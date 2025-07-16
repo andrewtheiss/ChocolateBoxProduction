@@ -1,0 +1,6 @@
+pyserial==3.5
+transitions==0.9.1
+rich==13.7.0
+pyyaml==6.0.1
+pytest==8.0.0
+transitions-asyncio

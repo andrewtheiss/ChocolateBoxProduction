@@ -1,0 +1,20 @@
+global_states:  # For coordinator oversight
+  - RUNNING
+  - PAUSED
+  - ERROR
+
+station_transitions:  # Default shared; override in station modules
+  - trigger: start_process
+    source: READY
+    dest: PROCESSING
+  - trigger: process_success
+    source: PROCESSING
+    dest: READY
+  - trigger: error
+    source: '*'
+    dest: ERROR
+  - trigger: reset
+    source: [ERROR, IDLE]
+    dest: READY
+
+# Per-station custom triggers added in code

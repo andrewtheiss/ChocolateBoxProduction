@@ -1,0 +1,17 @@
+dispenser:
+  port: /dev/ttyUSB0
+  baud: 9600
+  initial_state: IDLE
+  sensors: [ir_stack]  # Example: List for future validation
+
+roller:
+  port: /dev/ttyUSB1
+  baud: 9600
+  initial_state: IDLE
+
+taper:
+  port: /dev/ttyUSB2
+  baud: 9600
+  initial_state: IDLE
+
+# Add e.g., puncher: {port: /dev/ttyUSB3, ...}
