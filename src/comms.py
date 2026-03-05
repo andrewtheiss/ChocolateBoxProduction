@@ -2,36 +2,68 @@ import serial
 import serial.tools.list_ports
 from json import loads, dumps
 import logging
+import time
+
+IGNORED_PORT_KEYWORDS = ['bluetooth', 'wlan', 'debug']
+
 
 def scan_ports():
-    """Return list of available serial port device paths."""
-    return [p.device for p in serial.tools.list_ports.comports()]
+    """Return list of available serial ports, filtering out non-Arduino system ports."""
+    all_ports = serial.tools.list_ports.comports()
+    usable = []
+    for p in all_ports:
+        if any(kw in p.device.lower() for kw in IGNORED_PORT_KEYWORDS):
+            continue
+        usable.append(p)
+    return usable
 
-def connect_serials(config):
-    """Try to open configured serial ports. Returns dict of name -> Serial or None."""
-    connections = {}
-    for name, cfg in config.items():
-        try:
-            conn = serial.Serial(cfg['port'], cfg['baud'], timeout=1)
-            connections[name] = conn
-            logging.info(f"{name}: connected on {cfg['port']}")
-        except (serial.SerialException, OSError):
-            connections[name] = None
-    return connections
 
-def send_command(ser, cmd):
+def connect_serial(port, baud=9600):
+    """Open a serial connection with a brief delay for Arduino reset."""
+    conn = serial.Serial(port, baud, timeout=2)
+    time.sleep(2)  # Arduino resets on serial open; wait for it to boot
+    conn.reset_input_buffer()  # Discard any startup messages
+    return conn
+
+
+def send_json(ser, payload):
+    """Send a JSON command and return the parsed JSON response dict, or None."""
     if ser is None:
         return None
     try:
-        ser.write(dumps({"cmd": cmd}).encode() + b'\n')
+        ser.reset_input_buffer()
+        ser.write(dumps(payload).encode() + b'\n')
         line = ser.readline().decode().strip()
         if not line:
-            return 'no_response'
-        resp = loads(line)
-        return resp.get('status', 'error')
+            return None
+        return loads(line)
     except Exception as e:
         logging.warning(f"Comms error: {e}")
-        return 'error'
+        return None
+
+
+def send_command(ser, cmd, **params):
+    """Send a command with optional params. Returns the response dict."""
+    payload = {"cmd": cmd}
+    payload.update(params)
+    return send_json(ser, payload)
+
+
+def identify(ser):
+    """Ask an Arduino to identify itself. Returns {'id': 'roller', 'version': '1.0'} or None."""
+    return send_json(ser, {"cmd": "identify"})
+
 
 def get_status(ser):
-    return send_command(ser, 'get_status')
+    """Get station status. Returns full response dict."""
+    return send_command(ser, "get_status")
+
+
+def start_station(ser, **params):
+    """Send start command with optional params like steps, speed_us."""
+    return send_command(ser, "start", **params)
+
+
+def stop_station(ser):
+    """Send emergency stop."""
+    return send_command(ser, "stop")

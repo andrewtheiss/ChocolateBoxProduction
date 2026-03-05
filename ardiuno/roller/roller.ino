@@ -1,69 +1,102 @@
-const int pulPin = 9;   // PUL+ (D9)
-const int dirPin = 8;   // DIR+ (D8)
-const int enaPin = 7;   // ENA+ (D7)
-const int beamPin = 2;  // Beam sensor on D2 (interrupt-capable)
+#include <ArduinoJson.h>
 
-volatile int beamState = HIGH;          // Current state of the beam
-volatile unsigned long beamToggleCount = 0;  // Total number of beam toggles
-volatile bool beamChanged = false;      // Flag to notify main loop
+const int pulPin = 9;
+const int dirPin = 8;
+const int enaPin = 7;
+const int beamPin = 2;
+
+volatile int beamState = HIGH;
+volatile unsigned long beamToggleCount = 0;
+volatile bool beamChanged = false;
+volatile bool stopRequested = false;
+
+String currentState = "IDLE";
 
 void setup() {
-  // Set up motor pins
   pinMode(pulPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
   pinMode(enaPin, OUTPUT);
-  digitalWrite(enaPin, LOW);
+  digitalWrite(enaPin, HIGH);  // Disabled until needed
   digitalWrite(dirPin, HIGH);
 
-  // Set up beam sensor
-  pinMode(beamPin, INPUT_PULLUP);  // Use pull-up
-  attachInterrupt(digitalPinToInterrupt(beamPin), beamISR, CHANGE);  // Respond to any state change
+  pinMode(beamPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(beamPin), beamISR, CHANGE);
 
-  // Serial for debug and control
   Serial.begin(9600);
   while (!Serial) {}
-  Serial.println("Stepper + Beam Sensor Interrupt Ready. Send input to trigger motor.");
+}
+
+void sendResponse(const char* status, JsonObject data = JsonObject()) {
+  StaticJsonDocument<256> resp;
+  resp["status"] = status;
+  if (!data.isNull()) {
+    resp["data"] = data;
+  }
+  serializeJson(resp, Serial);
+  Serial.println();
 }
 
 void loop() {
-  // Beam change output
-  if (beamChanged) {
-    beamChanged = false;
-    if (beamState == LOW) {
-      Serial.print("Beam broken! ");
-    } else {
-      Serial.print("Beam restored. ");
+  if (Serial.available()) {
+    StaticJsonDocument<200> doc;
+    DeserializationError err = deserializeJson(doc, Serial);
+    if (err) return;
+
+    const char* cmd = doc["cmd"];
+    if (!cmd) return;
+
+    if (strcmp(cmd, "identify") == 0) {
+      StaticJsonDocument<128> resp;
+      resp["id"] = "roller";
+      resp["version"] = "1.0";
+      serializeJson(resp, Serial);
+      Serial.println();
+
+    } else if (strcmp(cmd, "get_status") == 0) {
+      StaticJsonDocument<256> resp;
+      resp["status"] = currentState;
+      resp["beam_state"] = (beamState == LOW) ? "broken" : "clear";
+      resp["beam_count"] = beamToggleCount;
+      serializeJson(resp, Serial);
+      Serial.println();
+
+    } else if (strcmp(cmd, "start") == 0) {
+      int steps = doc["steps"] | 1000;  // Default 1000 steps (~1 second)
+      int speed_us = doc["speed_us"] | 500;
+
+      currentState = "PROCESSING";
+      stopRequested = false;
+      digitalWrite(enaPin, LOW);
+
+      for (int i = 0; i < steps; i++) {
+        if (stopRequested) break;
+        digitalWrite(pulPin, HIGH);
+        delayMicroseconds(speed_us);
+        digitalWrite(pulPin, LOW);
+        delayMicroseconds(speed_us);
+      }
+
+      digitalWrite(enaPin, HIGH);
+
+      if (stopRequested) {
+        currentState = "IDLE";
+        sendResponse("stopped");
+      } else {
+        currentState = "IDLE";
+        sendResponse("done");
+      }
+
+    } else if (strcmp(cmd, "stop") == 0) {
+      stopRequested = true;
+      digitalWrite(enaPin, HIGH);
+      currentState = "IDLE";
+      sendResponse("stopped");
     }
-    Serial.print("Toggles: ");
-    Serial.println(beamToggleCount);
-  }
-
-  // Serial trigger for motor
-  if (Serial.available() > 0) {
-    while (Serial.available() > 0) {
-      Serial.read();
-    }
-
-    Serial.println("Input received! Starting 1-second motor turn...");
-
-    digitalWrite(enaPin, LOW);
-
-    int stepsForOneSecond = 5000;
-
-    for (int i = 0; i < stepsForOneSecond; i++) {
-      digitalWrite(pulPin, HIGH);
-      delayMicroseconds(500);
-      digitalWrite(pulPin, LOW);
-      delayMicroseconds(500);
-    }
-
-    Serial.println("Motor turn complete.");
   }
 }
 
-// Interrupt Service Routine
 void beamISR() {
-  beamState = digitalRead(beamPin);  // Read the new state
-  beamToggleCount++;                 // Count toggle
-  beamChanged = true;               // Notify main loop to print
+  beamState = digitalRead(beamPin);
+  beamToggleCount++;
+  beamChanged = true;
 }
