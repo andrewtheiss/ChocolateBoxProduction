@@ -1,3 +1,4 @@
+import asyncio
 from .base import BaseStation
 from src.comms import send_command
 

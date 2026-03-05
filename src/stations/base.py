@@ -1,3 +1,4 @@
+import logging
 from transitions.extensions.asyncio import AsyncMachine
 
 class BaseStation:
