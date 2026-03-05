@@ -585,3 +585,5 @@
 2026-03-05 13:33:07,065 - INFO -   roller response: {'status': 'done'}
 2026-03-05 13:33:10,975 - INFO - Triggering: roller
 2026-03-05 13:33:12,030 - INFO -   roller response: {'status': 'done'}
+2026-03-05 13:36:24,382 - INFO - Active pipeline: roller
+2026-03-05 13:36:24,383 - INFO - Starting with stations: roller

@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import logging.config
 import yaml
@@ -6,7 +5,7 @@ from rich.console import Console
 from rich.table import Table
 from src.state_machine import PipelineCoordinator
 from src.comms import scan_ports, connect_serial
-from src.ui import start_ui
+from src.ui import run_dashboard
 from src.stations.base import load_stations
 
 with open('config/stations.yaml') as f:
@@ -154,74 +153,7 @@ def device_setup(config):
     return serials
 
 
-def start_command_input(serials, stations):
-    """Background thread that reads typed commands to trigger stations."""
-    import threading
-    from src.comms import start_station, stop_station, get_status, identify
-
-    def input_loop():
-        while True:
-            try:
-                cmd = input().strip().lower()
-            except (EOFError, KeyboardInterrupt):
-                break
-
-            if not cmd:
-                continue
-
-            parts = cmd.split()
-            action = parts[0]
-
-            if action == 'help':
-                print("\nCommands:")
-                print("  <station>          — trigger station (e.g. 'roller')")
-                print("  status <station>   — get station status")
-                print("  identify <station> — ask Arduino to identify")
-                print("  stop <station>     — emergency stop")
-                print("  help               — show this message")
-                print("  quit               — exit")
-                print(f"\nStations: {', '.join(stations.keys())}\n")
-                continue
-
-            if action == 'quit':
-                raise SystemExit(0)
-
-            if action == 'stop' and len(parts) > 1:
-                name = parts[1]
-                if name in serials and serials[name]:
-                    resp = stop_station(serials[name])
-                    logging.info(f"stop {name}: {resp}")
-                continue
-
-            if action == 'status' and len(parts) > 1:
-                name = parts[1]
-                if name in serials and serials[name]:
-                    resp = get_status(serials[name])
-                    logging.info(f"status {name}: {resp}")
-                continue
-
-            if action == 'identify' and len(parts) > 1:
-                name = parts[1]
-                if name in serials and serials[name]:
-                    resp = identify(serials[name])
-                    logging.info(f"identify {name}: {resp}")
-                continue
-
-            # Default: treat as station name to trigger
-            if action in serials and serials[action] is not None:
-                ser = serials[action]
-                logging.info(f"Triggering: {action}")
-                resp = start_station(ser)
-                logging.info(f"  {action} response: {resp}")
-            elif action in serials:
-                print(f"  {action} is not connected.")
-            else:
-                print(f"  Unknown command '{cmd}'. Type 'help' for options.")
-
-    threading.Thread(target=input_loop, daemon=True).start()
-
-
-async def main():
+def main():
     serials = device_setup(stations_config)
     stations = load_stations(stations_config, fsm_config)
     coordinator = PipelineCoordinator(serials, stations, fsm_config)
@@ -229,10 +161,6 @@ async def main():
     connected = [n for n, s in serials.items() if s is not None]
     logging.info(f"Starting with stations: {', '.join(connected)}")
 
-    start_ui(coordinator, stations)
-    start_command_input(serials, stations)
+    run_dashboard(coordinator, stations, serials)
 
-    logging.info("Starting production line coordinator... Type 'help' for commands.")
-    await coordinator.run()
-
-asyncio.run(main())
+main()
