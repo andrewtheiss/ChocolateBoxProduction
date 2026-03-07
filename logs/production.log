@@ -690,3 +690,19 @@ Traceback (most recent call last):
 RuntimeError: The parent slot of the element has been deleted.
 2026-03-06 21:20:46,602 - INFO - Web UI → http://localhost:8080
 2026-03-06 21:20:47,139 - INFO - Pipeline: (none)
+2026-03-07 14:56:26,111 - INFO - Web UI → http://localhost:8080
+2026-03-07 14:56:26,639 - INFO - Pipeline: (none)
+2026-03-07 14:57:05,470 - INFO - Coordinator and workers reset to IDLE
+2026-03-07 14:57:32,117 - INFO - Coordinator and workers reset to IDLE
+2026-03-07 14:57:32,399 - INFO - Coordinator and workers reset to IDLE
+2026-03-07 14:58:14,506 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-03-07 15:10:25,916 - INFO - Web UI → http://localhost:8080
+2026-03-07 15:10:26,187 - INFO - Pipeline: (none)
+2026-03-07 15:11:14,361 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-03-07 15:11:14,369 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-03-07 15:12:10,587 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-03-07 15:22:49,733 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-03-07 15:23:52,309 - INFO - Web UI → http://localhost:8080
+2026-03-07 15:23:52,532 - INFO - Pipeline: (none)
+2026-03-07 15:23:54,646 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-03-07 15:23:59,572 - INFO - Pipeline: roller

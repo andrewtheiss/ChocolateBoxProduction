@@ -1,5 +1,9 @@
 #include <ArduinoJson.h>
 
+const char* FIRMWARE_NAME = "dispenser";
+const char* FIRMWARE_VERSION = "1.1.0";
+const char* FIRMWARE_BUILD = __DATE__ " " __TIME__;
+
 const int STEP_PIN = 9;
 const int DIR_PIN = 8;
 const int EN_PIN = 7;
@@ -8,6 +12,17 @@ const int SENSOR_PIN = 2;
 volatile bool stopRequested = false;
 String currentState = "IDLE";
 
+void sendVersionInfo(const char* status = "ok") {
+  StaticJsonDocument<192> resp;
+  resp["status"] = status;
+  resp["id"] = FIRMWARE_NAME;
+  resp["firmware"] = FIRMWARE_NAME;
+  resp["version"] = FIRMWARE_VERSION;
+  resp["build"] = FIRMWARE_BUILD;
+  serializeJson(resp, Serial);
+  Serial.println();
+}
+
 void setup() {
   Serial.begin(9600);
   pinMode(STEP_PIN, OUTPUT);
@@ -15,6 +30,8 @@ void setup() {
   pinMode(EN_PIN, OUTPUT);
   pinMode(SENSOR_PIN, INPUT);
   digitalWrite(EN_PIN, HIGH);  // Disabled until needed
+  while (!Serial) {}
+  sendVersionInfo("boot");
 }
 
 void sendResponse(const char* status, JsonObject data = JsonObject()) {
@@ -38,14 +55,23 @@ void loop() {
 
     if (strcmp(cmd, "identify") == 0) {
       StaticJsonDocument<128> resp;
-      resp["id"] = "dispenser";
-      resp["version"] = "1.0";
+      resp["id"] = FIRMWARE_NAME;
+      resp["firmware"] = FIRMWARE_NAME;
+      resp["version"] = FIRMWARE_VERSION;
+      resp["build"] = FIRMWARE_BUILD;
       serializeJson(resp, Serial);
       Serial.println();
+
+    } else if (strcmp(cmd, "version") == 0) {
+      sendVersionInfo();
 
     } else if (strcmp(cmd, "get_status") == 0) {
       StaticJsonDocument<256> resp;
       resp["status"] = currentState;
+      resp["id"] = FIRMWARE_NAME;
+      resp["firmware"] = FIRMWARE_NAME;
+      resp["version"] = FIRMWARE_VERSION;
+      resp["build"] = FIRMWARE_BUILD;
       resp["sensor"] = (digitalRead(SENSOR_PIN) == LOW) ? "triggered" : "clear";
       serializeJson(resp, Serial);
       Serial.println();

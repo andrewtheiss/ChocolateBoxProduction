@@ -4,9 +4,10 @@ import logging
 from src.comms import (
     scan_ports, connect_serial, identify, get_status,
     start_station, stop_station, send_command,
-    add_motor, remove_motor, list_motors, run_motor,
+    add_motor, remove_motor, list_motors, run_motor, run_motor_group,
     stop_motor, verify_pin, set_station_id,
 )
+from src.firmware import available_firmware_options, flash_firmware
 from src.state_machine import PipelineCoordinator
 
 # ── State ────────────────────────────────────
@@ -18,24 +19,469 @@ log_lines: list = []
 STATION_ORDER = ['dispenser', 'roller', 'taper']
 
 CSS = '''
-body { background: #111; color: #ccc; font-family: -apple-system, "Segoe UI", sans-serif; }
-.q-header { background: #111 !important; border-bottom: 1px solid #222 !important; }
-.q-card { background: #181818 !important; border: 1px solid #222 !important; border-radius: 6px !important; }
-.q-btn { border-radius: 4px !important; text-transform: none !important; font-weight: 500 !important; letter-spacing: 0 !important; }
-.q-field--dark .q-field__control { background: #1a1a1a !important; }
-.nicegui-log { background: #1a1a1a !important; border: 1px solid #222 !important; border-radius: 4px !important; font-size: 12px !important; }
-.nicegui-code { background: #1a1a1a !important; border: 1px solid #222 !important; border-radius: 4px !important; }
-.q-drawer { background: #151515 !important; border-right: 1px solid #222 !important; }
-.q-item { min-height: 36px !important; padding: 4px 12px !important; }
-.sec { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #555; padding: 12px 0 4px 0; }
-.dim { color: #555; }
-.mono { font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 12px; }
-.tag { display: inline-block; padding: 1px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
-.tag-on { background: #062a1e; color: #34d399; }
-.tag-off { background: #1a1a1a; color: #555; }
-.tag-run { background: #0c2340; color: #60a5fa; }
-.tag-err { background: #2a0a0a; color: #f87171; }
-.tag-idle { background: #1a1800; color: #ca8a04; }
+body {
+    font-family: Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: .5rem;
+    background-color: #f8f9fa;
+    color: #000
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: .75rem;
+    box-shadow: 0 2px 4px #0000001a
+}
+
+h1 {
+    color: #000;
+    font-size: 1.25rem;
+    margin-bottom: .75rem;
+    text-align: center
+}
+
+.h5 {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    font-weight: 600;
+    margin: 0 0 .3rem
+}
+
+.widget-action-button {
+    display: inline-block;
+    padding: .65rem 1rem;
+    background: #e60000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: all .2s ease;
+    font-size: .9rem;
+    min-width: 120px;
+    line-height: 1.2
+}
+
+.widget-action-button:hover {
+    background: #c00;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px #0000001a
+}
+
+.widget-action-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .55rem 1rem;
+    background: #e60000;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all .2s ease
+}
+
+.btn:hover {
+    background: #c00;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px #e6000033
+}
+
+.btn:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none
+}
+
+.btn-outline {
+    background: transparent;
+    color: #e60000;
+    border-color: #e60000
+}
+
+.btn-outline:hover {
+    background: #e60000;
+    color: #fff
+}
+
+.btn-sm {
+    padding: .35rem .7rem;
+    font-size: .9rem
+}
+
+.btn-block {
+    width: 100%
+}
+
+.panel {
+    background: #fff;
+    border-radius: 8px;
+    padding: .75rem;
+    box-shadow: 0 1px 3px #00000014;
+    border: 1px solid rgba(0,0,0,.06)
+}
+
+.badge {
+    display: inline-block;
+    padding: .2rem .5rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600
+}
+
+.badge-primary {
+    background: #e60000;
+    color: #fff
+}
+
+.badge-neutral {
+    background: #e9ecef;
+    color: #000
+}
+
+.badge-accent {
+    background: #f0b800;
+    color: #000
+}
+
+.alert {
+    padding: .75rem 1rem;
+    border-radius: 6px;
+    margin: .5rem 0;
+    border-left: 4px solid transparent
+}
+
+.alert-info {
+    background: #e7f3ff;
+    color: #084298;
+    border-left-color: #0d6efd
+}
+
+.alert-success {
+    background: #e6f4ea;
+    color: #0f5132;
+    border-left-color: #198754
+}
+
+.alert-warning {
+    background: #fff4e5;
+    color: #664d03;
+    border-left-color: #f6c343
+}
+
+.alert-danger {
+    background: #fdecea;
+    color: #842029;
+    border-left-color: #dc3545
+}
+
+.input,.select,.textarea,input[type=text],input[type=number],input[type=email],input[type=password],select,textarea {
+    width: 100%;
+    padding: .5rem .6rem;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background: #fff;
+    color: #000;
+    box-shadow: inset 0 1px 2px #00000005
+}
+
+.input:focus,.select:focus,.textarea:focus,input[type=text]:focus,input[type=number]:focus,input[type=email]:focus,input[type=password]:focus,select:focus,textarea:focus {
+    outline: none;
+    border-color: #e60000;
+    box-shadow: 0 0 0 3px #e600001f
+}
+
+.helper-text {
+    color: #6c757d;
+    font-size: .85rem
+}
+
+.error-text {
+    color: #dc3545;
+    font-size: .85rem
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden
+}
+
+.table thead th {
+    background: #f8f9fa;
+    font-weight: 600
+}
+
+.center {
+    display: grid;
+    place-items: center
+}
+
+.spacer {
+    height: 1rem
+}
+
+.divider {
+    border-top: 1px solid #e9ecef;
+    margin: .75rem 0
+}
+
+.muted {
+    color: #6c757d
+}
+
+*,*:before,*:after {
+    box-sizing: border-box
+}
+
+:root {
+    --hw-black: #231f20;
+    --hw-red: #c8102e;
+    --hw-gold: #f0b323;
+    --hw-gray-900: #1f2937;
+    --hw-gray-800: #374151;
+    --hw-gray-700: #4b5563;
+    --hw-gray-600: #6b7280;
+    --hw-gray-500: #9ca3af;
+    --hw-gray-400: #cbd5e1;
+    --hw-gray-300: #e5e7eb;
+    --hw-gray-200: #edf0f3;
+    --hw-gray-100: #f4f6f8;
+    --hw-surface: #ffffff;
+    --hw-font-sans: "Source Sans 3","Source Sans Pro","Source Sans", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;
+    --hw-font-weight-black: 900;
+    --hw-font-weight-bold: 700;
+    --hw-font-weight-semib: 600;
+    --hw-font-weight-reg: 400;
+    --hw-font-weight-light: 300;
+    --hw-radius: 8px;
+    --hw-radius-sm: 6px;
+    --hw-radius-xs: 4px;
+    --hw-border: #e5e7eb;
+    --hw-shadow: 0 1px 3px rgba(0,0,0,.08);
+    --hw-focus-ring: 0 0 0 3px rgba(200,16,46,.18)
+}
+
+.eyebrow {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: var(--hw-font-weight-bold);
+    color: var(--hw-gray-700)
+}
+
+.red {
+    color: #bf2b34 !important;
+    text-transform: uppercase
+}
+
+.mono {
+    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+    font-size: 12px
+}
+
+.tag {
+    display: inline-block;
+    padding: .2rem .55rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 700
+}
+
+.tag-on {
+    background: #e6f4ea;
+    color: #0f5132
+}
+
+.tag-off {
+    background: #e9ecef;
+    color: #495057
+}
+
+.tag-run {
+    background: #e7f3ff;
+    color: #084298
+}
+
+.tag-err {
+    background: #fdecea;
+    color: #842029
+}
+
+.tag-idle {
+    background: #fff4e5;
+    color: #664d03
+}
+
+.app-shell {
+    min-height: calc(100vh - 1rem);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: .75rem
+}
+
+.page {
+    padding-block: 1.25rem
+}
+
+.app-shell__title {
+    font-weight: 800;
+    font-size: 1rem
+}
+
+.page-title {
+    margin: 0;
+    text-align: left
+}
+
+.content-grid {
+    display: grid;
+    gap: .75rem
+}
+
+.nav-item {
+    min-height: 40px !important;
+    padding: 6px 10px !important;
+    border-radius: 6px;
+    color: #000
+}
+
+.nav-item.active,
+.nav-item:hover {
+    background: #f8f9fa
+}
+
+.section-row {
+    padding: .35rem 0
+}
+
+.readout,
+.nicegui-log {
+    background: #fafafa !important;
+    border: 1px solid #eceff1 !important;
+    border-radius: 4px !important;
+    color: #000 !important;
+    box-shadow: none !important
+}
+
+.readout {
+    display: block;
+    min-height: 2.5rem;
+    padding: .45rem .55rem;
+    line-height: 1.45;
+    font-size: .9rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow: auto
+}
+
+.q-layout,
+.q-page-container,
+.q-page {
+    background: transparent !important
+}
+
+.q-drawer {
+    background: #fff !important;
+    border-right: 1px solid #e9ecef !important
+}
+
+.q-header {
+    background: #fff !important;
+    color: #000 !important;
+    border-bottom: 1px solid #e9ecef !important;
+    box-shadow: none !important
+}
+
+.q-card.panel {
+    box-shadow: 0 1px 3px #00000014 !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0,0,0,.06) !important
+}
+
+.q-field__native,
+.q-field__input,
+.q-field__marginal,
+.q-field__label {
+    color: #000 !important
+}
+
+.pin-pul .q-field__label {
+    color: #2563eb !important;
+    font-weight: 700 !important
+}
+
+.pin-dir .q-field__label {
+    color: #dc2626 !important;
+    font-weight: 700 !important
+}
+
+.pin-ena .q-field__label {
+    color: #16a34a !important;
+    font-weight: 700 !important
+}
+
+.q-field--outlined .q-field__control:before {
+    border: 1px solid #dee2e6 !important
+}
+
+.q-field--focused .q-field__control:before,
+.q-field--focused .q-field__control:after {
+    border-color: #e60000 !important
+}
+
+.q-toggle__inner,
+.q-checkbox__inner {
+    color: #e60000 !important
+}
+
+.btn-neutral {
+    background: #e9ecef !important;
+    color: #000 !important;
+    border-color: #dee2e6 !important
+}
+
+.btn-neutral:hover {
+    background: #dde2e6 !important
+}
+
+.btn-danger {
+    background: #842029 !important;
+    color: #fff !important
+}
+
+.btn-danger:hover {
+    background: #6d1b25 !important
+}
+
+@media(max-width: 768px) {
+    body {
+        padding: .25rem
+    }
+
+    .container {
+        padding: .5rem
+    }
+}
 '''
 
 
@@ -50,8 +496,19 @@ def tag(text, variant='off'):
 
 
 def theme():
-    ui.dark_mode().enable()
     ui.add_css(CSS)
+
+
+def action_button(label, on_click=None, icon=None, variant='primary'):
+    classes = ['btn']
+    if variant == 'outline':
+        classes.append('btn-outline')
+    elif variant == 'neutral':
+        classes.append('btn-neutral')
+    elif variant == 'danger':
+        classes.append('btn-danger')
+    classes.append('btn-sm')
+    return ui.button(label, on_click=on_click, icon=icon).props('unelevated no-caps').classes(' '.join(classes))
 
 
 def ensure_coordinator():
@@ -63,40 +520,50 @@ def ensure_coordinator():
         coordinator = PipelineCoordinator(serials, {}, fsm_config)
 
 
+def rebuild_coordinator():
+    global coordinator
+    if coordinator is not None:
+        coordinator.shutdown()
+    coordinator = None
+    ensure_coordinator()
+
+
 # ── Layout with sidebar ─────────────────────
 def page_layout(active='dashboard'):
     theme()
 
-    with ui.left_drawer(value=True, fixed=True).classes('p-0').props('width=180 bordered') as drawer:
-        ui.html('<div class="sec" style="padding:16px 12px 4px">Navigation</div>')
+    with ui.left_drawer(value=True, fixed=True).classes('p-0').props('width=220 bordered') as drawer:
+        with ui.column().classes('w-full gap-1 p-3'):
+            ui.label('Navigation').classes('eyebrow red')
 
-        items = [
-            ('Dashboard', 'grid_view', '/dashboard'),
-            ('Devices', 'usb', '/devices'),
-        ]
-        for label, icon, url in items:
-            with ui.item(on_click=lambda u=url: ui.navigate.to(u)).classes(
-                'rounded mx-1' + (' bg-white/5' if active == label.lower() else '')
-            ):
-                with ui.item_section().props('avatar'):
-                    ui.icon(icon, size='18px').classes('text-zinc-400')
-                ui.item_label(label).classes('text-sm')
+            items = [
+                ('Dashboard', 'grid_view', '/dashboard'),
+                ('Devices', 'usb', '/devices'),
+            ]
+            for label, icon, url in items:
+                with ui.item(on_click=lambda u=url: ui.navigate.to(u)).classes(
+                    'nav-item' + (' active' if active == label.lower() else '')
+                ):
+                    with ui.item_section().props('avatar'):
+                        ui.icon(icon, size='18px').classes('muted')
+                    ui.item_label(label).classes('text-sm')
 
-        ui.html('<div class="sec" style="padding:16px 12px 4px">Stations</div>')
-        for name in STATION_ORDER:
-            online = serials.get(name) is not None
-            with ui.item(on_click=lambda n=name: ui.navigate.to(f'/station/{n}')).classes(
-                'rounded mx-1' + (' bg-white/5' if active == name else '')
-            ):
-                with ui.item_section().props('avatar'):
-                    ui.icon('circle', size='8px').classes('text-emerald-500' if online else 'text-zinc-600')
-                ui.item_label(name).classes('text-sm')
+            ui.separator().classes('divider')
+            ui.label('Stations').classes('eyebrow red')
+            for name in STATION_ORDER:
+                online = serials.get(name) is not None
+                with ui.item(on_click=lambda n=name: ui.navigate.to(f'/station/{n}')).classes(
+                    'nav-item' + (' active' if active == name else '')
+                ):
+                    with ui.item_section().props('avatar'):
+                        ui.icon('circle', size='8px').classes('text-green-600' if online else 'muted')
+                    ui.item_label(name.capitalize()).classes('text-sm')
 
-    with ui.header().classes('items-center px-4 h-10'):
-        ui.button(icon='menu', on_click=drawer.toggle).props('flat dense color=grey size=sm')
-        ui.label('ChocolateBox').classes('text-sm font-semibold ml-2')
+    with ui.header().classes('items-center px-4 py-2'):
+        action_button('', on_click=drawer.toggle, icon='menu', variant='neutral').props('round')
+        ui.label('ChocolateBox Production').classes('app-shell__title ml-2')
 
-    return ui.column().classes('w-full max-w-3xl mx-auto px-4 py-6 gap-4')
+    return ui.column().classes('container page content-grid')
 
 
 # ── Devices page ─────────────────────────────
@@ -105,78 +572,100 @@ def devices_page():
     content = page_layout('devices')
 
     with content:
-        ui.html('<div class="sec">Scan & Assign</div>')
+        ui.label('Devices').classes('h5 red page-title')
 
-        scan_box = ui.column().classes('w-full gap-2')
+        with ui.card().classes('panel w-full'):
+            with ui.column().classes('w-full gap-3'):
+                ui.label('Scan & Assign').classes('eyebrow red')
+                scan_box = ui.column().classes('w-full gap-2')
 
-        def refresh():
-            scan_box.clear()
-            ports = scan_ports()
-            assigned_ports = {s.port for s in serials.values() if s}
+                def refresh():
+                    scan_box.clear()
+                    ports = scan_ports()
+                    assigned_ports = {s.port for s in serials.values() if s}
 
-            with scan_box:
-                if not ports:
-                    ui.label('No USB devices found.').classes('dim text-sm')
-                    return
+                    with scan_box:
+                        if not ports:
+                            ui.label('No USB devices found.').classes('muted text-sm')
+                            return
 
-                for p in ports:
-                    is_assigned = p.device in assigned_ports
-                    assigned_to = None
-                    if is_assigned:
-                        assigned_to = next((n for n, s in serials.items() if s and s.port == p.device), None)
+                        for p in ports:
+                            is_assigned = p.device in assigned_ports
+                            assigned_to = None
+                            assigned_info = None
+                            if is_assigned:
+                                assigned_to = next((n for n, s in serials.items() if s and s.port == p.device), None)
+                                if assigned_to and serials.get(assigned_to):
+                                    assigned_info = identify(serials[assigned_to])
 
-                    with ui.row().classes('items-center gap-3 py-1'):
-                        ui.label(p.device).classes('mono flex-shrink-0')
-                        ui.label(p.description or '—').classes('text-xs dim flex-shrink-0')
+                            with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
+                                ui.label(p.device).classes('mono')
+                                ui.label(p.description or '—').classes('text-xs muted')
+                                if assigned_info:
+                                    fw = assigned_info.get('firmware', assigned_info.get('id', '?'))
+                                    ver = assigned_info.get('version', '?')
+                                    build = assigned_info.get('build', '?')
+                                    ui.label(f'{fw} {ver}').classes('mono muted text-xs')
+                                    ui.label(build).classes('mono muted text-xs')
+                                ui.element('div').classes('flex-grow')
 
-                        if assigned_to:
-                            tag(assigned_to, 'on')
+                                if assigned_to:
+                                    tag(assigned_to, 'on')
 
-                            def mk_disconnect(port_name):
-                                def do():
-                                    if serials.get(port_name):
-                                        serials[port_name].close()
-                                        serials[port_name] = None
-                                        add_log(f'Disconnected {port_name}')
-                                        ui.notify(f'{port_name} disconnected')
-                                        ensure_coordinator()
-                                        refresh()
-                                return do
+                                    def mk_disconnect(port_name):
+                                        def do():
+                                            if serials.get(port_name):
+                                                serials[port_name].close()
+                                                serials[port_name] = None
+                                                add_log(f'Disconnected {port_name}')
+                                                ui.notify(f'{port_name} disconnected')
+                                                rebuild_coordinator()
+                                                refresh()
+                                        return do
 
-                            ui.button('Disconnect', on_click=mk_disconnect(assigned_to)).props('flat dense color=red size=xs')
+                                    action_button('Disconnect', on_click=mk_disconnect(assigned_to), variant='danger')
+                                else:
+                                    available = [n for n in STATION_ORDER if not serials.get(n)]
+                                    if available:
+                                        sel = ui.select(options=available, value=available[0]).props('outlined').classes('w-32')
+
+                                        def mk_connect(port_info, select_w):
+                                            def do():
+                                                nm = select_w.value
+                                                try:
+                                                    ser = connect_serial(port_info.device, station_configs.get(nm, {}).get('baud', 9600))
+                                                    serials[nm] = ser
+                                                    add_log(f'{nm} → {port_info.device}')
+                                                    ui.notify(f'{nm} connected', type='positive')
+                                                    rebuild_coordinator()
+                                                    refresh()
+                                                except Exception as e:
+                                                    ui.notify(str(e), type='negative')
+                                            return do
+
+                                        action_button('Connect', on_click=mk_connect(p, sel))
+
+                action_button('Rescan', on_click=refresh, icon='refresh', variant='neutral')
+
+        with ui.card().classes('panel w-full'):
+            with ui.column().classes('w-full gap-2'):
+                ui.label('Status').classes('eyebrow red')
+                for name in STATION_ORDER:
+                    s = serials.get(name)
+                    with ui.row().classes('items-center gap-3 section-row'):
+                        ui.label(name.capitalize()).classes('text-sm w-20')
+                        if s:
+                            info = identify(s)
+                            ui.label(s.port).classes('mono muted')
+                            tag('online', 'on')
+                            if info:
+                                fw = info.get('firmware', info.get('id', '?'))
+                                ver = info.get('version', '?')
+                                build = info.get('build', '?')
+                                ui.label(f'{fw} {ver}').classes('mono muted text-xs')
+                                ui.label(build).classes('mono muted text-xs')
                         else:
-                            available = [n for n in STATION_ORDER if not serials.get(n)]
-                            if available:
-                                sel = ui.select(options=available, value=available[0]).props('dense outlined dark').classes('w-28')
-
-                                def mk_connect(port_info, select_w):
-                                    def do():
-                                        nm = select_w.value
-                                        try:
-                                            ser = connect_serial(port_info.device, station_configs.get(nm, {}).get('baud', 9600))
-                                            serials[nm] = ser
-                                            add_log(f'{nm} → {port_info.device}')
-                                            ui.notify(f'{nm} connected', type='positive')
-                                            ensure_coordinator()
-                                            refresh()
-                                        except Exception as e:
-                                            ui.notify(str(e), type='negative')
-                                    return do
-
-                                ui.button('Connect', on_click=mk_connect(p, sel)).props('flat dense color=cyan size=xs')
-
-        ui.button('Rescan', on_click=refresh, icon='refresh').props('flat dense color=grey size=sm')
-
-        ui.html('<div class="sec" style="margin-top:12px">Status</div>')
-        for name in STATION_ORDER:
-            s = serials.get(name)
-            with ui.row().classes('items-center gap-3'):
-                ui.label(name).classes('text-sm w-20')
-                if s:
-                    ui.label(s.port).classes('mono dim')
-                    tag('online', 'on')
-                else:
-                    tag('offline', 'off')
+                            tag('offline', 'off')
 
         refresh()
 
@@ -189,56 +678,58 @@ def dashboard_page():
     content = page_layout('dashboard')
 
     with content:
-        # Pipeline bar
-        with ui.row().classes('items-center gap-3'):
-            coord_tag = ui.html('<span class="tag tag-idle">IDLE</span>')
-            ui.element('div').classes('flex-grow')
-            ui.button('Run', on_click=lambda: (coordinator.run_pipeline(), add_log('Pipeline triggered')),
-                      icon='play_arrow').props('flat dense color=cyan size=sm')
-            ui.button('Reset', on_click=lambda: coordinator.reset(),
-                      icon='restart_alt').props('flat dense color=grey size=sm')
+        ui.label('Dashboard').classes('h5 red page-title')
 
-        # Station rows
-        ui.html('<div class="sec">Stations</div>')
-        station_els = {}
-
-        for name in STATION_ORDER:
-            ser = serials.get(name)
-            with ui.row().classes('items-center gap-3 py-1 w-full'):
-                ui.label(name).classes('text-sm font-medium w-20')
-                state_tag = ui.html('<span class="tag tag-idle">IDLE</span>')
-                items_lbl = ui.label('0').classes('mono text-sm')
-                ui.label('items').classes('dim text-xs')
+        with ui.card().classes('panel w-full'):
+            with ui.row().classes('items-center gap-3 flex-wrap'):
+                coord_tag = ui.html('<span class="tag tag-idle">IDLE</span>')
                 ui.element('div').classes('flex-grow')
+                action_button('Run', on_click=lambda: (coordinator.run_pipeline(), add_log('Pipeline triggered')),
+                              icon='play_arrow')
+                action_button('Reset', on_click=lambda: coordinator.reset(),
+                              icon='restart_alt', variant='neutral')
 
-                if ser:
-                    tag('on', 'on')
-                else:
-                    tag('off', 'off')
+        with ui.card().classes('panel w-full'):
+            ui.label('Stations').classes('eyebrow red')
+            station_els = {}
 
-                def mk_t(n):
-                    def f():
-                        if n in coordinator.workers:
-                            coordinator.run_single(n)
-                            add_log(f'Triggered {n}')
-                    return f
+            for name in STATION_ORDER:
+                ser = serials.get(name)
+                with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
+                    ui.label(name.capitalize()).classes('text-sm font-medium w-24')
+                    state_tag = ui.html('<span class="tag tag-idle">IDLE</span>')
+                    items_lbl = ui.label('0').classes('mono text-sm')
+                    ui.label('items').classes('muted text-xs')
+                    ui.element('div').classes('flex-grow')
 
-                def mk_s(n):
-                    def f():
-                        if serials.get(n):
-                            stop_station(serials[n])
-                            add_log(f'Stopped {n}')
-                    return f
+                    if ser:
+                        tag('on', 'on')
+                    else:
+                        tag('off', 'off')
 
-                ui.button('Trigger', on_click=mk_t(name)).props('flat dense size=xs color=cyan')
-                ui.button('Stop', on_click=mk_s(name)).props('flat dense size=xs color=red')
-                ui.button('→', on_click=lambda n=name: ui.navigate.to(f'/station/{n}')).props('flat dense size=xs color=grey')
+                    def mk_t(n):
+                        def f():
+                            if n in coordinator.workers:
+                                coordinator.run_single(n)
+                                add_log(f'Triggered {n}')
+                        return f
 
-                station_els[name] = {'state': state_tag, 'items': items_lbl}
+                    def mk_s(n):
+                        def f():
+                            if serials.get(n):
+                                stop_station(serials[n])
+                                add_log(f'Stopped {n}')
+                        return f
 
-        # Log
-        ui.html('<div class="sec" style="margin-top:8px">Log</div>')
-        log_disp = ui.log(max_lines=40).classes('w-full h-32')
+                    action_button('Trigger', on_click=mk_t(name))
+                    action_button('Stop', on_click=mk_s(name), variant='danger')
+                    action_button('Details', on_click=lambda n=name: ui.navigate.to(f'/station/{n}'), variant='outline')
+
+                    station_els[name] = {'state': state_tag, 'items': items_lbl}
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Log').classes('eyebrow red')
+            log_disp = ui.log(max_lines=40).classes('w-full h-32')
 
         def tick():
             cmap = {'IDLE': 'idle', 'RUNNING': 'run', 'ERROR': 'err'}
@@ -265,160 +756,332 @@ def station_detail_page(name: str):
     ensure_coordinator()
     ser = serials.get(name)
     content = page_layout(name)
+    selected_motors = set()
 
     with content:
-
-        # ── Header row ──
-        with ui.row().classes('items-center gap-3'):
-            ui.label(name.capitalize()).classes('text-lg font-semibold')
+        with ui.row().classes('items-center gap-3 flex-wrap'):
+            ui.label(name.capitalize()).classes('h5 red page-title')
             if ser:
-                tag('online', 'on')
-                ui.label(ser.port).classes('mono dim')
+                online_tag = tag('online', 'on')
+                ui.label(ser.port).classes('mono muted')
             else:
-                tag('offline', 'off')
+                online_tag = tag('offline', 'off')
 
-        # ── Status ──
-        ui.html('<div class="sec">Status</div>')
-        status_out = ui.code('—').classes('w-full')
+        with ui.card().classes('panel w-full'):
+            ui.label('Status').classes('eyebrow red')
+            firmware_meta = ui.label('Firmware: —').classes('mono muted text-xs')
+            status_out = ui.label('—').classes('w-full readout mono')
 
-        def poll():
-            if not ser:
-                return
-            r = get_status(ser)
-            status_out.content = json.dumps(r, indent=2) if r else 'No response'
+            def refresh_identity():
+                if not ser:
+                    firmware_meta.text = 'Firmware: —'
+                    return None
 
-        with ui.row().classes('items-center gap-2'):
-            ui.button('Refresh', on_click=poll).props('flat dense color=grey size=xs')
-            auto = ui.switch('Auto').props('dense color=cyan')
+                info = identify(ser)
+                if info:
+                    fw = info.get('firmware', info.get('id', '?'))
+                    ver = info.get('version', '?')
+                    build = info.get('build', '?')
+                    firmware_meta.text = f'Firmware: {fw} | Version: {ver} | Build: {build}'
+                else:
+                    firmware_meta.text = 'Firmware: no response'
+                return info
 
-        ui.timer(2.0, lambda: poll() if auto.value else None)
+            def poll():
+                if not ser:
+                    firmware_meta.text = 'Firmware: —'
+                    return
+                refresh_identity()
+                r = get_status(ser)
+                status_out.text = json.dumps(r, indent=2) if r else 'No response'
 
-        # ── Motors ──
-        ui.html('<div class="sec">Motors</div>')
-        motors_box = ui.column().classes('w-full gap-2')
+            with ui.row().classes('items-center gap-2 flex-wrap'):
+                action_button('Refresh', on_click=poll, variant='neutral')
+                auto = ui.switch('Auto')
 
-        def refresh_motors():
-            motors_box.clear()
-            if not ser:
-                with motors_box:
-                    ui.label('Not connected.').classes('dim text-sm')
-                return
+            ui.timer(2.0, lambda: poll() if auto.value else None)
 
-            r = list_motors(ser)
-            mlist = r.get('motors', []) if r and r.get('status') == 'ok' else []
-
-            if not mlist:
-                with motors_box:
-                    ui.label('No motors. Add one below.').classes('dim text-sm')
-                return
-
-            with motors_box:
-                for m in mlist:
-                    with ui.row().classes('items-center gap-2 py-1 w-full border-b border-zinc-800'):
-                        ui.label(m['name']).classes('text-sm font-medium w-24')
-                        tag('run' if m.get('running') else 'idle', 'run' if m.get('running') else 'idle')
-                        if m.get('reversed'):
-                            tag('rev', 'err')
-                        ui.label(f'{m["pul_pin"]}/{m["dir_pin"]}/{m["ena_pin"]}').classes('mono dim text-xs')
-                        ui.element('div').classes('flex-grow')
-
-                        s_w = ui.number(value=1000, min=1, max=50000, step=100).props('dense outlined dark').classes('w-20').tooltip('Steps')
-                        sp_w = ui.number(value=500, min=50, max=5000, step=50).props('dense outlined dark').classes('w-16').tooltip('μs/step')
-
-                        def mk_run(mn, sw, spw, fwd):
-                            def f():
-                                r = run_motor(ser, mn, steps=int(sw.value), speed_us=int(spw.value), forward=fwd)
-                                st = r.get('status', '?') if r else '?'
-                                add_log(f'{name}/{mn} {"fwd" if fwd else "rev"} → {st}')
-                                refresh_motors()
-                            return f
-
-                        def mk_stp(mn):
-                            def f():
-                                stop_motor(ser, mn)
-                                refresh_motors()
-                            return f
-
-                        def mk_rm(mn):
-                            def f():
-                                remove_motor(ser, mn)
-                                add_log(f'{name}: -{mn}')
-                                refresh_motors()
-                            return f
-
-                        ui.button('▶', on_click=mk_run(m['name'], s_w, sp_w, True)).props('flat dense color=cyan size=xs').tooltip('Forward')
-                        ui.button('◀', on_click=mk_run(m['name'], s_w, sp_w, False)).props('flat dense color=cyan size=xs').tooltip('Reverse')
-                        ui.button('■', on_click=mk_stp(m['name'])).props('flat dense color=red size=xs').tooltip('Stop')
-                        ui.button('✕', on_click=mk_rm(m['name'])).props('flat dense color=grey size=xs').tooltip('Remove')
-
-        with ui.row().classes('gap-2'):
-            ui.button('Refresh', on_click=refresh_motors).props('flat dense color=grey size=xs')
+        with ui.card().classes('panel w-full'):
+            ui.label('Firmware').classes('eyebrow red')
             if ser:
-                ui.button('Stop All', on_click=lambda: (stop_station(ser), refresh_motors())).props('flat dense color=red size=xs')
+                firmware_options = available_firmware_options(name)
+                with ui.row().classes('items-end gap-2 flex-wrap w-full'):
+                    fw_sel = ui.select(
+                        options=firmware_options,
+                        value=next(iter(firmware_options)),
+                    ).props('outlined').classes('w-40')
+                    fw_out = ui.label('—').classes('w-full readout mono')
+
+                    def do_flash():
+                        nonlocal ser
+
+                        current_ser = ser
+                        current_port = current_ser.port if current_ser else None
+                        if not current_port:
+                            ui.notify('No connected device for this station', type='warning')
+                            return
+
+                        try:
+                            current_ser.close()
+                        except Exception:
+                            pass
+
+                        ser = None
+                        serials[name] = None
+                        rebuild_coordinator()
+                        online_tag.content = '<span class="tag tag-off">offline</span>'
+                        fw_out.text = 'Compiling and uploading...'
+                        ui.notify(f'Flashing {fw_sel.value} to {name}', type='info')
+
+                        result = flash_firmware(current_port, fw_sel.value)
+                        fw_out.text = result['output'] or 'No output'
+
+                        try:
+                            reopened = connect_serial(
+                                current_port,
+                                station_configs.get(name, {}).get('baud', 9600),
+                            )
+                            ser = reopened
+                            serials[name] = reopened
+                            rebuild_coordinator()
+                            online_tag.content = '<span class="tag tag-on">online</span>'
+                        except Exception as exc:
+                            ser = None
+                            serials[name] = None
+                            rebuild_coordinator()
+                            online_tag.content = '<span class="tag tag-off">offline</span>'
+                            fw_out.text += f'\n\nReconnect failed: {exc}'
+
+                        if result['ok']:
+                            add_log(f'Flashed {fw_sel.value} to {name}')
+                            ui.notify('Flash complete', type='positive')
+                            refresh_identity()
+                            poll()
+                            refresh_motors()
+                        else:
+                            ui.notify('Flash failed', type='negative')
+
+                    action_button('Flash', on_click=do_flash, icon='memory')
+                    action_button('Read Version', on_click=refresh_identity, variant='neutral')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Motors').classes('eyebrow red')
+            motors_box = ui.column().classes('w-full gap-2')
+            tester_options = {}
+            tester_motor = None
+            tester_result = None
+
+            def refresh_motors():
+                motors_box.clear()
+                if not ser:
+                    if tester_motor is not None:
+                        tester_motor.options = {}
+                        tester_motor.value = None
+                        tester_motor.update()
+                    if tester_result is not None:
+                        tester_result.text = 'No connection'
+                    with motors_box:
+                        ui.label('Not connected.').classes('muted text-sm')
+                    return
+
+                r = list_motors(ser)
+                mlist = r.get('motors', []) if r and r.get('status') == 'ok' else []
+                current_motor_names = {m['name'] for m in mlist}
+                selected_motors.intersection_update(current_motor_names)
+                tester_options.clear()
+                tester_options.update({m['name']: m['name'] for m in mlist})
+                if tester_motor is not None:
+                    tester_motor.options = tester_options
+                    if tester_motor.value not in tester_options:
+                        tester_motor.value = next(iter(tester_options), None)
+                    tester_motor.update()
+
+                if not mlist:
+                    if tester_result is not None:
+                        tester_result.text = 'No motors configured'
+                    with motors_box:
+                        ui.label('No motors. Add one below.').classes('muted text-sm')
+                    return
+
+                if tester_result is not None:
+                    tester_result.text = f'{len(mlist)} motor(s) ready for test'
+                with motors_box:
+                    for m in mlist:
+                        with ui.row().classes('items-center gap-2 section-row w-full flex-wrap'):
+                            selected_box = ui.checkbox(value=m['name'] in selected_motors)
+
+                            def update_selected(event, motor_name=m['name']):
+                                if event.value:
+                                    selected_motors.add(motor_name)
+                                else:
+                                    selected_motors.discard(motor_name)
+                                if tester_result is not None:
+                                    tester_result.text = f'{len(selected_motors)} motor(s) checked'
+
+                            selected_box.on_value_change(update_selected)
+                            ui.label(m['name']).classes('text-sm font-medium w-24')
+                            tag('run' if m.get('running') else 'idle', 'run' if m.get('running') else 'idle')
+                            if m.get('reversed'):
+                                tag('rev', 'err')
+                            ui.label(f'{m["pul_pin"]}/{m["dir_pin"]}/{m["ena_pin"]}').classes('mono muted text-xs')
+                            ui.element('div').classes('flex-grow')
+
+                            s_w = ui.number(value=1000, min=1, max=50000, step=100).props('outlined').classes('w-24').tooltip('Steps')
+                            sp_w = ui.number(value=500, min=50, max=5000, step=50).props('outlined').classes('w-20').tooltip('μs/step')
+
+                            def mk_run(mn, sw, spw, fwd):
+                                def f():
+                                    r = run_motor(ser, mn, steps=int(sw.value), speed_us=int(spw.value), forward=fwd)
+                                    st = r.get('status', '?') if r else '?'
+                                    add_log(f'{name}/{mn} {"fwd" if fwd else "rev"} → {st}')
+                                    refresh_motors()
+                                return f
+
+                            def mk_stp(mn):
+                                def f():
+                                    stop_motor(ser, mn)
+                                    refresh_motors()
+                                return f
+
+                            def mk_rm(mn):
+                                def f():
+                                    remove_motor(ser, mn)
+                                    add_log(f'{name}: -{mn}')
+                                    refresh_motors()
+                                return f
+
+                            action_button('Forward', on_click=mk_run(m['name'], s_w, sp_w, True))
+                            action_button('Reverse', on_click=mk_run(m['name'], s_w, sp_w, False), variant='outline')
+                            action_button('Stop', on_click=mk_stp(m['name']), variant='danger')
+                            action_button('Remove', on_click=mk_rm(m['name']), variant='neutral')
+
+            with ui.row().classes('gap-2 flex-wrap'):
+                action_button('Refresh', on_click=refresh_motors, variant='neutral')
+                if ser:
+                    action_button('Stop All', on_click=lambda: (stop_station(ser), refresh_motors()), variant='danger')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Motor Tester').classes('eyebrow red')
+            if ser:
+                with ui.column().classes('w-full gap-3'):
+                    with ui.row().classes('items-end gap-2 flex-wrap'):
+                        tester_motor = ui.select(options={}).props('outlined').classes('w-36')
+                        tester_steps = ui.number('Steps', value=1000, min=1, max=50000, step=100).props('outlined').classes('w-28')
+                        tester_speed = ui.number('Speed μs', value=500, min=50, max=5000, step=50).props('outlined').classes('w-28')
+                        tester_direction = ui.toggle(['forward', 'reverse'], value='forward')
+
+                        def run_test():
+                            if not tester_motor.value:
+                                ui.notify('Choose a motor to test', type='warning')
+                                return
+                            resp = run_motor(
+                                ser,
+                                tester_motor.value,
+                                steps=int(tester_steps.value),
+                                speed_us=int(tester_speed.value),
+                                forward=tester_direction.value == 'forward',
+                            )
+                            status = resp.get('status', 'no response') if resp else 'no response'
+                            tester_result.text = json.dumps(resp) if resp else 'no response'
+                            add_log(f'{name}/{tester_motor.value} test → {status}')
+                            refresh_motors()
+
+                        action_button('Run Test', on_click=run_test, icon='play_arrow')
+                        action_button('Stop Test', on_click=lambda: (stop_motor(ser, tester_motor.value), refresh_motors()), variant='danger')
+
+                    with ui.row().classes('items-end gap-2 flex-wrap'):
+                        def run_checked(forward):
+                            names = sorted(selected_motors)
+                            if not names:
+                                ui.notify('Check at least one motor', type='warning')
+                                return
+                            resp = run_motor_group(
+                                ser,
+                                names=names,
+                                steps=int(tester_steps.value),
+                                speed_us=int(tester_speed.value),
+                                forward=forward,
+                            )
+                            status = resp.get('status', 'no response') if resp else 'no response'
+                            tester_result.text = json.dumps(resp) if resp else 'no response'
+                            add_log(f'{name}/group {",".join(names)} → {status}')
+                            refresh_motors()
+
+                        action_button('Run Checked', on_click=lambda: run_checked(True), icon='playlist_play')
+                        action_button('Run Checked Rev', on_click=lambda: run_checked(False), variant='outline')
+                        action_button('Clear Checks', on_click=lambda: (selected_motors.clear(), refresh_motors()), variant='neutral')
+
+                    tester_result = ui.label('Select a motor and run a test').classes('mono muted text-xs')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
 
         refresh_motors()
 
-        # ── Add motor ──
-        ui.html('<div class="sec">Add Motor</div>')
-        if ser:
-            with ui.row().classes('items-end gap-2 flex-wrap'):
-                nn = ui.input('Name').props('dense outlined dark').classes('w-24')
-                np = ui.number('PUL', value=9, min=0, max=19).props('dense outlined dark').classes('w-16')
-                nd = ui.number('DIR', value=8, min=0, max=19).props('dense outlined dark').classes('w-16')
-                ne = ui.number('ENA', value=7, min=0, max=19).props('dense outlined dark').classes('w-16')
-                nr = ui.checkbox('Rev').props('dense color=cyan')
+        with ui.card().classes('panel w-full'):
+            ui.label('Add Motor').classes('eyebrow red')
+            if ser:
+                with ui.row().classes('items-end gap-2 flex-wrap'):
+                    nn = ui.input('Name').props('outlined').classes('w-28')
+                    np = ui.number('PUL', value=9, min=0, max=19).props('outlined').classes('w-20 pin-pul')
+                    nd = ui.number('DIR', value=8, min=0, max=19).props('outlined').classes('w-20 pin-dir')
+                    ne = ui.number('ENA', value=7, min=0, max=19).props('outlined').classes('w-20 pin-ena')
+                    nr = ui.checkbox('Rev')
 
-                def do_add():
-                    if not nn.value:
-                        ui.notify('Name required', type='warning')
-                        return
-                    r = add_motor(ser, name=nn.value, pul_pin=int(np.value),
-                                  dir_pin=int(nd.value), ena_pin=int(ne.value), reversed=nr.value)
-                    if r and r.get('status') == 'motor_added':
-                        add_log(f'{name}: +{nn.value}')
-                        nn.value = ''
-                        refresh_motors()
-                    else:
-                        ui.notify(f'Failed: {r.get("error") if r else "no response"}', type='negative')
+                    def do_add():
+                        if not nn.value:
+                            ui.notify('Name required', type='warning')
+                            return
+                        r = add_motor(ser, name=nn.value, pul_pin=int(np.value),
+                                      dir_pin=int(nd.value), ena_pin=int(ne.value), reversed=nr.value)
+                        if r and r.get('status') == 'motor_added':
+                            add_log(f'{name}: +{nn.value}')
+                            nn.value = ''
+                            refresh_motors()
+                        else:
+                            ui.notify(f'Failed: {r.get("error") if r else "no response"}', type='negative')
 
-                ui.button('Add', on_click=do_add, icon='add').props('flat dense color=cyan size=xs')
-        else:
-            ui.label('Connect first.').classes('dim text-sm')
+                    action_button('Add', on_click=do_add, icon='add')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
 
-        # ── Pin test ──
-        ui.html('<div class="sec">Pin Test</div>')
-        if ser:
-            with ui.row().classes('items-end gap-2'):
-                tp = ui.number('Pin', value=9, min=0, max=19).props('dense outlined dark').classes('w-16')
-                tm = ui.toggle(['out', 'in'], value='out').props('dense color=cyan')
-                pin_out = ui.label('').classes('mono dim text-xs')
+        with ui.card().classes('panel w-full'):
+            ui.label('Pin Test').classes('eyebrow red')
+            if ser:
+                with ui.row().classes('items-end gap-2 flex-wrap'):
+                    tp = ui.number('Pin', value=9, min=0, max=19).props('outlined').classes('w-20')
+                    tm = ui.toggle(['out', 'in'], value='out')
+                    pin_out = ui.label('').classes('mono muted text-xs')
 
-                def test():
-                    mode = 'output' if tm.value == 'out' else 'input'
-                    r = verify_pin(ser, pin=int(tp.value), mode=mode)
-                    if r:
-                        pin_out.text = json.dumps(r)
-                    else:
-                        pin_out.text = 'no response'
+                    def test():
+                        mode = 'output' if tm.value == 'out' else 'input'
+                        r = verify_pin(ser, pin=int(tp.value), mode=mode)
+                        if r:
+                            pin_out.text = json.dumps(r)
+                        else:
+                            pin_out.text = 'no response'
 
-                ui.button('Test', on_click=test).props('flat dense color=grey size=xs')
-        else:
-            ui.label('Connect first.').classes('dim text-sm')
+                    action_button('Test', on_click=test, variant='neutral')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
 
-        # ── Raw ──
-        ui.html('<div class="sec">Raw Command</div>')
-        if ser:
-            with ui.row().classes('items-end gap-2 w-full'):
-                ci = ui.input('cmd').props('dense outlined dark').classes('flex-grow')
-                ro = ui.label('').classes('mono dim text-xs')
+        with ui.card().classes('panel w-full'):
+            ui.label('Raw Command').classes('eyebrow red')
+            if ser:
+                with ui.row().classes('items-end gap-2 w-full flex-wrap'):
+                    ci = ui.input('cmd').props('outlined').classes('flex-grow')
+                    ro = ui.label('').classes('mono muted text-xs')
 
-                def raw():
-                    r = send_command(ser, ci.value)
-                    ro.text = json.dumps(r) if r else 'no response'
+                    def raw():
+                        r = send_command(ser, ci.value)
+                        ro.text = json.dumps(r) if r else 'no response'
 
-                ui.button('Send', on_click=raw).props('flat dense color=grey size=xs')
-        else:
-            ui.label('Connect first.').classes('dim text-sm')
+                    action_button('Send', on_click=raw, variant='neutral')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
+
+        refresh_identity()
 
 
 # ── Entry ────────────────────────────────────

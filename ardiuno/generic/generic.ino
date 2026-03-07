@@ -3,6 +3,10 @@
 // ── Motor registry ──────────────────────────
 #define MAX_MOTORS 6
 
+const char* FIRMWARE_NAME = "generic";
+const char* FIRMWARE_VERSION = "2.2.0";
+const char* FIRMWARE_BUILD = __DATE__ " " __TIME__;
+
 struct Motor {
   char name[16];
   int pulPin;
@@ -43,13 +47,33 @@ void sendError(const char* msg) {
   Serial.println();
 }
 
-void runSingleMotor(Motor* m, int steps, int speed_us, bool forward) {
+void sendVersionInfo(const char* status = "ok") {
+  StaticJsonDocument<192> resp;
+  resp["status"] = status;
+  resp["id"] = stationId;
+  resp["firmware"] = FIRMWARE_NAME;
+  resp["version"] = FIRMWARE_VERSION;
+  resp["build"] = FIRMWARE_BUILD;
+  serializeJson(resp, Serial);
+  Serial.println();
+}
+
+void setMotorOutputState(Motor* m, bool forward) {
   bool dir = forward;
   if (m->reversed) dir = !dir;
 
   digitalWrite(m->dirPin, dir ? HIGH : LOW);
   digitalWrite(m->enaPin, LOW);
   m->running = true;
+}
+
+void stopMotorOutputState(Motor* m) {
+  digitalWrite(m->enaPin, HIGH);
+  m->running = false;
+}
+
+void runSingleMotor(Motor* m, int steps, int speed_us, bool forward) {
+  setMotorOutputState(m, forward);
 
   for (int i = 0; i < steps; i++) {
     if (globalStop) break;
@@ -59,8 +83,31 @@ void runSingleMotor(Motor* m, int steps, int speed_us, bool forward) {
     delayMicroseconds(speed_us);
   }
 
-  digitalWrite(m->enaPin, HIGH);
-  m->running = false;
+  stopMotorOutputState(m);
+}
+
+void runMotorGroup(Motor* selected[], int selectedCount, int steps, int speed_us, bool forward) {
+  for (int i = 0; i < selectedCount; i++) {
+    setMotorOutputState(selected[i], forward);
+  }
+
+  for (int step = 0; step < steps; step++) {
+    if (globalStop) break;
+
+    for (int i = 0; i < selectedCount; i++) {
+      digitalWrite(selected[i]->pulPin, HIGH);
+    }
+    delayMicroseconds(speed_us);
+
+    for (int i = 0; i < selectedCount; i++) {
+      digitalWrite(selected[i]->pulPin, LOW);
+    }
+    delayMicroseconds(speed_us);
+  }
+
+  for (int i = 0; i < selectedCount; i++) {
+    stopMotorOutputState(selected[i]);
+  }
 }
 
 // ── Main ────────────────────────────────────
@@ -71,6 +118,8 @@ void setup() {
   for (int i = 0; i < MAX_MOTORS; i++) {
     motors[i].configured = false;
   }
+
+  sendVersionInfo("boot");
 }
 
 void loop() {
@@ -87,10 +136,16 @@ void loop() {
   if (strcmp(cmd, "identify") == 0) {
     StaticJsonDocument<128> resp;
     resp["id"] = stationId;
-    resp["version"] = "2.0";
+    resp["firmware"] = FIRMWARE_NAME;
+    resp["version"] = FIRMWARE_VERSION;
+    resp["build"] = FIRMWARE_BUILD;
     resp["motors"] = motorCount;
     serializeJson(resp, Serial);
     Serial.println();
+
+  // ── version ──
+  } else if (strcmp(cmd, "version") == 0) {
+    sendVersionInfo();
 
   // ── set_id ──
   } else if (strcmp(cmd, "set_id") == 0) {
@@ -211,6 +266,50 @@ void loop() {
       sendOk("done");
     }
 
+  // ── run_group ──
+  } else if (strcmp(cmd, "run_group") == 0) {
+    JsonArray names = doc["names"].as<JsonArray>();
+    if (names.isNull() || names.size() == 0) {
+      sendError("need names");
+      return;
+    }
+
+    Motor* selected[MAX_MOTORS];
+    int selectedCount = 0;
+    for (JsonVariant value : names) {
+      const char* motorName = value.as<const char*>();
+      if (!motorName) {
+        sendError("invalid motor name");
+        return;
+      }
+
+      Motor* m = findMotor(motorName);
+      if (!m) {
+        sendError("motor not found");
+        return;
+      }
+      if (m->running) {
+        sendError("motor already running");
+        return;
+      }
+
+      selected[selectedCount++] = m;
+      if (selectedCount >= MAX_MOTORS) break;
+    }
+
+    int steps = doc["steps"] | 1000;
+    int speed_us = doc["speed_us"] | 500;
+    bool forward = doc["forward"] | true;
+
+    globalStop = false;
+    runMotorGroup(selected, selectedCount, steps, speed_us, forward);
+
+    if (globalStop) {
+      sendOk("stopped");
+    } else {
+      sendOk("done");
+    }
+
   // ── stop_motor ──
   } else if (strcmp(cmd, "stop_motor") == 0) {
     const char* name = doc["name"];
@@ -254,12 +353,15 @@ void loop() {
     int speed_us = doc["speed_us"] | 500;
     bool forward = doc["forward"] | true;
 
-    globalStop = false;
+    Motor* selected[MAX_MOTORS];
+    int selectedCount = 0;
     for (int i = 0; i < motorCount; i++) {
       if (!motors[i].configured) continue;
-      runSingleMotor(&motors[i], steps, speed_us, forward);
-      if (globalStop) break;
+      selected[selectedCount++] = &motors[i];
     }
+
+    globalStop = false;
+    runMotorGroup(selected, selectedCount, steps, speed_us, forward);
 
     if (globalStop) {
       sendOk("stopped");
@@ -272,6 +374,9 @@ void loop() {
     StaticJsonDocument<256> resp;
     resp["status"] = "ok";
     resp["id"] = stationId;
+    resp["firmware"] = FIRMWARE_NAME;
+    resp["version"] = FIRMWARE_VERSION;
+    resp["build"] = FIRMWARE_BUILD;
     resp["motors"] = motorCount;
 
     bool anyRunning = false;

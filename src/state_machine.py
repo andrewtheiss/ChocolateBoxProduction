@@ -125,3 +125,9 @@ class PipelineCoordinator:
         self.state = 'IDLE'
         logging.info("Coordinator and workers reset to IDLE")
         return "[green]All stations reset to IDLE.[/green]"
+
+    def shutdown(self):
+        """Stop all worker threads before rebuilding the coordinator."""
+        for worker in self.workers.values():
+            worker.shutdown()
+        self.state = 'IDLE'

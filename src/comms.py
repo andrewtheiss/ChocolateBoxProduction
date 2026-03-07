@@ -3,8 +3,21 @@ import serial.tools.list_ports
 from json import loads, dumps
 import logging
 import time
+import threading
 
 IGNORED_PORT_KEYWORDS = ['bluetooth', 'wlan', 'debug']
+_SERIAL_LOCKS = {}
+_SERIAL_LOCKS_GUARD = threading.Lock()
+
+
+def _get_serial_lock(ser):
+    key = getattr(ser, 'port', None) or id(ser)
+    with _SERIAL_LOCKS_GUARD:
+        lock = _SERIAL_LOCKS.get(key)
+        if lock is None:
+            lock = threading.Lock()
+            _SERIAL_LOCKS[key] = lock
+        return lock
 
 
 def scan_ports():
@@ -31,9 +44,10 @@ def send_json(ser, payload):
     if ser is None:
         return None
     try:
-        ser.reset_input_buffer()
-        ser.write(dumps(payload).encode() + b'\n')
-        line = ser.readline().decode().strip()
+        with _get_serial_lock(ser):
+            ser.write(dumps(payload).encode() + b'\n')
+            ser.flush()
+            line = ser.readline().decode().strip()
         if not line:
             return None
         return loads(line)
@@ -86,6 +100,11 @@ def list_motors(ser):
 
 def run_motor(ser, name, steps=1000, speed_us=500, forward=True):
     return send_command(ser, "run_motor", name=name, steps=steps,
+                        speed_us=speed_us, forward=forward)
+
+
+def run_motor_group(ser, names, steps=1000, speed_us=500, forward=True):
+    return send_command(ser, "run_group", names=names, steps=steps,
                         speed_us=speed_us, forward=forward)
 
 

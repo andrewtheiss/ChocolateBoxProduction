@@ -1,5 +1,9 @@
 #include <ArduinoJson.h>
 
+const char* FIRMWARE_NAME = "roller";
+const char* FIRMWARE_VERSION = "1.1.0";
+const char* FIRMWARE_BUILD = __DATE__ " " __TIME__;
+
 const int pulPin = 9;
 const int dirPin = 8;
 const int enaPin = 7;
@@ -11,6 +15,17 @@ volatile bool beamChanged = false;
 volatile bool stopRequested = false;
 
 String currentState = "IDLE";
+
+void sendVersionInfo(const char* status = "ok") {
+  StaticJsonDocument<192> resp;
+  resp["status"] = status;
+  resp["id"] = FIRMWARE_NAME;
+  resp["firmware"] = FIRMWARE_NAME;
+  resp["version"] = FIRMWARE_VERSION;
+  resp["build"] = FIRMWARE_BUILD;
+  serializeJson(resp, Serial);
+  Serial.println();
+}
 
 void setup() {
   pinMode(pulPin, OUTPUT);
@@ -24,6 +39,7 @@ void setup() {
 
   Serial.begin(9600);
   while (!Serial) {}
+  sendVersionInfo("boot");
 }
 
 void sendResponse(const char* status, JsonObject data = JsonObject()) {
@@ -47,14 +63,23 @@ void loop() {
 
     if (strcmp(cmd, "identify") == 0) {
       StaticJsonDocument<128> resp;
-      resp["id"] = "roller";
-      resp["version"] = "1.0";
+      resp["id"] = FIRMWARE_NAME;
+      resp["firmware"] = FIRMWARE_NAME;
+      resp["version"] = FIRMWARE_VERSION;
+      resp["build"] = FIRMWARE_BUILD;
       serializeJson(resp, Serial);
       Serial.println();
+
+    } else if (strcmp(cmd, "version") == 0) {
+      sendVersionInfo();
 
     } else if (strcmp(cmd, "get_status") == 0) {
       StaticJsonDocument<256> resp;
       resp["status"] = currentState;
+      resp["id"] = FIRMWARE_NAME;
+      resp["firmware"] = FIRMWARE_NAME;
+      resp["version"] = FIRMWARE_VERSION;
+      resp["build"] = FIRMWARE_BUILD;
       resp["beam_state"] = (beamState == LOW) ? "broken" : "clear";
       resp["beam_count"] = beamToggleCount;
       serializeJson(resp, Serial);
