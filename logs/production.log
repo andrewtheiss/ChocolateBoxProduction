@@ -600,3 +600,93 @@
 2026-03-06 13:46:49,379 - INFO - Starting with stations: roller
 2026-03-06 13:46:53,461 - INFO - roller: processing...
 2026-03-06 13:46:54,523 - INFO - roller: done (item #1)
+2026-03-06 15:02:48,208 - INFO - Starting NiceGUI web dashboard on http://localhost:8080
+2026-03-06 15:04:12,096 - INFO - Pipeline: roller
+2026-03-06 15:04:26,481 - INFO - roller: processing...
+2026-03-06 15:04:27,533 - INFO - roller: done (item #1)
+2026-03-06 15:04:28,181 - INFO - roller: processing...
+2026-03-06 15:04:29,233 - INFO - roller: done (item #2)
+2026-03-06 15:04:31,347 - INFO - roller: processing...
+2026-03-06 15:04:32,398 - INFO - roller: done (item #3)
+2026-03-06 15:04:32,744 - INFO - roller: processing...
+2026-03-06 15:04:33,778 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-03-06 15:04:33,778 - ERROR - roller: failed with 'no_response'
+2026-03-06 15:04:34,629 - INFO - roller: processing...
+2026-03-06 15:04:35,662 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-03-06 15:04:35,663 - ERROR - roller: failed with 'no_response'
+2026-03-06 15:04:41,414 - INFO - roller: processing...
+2026-03-06 15:04:42,466 - INFO - roller: done (item #4)
+2026-03-06 15:04:43,581 - INFO - roller: processing...
+2026-03-06 15:04:44,633 - INFO - roller: done (item #5)
+2026-03-06 18:40:50,254 - INFO - Starting web dashboard → http://localhost:8080
+2026-03-06 18:49:20,247 - INFO - Pipeline: (none)
+2026-03-06 18:53:01,698 - INFO - Starting web dashboard → http://localhost:8080
+2026-03-06 18:56:13,557 - INFO - Pipeline: roller
+2026-03-06 18:56:15,923 - INFO - roller: processing...
+2026-03-06 18:56:16,978 - INFO - roller: done (item #1)
+2026-03-06 18:56:18,860 - INFO - roller: processing...
+2026-03-06 18:56:19,914 - INFO - roller: done (item #2)
+2026-03-06 18:56:20,342 - INFO - roller: processing...
+2026-03-06 18:56:21,397 - INFO - roller: done (item #3)
+2026-03-06 18:56:21,677 - INFO - roller: processing...
+2026-03-06 18:56:22,732 - INFO - roller: done (item #4)
+2026-03-06 18:56:23,026 - INFO - roller: processing...
+2026-03-06 18:56:24,082 - INFO - roller: done (item #5)
+2026-03-06 18:56:24,327 - INFO - roller: processing...
+2026-03-06 18:56:25,382 - INFO - roller: done (item #6)
+2026-03-06 18:56:25,610 - INFO - roller: processing...
+2026-03-06 18:56:26,664 - INFO - roller: done (item #7)
+2026-03-06 18:56:53,505 - INFO - roller: processing...
+2026-03-06 18:56:54,561 - INFO - roller: done (item #8)
+2026-03-06 18:56:54,810 - INFO - roller: processing...
+2026-03-06 18:56:55,865 - INFO - roller: done (item #9)
+2026-03-06 18:58:31,772 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-03-06 18:58:41,771 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-03-06 21:13:18,725 - INFO - Web UI → http://localhost:8080
+2026-03-06 21:13:19,657 - INFO - Pipeline: (none)
+2026-03-06 21:15:09,270 - INFO - Coordinator and workers reset to IDLE
+2026-03-06 21:16:30,005 - INFO - Web UI → http://localhost:8080
+2026-03-06 21:16:30,293 - INFO - Pipeline: (none)
+2026-03-06 21:17:24,188 - INFO - Coordinator and workers reset to IDLE
+2026-03-06 21:18:03,130 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-03-06 21:20:46,602 - INFO - Web UI → http://localhost:8080
+2026-03-06 21:20:47,139 - INFO - Pipeline: (none)

@@ -67,3 +67,37 @@ def start_station(ser, **params):
 def stop_station(ser):
     """Send emergency stop."""
     return send_command(ser, "stop")
+
+
+# ── Motor management ────────────────────────
+
+def add_motor(ser, name, pul_pin, dir_pin, ena_pin, reversed=False):
+    return send_command(ser, "add_motor", name=name, pul_pin=pul_pin,
+                        dir_pin=dir_pin, ena_pin=ena_pin, reversed=reversed)
+
+
+def remove_motor(ser, name):
+    return send_command(ser, "remove_motor", name=name)
+
+
+def list_motors(ser):
+    return send_command(ser, "list_motors")
+
+
+def run_motor(ser, name, steps=1000, speed_us=500, forward=True):
+    return send_command(ser, "run_motor", name=name, steps=steps,
+                        speed_us=speed_us, forward=forward)
+
+
+def stop_motor(ser, name=None):
+    if name:
+        return send_command(ser, "stop_motor", name=name)
+    return send_command(ser, "stop_motor")
+
+
+def verify_pin(ser, pin, mode="output"):
+    return send_command(ser, "verify_pin", pin=pin, mode=mode)
+
+
+def set_station_id(ser, station_id):
+    return send_command(ser, "set_id", id=station_id)
