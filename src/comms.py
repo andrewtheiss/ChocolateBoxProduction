@@ -103,9 +103,17 @@ def run_motor(ser, name, steps=1000, speed_us=500, forward=True):
                         speed_us=speed_us, forward=forward)
 
 
-def run_motor_group(ser, names, steps=1000, speed_us=500, forward=True):
-    return send_command(ser, "run_group", names=names, steps=steps,
-                        speed_us=speed_us, forward=forward)
+def run_motor_group(ser, names=None, motors=None, steps=1000, speed_us=500, forward=True):
+    payload = {
+        "steps": steps,
+        "speed_us": speed_us,
+        "forward": forward,
+    }
+    if motors is not None:
+        payload["motors"] = motors
+    else:
+        payload["names"] = names or []
+    return send_command(ser, "run_group", **payload)
 
 
 def stop_motor(ser, name=None):

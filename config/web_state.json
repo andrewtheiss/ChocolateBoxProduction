@@ -1,0 +1,52 @@
+{
+  "last_active_routine": null,
+  "routines": [],
+  "stations": {
+    "dispenser": {
+      "firmware": "generic",
+      "limits": [],
+      "motors": [
+        {
+          "dir_pin": 8,
+          "ena_pin": 7,
+          "name": "Motor 1",
+          "pul_pin": 9,
+          "reversed": false
+        }
+      ],
+      "port_hint": "/dev/cu.usbmodem113401",
+      "triggers": []
+    },
+    "roller": {
+      "firmware": "generic",
+      "limits": [],
+      "motors": [
+        {
+          "dir_pin": 8,
+          "ena_pin": 7,
+          "name": "Motor 1",
+          "pul_pin": 9,
+          "reversed": false
+        }
+      ],
+      "port_hint": "/dev/cu.usbmodem113201",
+      "triggers": []
+    },
+    "taper": {
+      "firmware": "generic",
+      "limits": [],
+      "motors": [
+        {
+          "dir_pin": 8,
+          "ena_pin": 7,
+          "name": "Motor 1",
+          "pul_pin": 9,
+          "reversed": false
+        }
+      ],
+      "port_hint": "/dev/cu.usbmodem113201",
+      "triggers": []
+    }
+  },
+  "version": 1
+}

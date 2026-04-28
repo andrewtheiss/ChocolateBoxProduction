@@ -4,7 +4,7 @@
 #define MAX_MOTORS 6
 
 const char* FIRMWARE_NAME = "generic";
-const char* FIRMWARE_VERSION = "2.2.0";
+const char* FIRMWARE_VERSION = "2.4.0";
 const char* FIRMWARE_BUILD = __DATE__ " " __TIME__;
 
 struct Motor {
@@ -21,6 +21,14 @@ Motor motors[MAX_MOTORS];
 int motorCount = 0;
 volatile bool globalStop = false;
 String stationId = "generic";
+Motor* activeMotors[MAX_MOTORS];
+int activeMotorCount = 0;
+int activeStepTarget = 0;
+int activeStepCount = 0;
+int activeSpeedUs = 500;
+unsigned long lastPulseMicros = 0;
+bool pulseHigh = false;
+bool asyncRunActive = false;
 
 // ── Helpers ─────────────────────────────────
 Motor* findMotor(const char* name) {
@@ -58,6 +66,15 @@ void sendVersionInfo(const char* status = "ok") {
   Serial.println();
 }
 
+bool anyMotorRunning() {
+  for (int i = 0; i < motorCount; i++) {
+    if (motors[i].configured && motors[i].running) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void setMotorOutputState(Motor* m, bool forward) {
   bool dir = forward;
   if (m->reversed) dir = !dir;
@@ -68,8 +85,66 @@ void setMotorOutputState(Motor* m, bool forward) {
 }
 
 void stopMotorOutputState(Motor* m) {
+  digitalWrite(m->pulPin, LOW);
   digitalWrite(m->enaPin, HIGH);
   m->running = false;
+}
+
+void clearAsyncRun() {
+  for (int i = 0; i < activeMotorCount; i++) {
+    stopMotorOutputState(activeMotors[i]);
+    activeMotors[i] = nullptr;
+  }
+  activeMotorCount = 0;
+  activeStepTarget = 0;
+  activeStepCount = 0;
+  pulseHigh = false;
+  asyncRunActive = false;
+  globalStop = false;
+}
+
+void startAsyncRun(Motor* selected[], bool forwards[], int selectedCount, int steps, int speed_us) {
+  activeMotorCount = selectedCount;
+  activeStepTarget = steps;
+  activeStepCount = 0;
+  activeSpeedUs = speed_us;
+  pulseHigh = false;
+  globalStop = false;
+
+  for (int i = 0; i < selectedCount; i++) {
+    activeMotors[i] = selected[i];
+    setMotorOutputState(activeMotors[i], forwards[i]);
+  }
+
+  lastPulseMicros = micros();
+  asyncRunActive = true;
+}
+
+void serviceAsyncRun() {
+  if (!asyncRunActive) return;
+
+  if (globalStop) {
+    clearAsyncRun();
+    return;
+  }
+
+  unsigned long now = micros();
+  if ((unsigned long)(now - lastPulseMicros) < (unsigned long)activeSpeedUs) {
+    return;
+  }
+  lastPulseMicros = now;
+
+  pulseHigh = !pulseHigh;
+  for (int i = 0; i < activeMotorCount; i++) {
+    digitalWrite(activeMotors[i]->pulPin, pulseHigh ? HIGH : LOW);
+  }
+
+  if (!pulseHigh) {
+    activeStepCount++;
+    if (activeStepCount >= activeStepTarget) {
+      clearAsyncRun();
+    }
+  }
 }
 
 void runSingleMotor(Motor* m, int steps, int speed_us, bool forward) {
@@ -86,9 +161,9 @@ void runSingleMotor(Motor* m, int steps, int speed_us, bool forward) {
   stopMotorOutputState(m);
 }
 
-void runMotorGroup(Motor* selected[], int selectedCount, int steps, int speed_us, bool forward) {
+void runMotorGroup(Motor* selected[], bool forwards[], int selectedCount, int steps, int speed_us) {
   for (int i = 0; i < selectedCount; i++) {
-    setMotorOutputState(selected[i], forward);
+    setMotorOutputState(selected[i], forwards[i]);
   }
 
   for (int step = 0; step < steps; step++) {
@@ -123,6 +198,7 @@ void setup() {
 }
 
 void loop() {
+  serviceAsyncRun();
   if (!Serial.available()) return;
 
   StaticJsonDocument<384> doc;
@@ -251,64 +327,86 @@ void loop() {
 
     Motor* m = findMotor(name);
     if (!m) { sendError("motor not found"); return; }
-    if (m->running) { sendError("motor already running"); return; }
+    if (anyMotorRunning()) { sendError("motor already running"); return; }
 
     int steps = doc["steps"] | 1000;
     int speed_us = doc["speed_us"] | 500;
     bool forward = doc["forward"] | true;
 
-    globalStop = false;
-    runSingleMotor(m, steps, speed_us, forward);
-
-    if (globalStop) {
-      sendOk("stopped");
-    } else {
-      sendOk("done");
-    }
+    Motor* selected[1] = {m};
+    bool forwards[1] = {forward};
+    startAsyncRun(selected, forwards, 1, steps, speed_us);
+    sendOk("started");
 
   // ── run_group ──
   } else if (strcmp(cmd, "run_group") == 0) {
     JsonArray names = doc["names"].as<JsonArray>();
-    if (names.isNull() || names.size() == 0) {
-      sendError("need names");
+    JsonArray motorsSpec = doc["motors"].as<JsonArray>();
+    if ((names.isNull() || names.size() == 0) && (motorsSpec.isNull() || motorsSpec.size() == 0)) {
+      sendError("need names or motors");
       return;
     }
 
     Motor* selected[MAX_MOTORS];
+    bool forwards[MAX_MOTORS];
     int selectedCount = 0;
-    for (JsonVariant value : names) {
-      const char* motorName = value.as<const char*>();
-      if (!motorName) {
-        sendError("invalid motor name");
-        return;
-      }
+    bool forward = doc["forward"] | true;
 
-      Motor* m = findMotor(motorName);
-      if (!m) {
-        sendError("motor not found");
-        return;
-      }
-      if (m->running) {
-        sendError("motor already running");
-        return;
-      }
+    if (!motorsSpec.isNull() && motorsSpec.size() > 0) {
+      for (JsonVariant value : motorsSpec) {
+        JsonObject motorSpec = value.as<JsonObject>();
+        const char* motorName = motorSpec["name"];
+        bool motorForward = motorSpec["forward"] | true;
+        if (!motorName) {
+          sendError("invalid motor spec");
+          return;
+        }
 
-      selected[selectedCount++] = m;
-      if (selectedCount >= MAX_MOTORS) break;
+        Motor* m = findMotor(motorName);
+        if (!m) {
+          sendError("motor not found");
+          return;
+        }
+        if (anyMotorRunning()) {
+          sendError("motor already running");
+          return;
+        }
+
+        selected[selectedCount] = m;
+        forwards[selectedCount] = motorForward;
+        selectedCount++;
+        if (selectedCount >= MAX_MOTORS) break;
+      }
+    } else {
+      for (JsonVariant value : names) {
+        const char* motorName = value.as<const char*>();
+        if (!motorName) {
+          sendError("invalid motor name");
+          return;
+        }
+
+        Motor* m = findMotor(motorName);
+        if (!m) {
+          sendError("motor not found");
+          return;
+        }
+        if (anyMotorRunning()) {
+          sendError("motor already running");
+          return;
+        }
+
+        selected[selectedCount] = m;
+        forwards[selectedCount] = forward;
+        selectedCount++;
+        if (selectedCount >= MAX_MOTORS) break;
+      }
     }
 
     int steps = doc["steps"] | 1000;
     int speed_us = doc["speed_us"] | 500;
-    bool forward = doc["forward"] | true;
 
-    globalStop = false;
-    runMotorGroup(selected, selectedCount, steps, speed_us, forward);
-
-    if (globalStop) {
-      sendOk("stopped");
-    } else {
-      sendOk("done");
-    }
+    startAsyncRun(selected, forwards, selectedCount, steps, speed_us);
+    sendOk("started");
 
   // ── stop_motor ──
   } else if (strcmp(cmd, "stop_motor") == 0) {
@@ -316,29 +414,33 @@ void loop() {
     if (!name) {
       // Stop all
       globalStop = true;
+      if (asyncRunActive) {
+        clearAsyncRun();
+      }
       for (int i = 0; i < motorCount; i++) {
-        if (motors[i].configured) {
-          digitalWrite(motors[i].enaPin, HIGH);
-          motors[i].running = false;
-        }
+        if (motors[i].configured) stopMotorOutputState(&motors[i]);
       }
       sendOk("all_stopped");
     } else {
       Motor* m = findMotor(name);
       if (!m) { sendError("motor not found"); return; }
       globalStop = true;
-      digitalWrite(m->enaPin, HIGH);
-      m->running = false;
+      if (asyncRunActive) {
+        clearAsyncRun();
+      }
+      stopMotorOutputState(m);
       sendOk("stopped");
     }
 
   // ── stop (global emergency) ──
   } else if (strcmp(cmd, "stop") == 0) {
     globalStop = true;
+    if (asyncRunActive) {
+      clearAsyncRun();
+    }
     for (int i = 0; i < motorCount; i++) {
       if (motors[i].configured) {
-        digitalWrite(motors[i].enaPin, HIGH);
-        motors[i].running = false;
+        stopMotorOutputState(&motors[i]);
       }
     }
     sendOk("emergency_stop");
@@ -354,14 +456,16 @@ void loop() {
     bool forward = doc["forward"] | true;
 
     Motor* selected[MAX_MOTORS];
+    bool forwards[MAX_MOTORS];
     int selectedCount = 0;
     for (int i = 0; i < motorCount; i++) {
       if (!motors[i].configured) continue;
       selected[selectedCount++] = &motors[i];
+      forwards[selectedCount - 1] = forward;
     }
 
     globalStop = false;
-    runMotorGroup(selected, selectedCount, steps, speed_us, forward);
+    runMotorGroup(selected, forwards, selectedCount, steps, speed_us);
 
     if (globalStop) {
       sendOk("stopped");
