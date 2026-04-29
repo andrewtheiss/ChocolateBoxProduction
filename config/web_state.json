@@ -29,7 +29,7 @@
           "reversed": false
         }
       ],
-      "port_hint": "/dev/cu.usbmodem113201",
+      "port_hint": "/dev/cu.usbmodem1113401",
       "triggers": []
     },
     "taper": {
@@ -44,7 +44,7 @@
           "reversed": false
         }
       ],
-      "port_hint": "/dev/cu.usbmodem113201",
+      "port_hint": "/dev/cu.usbmodem1113401",
       "triggers": []
     }
   },

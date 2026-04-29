@@ -87,7 +87,7 @@ void loop() {
 
     } else if (strcmp(cmd, "start") == 0) {
       int steps = doc["steps"] | 1000;  // Default 1000 steps (~1 second)
-      int speed_us = doc["speed_us"] | 500;
+      int speed_us = doc["speed_us"] | 62;
 
       currentState = "PROCESSING";
       stopRequested = false;

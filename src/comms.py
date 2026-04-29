@@ -98,12 +98,12 @@ def list_motors(ser):
     return send_command(ser, "list_motors")
 
 
-def run_motor(ser, name, steps=1000, speed_us=500, forward=True):
+def run_motor(ser, name, steps=1000, speed_us=62, forward=True):
     return send_command(ser, "run_motor", name=name, steps=steps,
                         speed_us=speed_us, forward=forward)
 
 
-def run_motor_group(ser, names=None, motors=None, steps=1000, speed_us=500, forward=True):
+def run_motor_group(ser, names=None, motors=None, steps=1000, speed_us=62, forward=True):
     payload = {
         "steps": steps,
         "speed_us": speed_us,

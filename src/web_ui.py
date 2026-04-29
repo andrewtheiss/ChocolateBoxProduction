@@ -29,467 +29,703 @@ MOTOR_PIN_PRESETS = [
 station_motor_cache: dict = {}
 
 CSS = '''
+:root {
+    color-scheme: dark;
+    --cb-bg: #080909;
+    --cb-bg-soft: #0d0f0f;
+    --cb-surface: #111414;
+    --cb-surface-2: #171b1b;
+    --cb-surface-3: #202626;
+    --cb-elevated: #151919;
+    --cb-border: #303737;
+    --cb-border-strong: #465050;
+    --cb-text: #f2efe8;
+    --cb-text-soft: #c9c5bc;
+    --cb-muted: #8f958f;
+    --cb-red: #c86f4a;
+    --cb-red-dark: #9f5134;
+    --cb-blue: #8aa4a8;
+    --cb-green: #86a17c;
+    --cb-gold: #c5a15a;
+    --cb-danger: #b85c52;
+    --cb-radius: 0;
+    --cb-radius-sm: 0;
+    --cb-shadow: 0 18px 48px rgba(0,0,0,.38);
+    --cb-shadow-sm: 0 10px 24px rgba(0,0,0,.24);
+    --cb-focus: 0 0 0 2px rgba(200,111,74,.34);
+    --cb-font-sans: Inter, "Source Sans 3", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    --cb-font-mono: "SF Mono", "Fira Code", Consolas, monospace;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    border-radius: 0 !important;
+}
+
+html,
+body,
+#app,
+.nicegui-content,
+.q-layout,
+.q-page-container,
+.q-page {
+    min-height: 100%;
+    background: linear-gradient(180deg, #0d0f0f 0%, var(--cb-bg) 42%, #060707 100%) !important;
+    color: var(--cb-text) !important;
+    font-family: var(--cb-font-sans);
+}
+
 body {
-    font-family: Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
-    line-height: 1.6;
     margin: 0;
-    padding: .5rem;
-    background-color: #f8f9fa;
-    color: #000
+    padding: 0;
+    line-height: 1.5;
+}
+
+a {
+    color: var(--cb-blue);
 }
 
 .container {
-    max-width: 1200px;
+    width: min(100%, 1220px);
     margin: 0 auto;
-    background: #fff;
-    border-radius: 8px;
-    padding: .75rem;
-    box-shadow: 0 2px 4px #0000001a
-}
-
-h1 {
-    color: #000;
-    font-size: 1.25rem;
-    margin-bottom: .75rem;
-    text-align: center
-}
-
-.h5 {
-    font-size: 1.25rem;
-    line-height: 1.35;
-    font-weight: 600;
-    margin: 0 0 .3rem
-}
-
-.widget-action-button {
-    display: inline-block;
-    padding: .65rem 1rem;
-    background: #e60000;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    text-align: center;
-    text-decoration: none;
-    transition: all .2s ease;
-    font-size: .9rem;
-    min-width: 120px;
-    line-height: 1.2
-}
-
-.widget-action-button:hover {
-    background: #c00;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px #0000001a
-}
-
-.widget-action-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: .55rem 1rem;
-    background: #e60000;
-    color: #fff;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all .2s ease
-}
-
-.btn:hover {
-    background: #c00;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px #e6000033
-}
-
-.btn:disabled {
-    background: #ccc;
-    border-color: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none
-}
-
-.btn-outline {
+    padding: 24px 28px;
     background: transparent;
-    color: #e60000;
-    border-color: #e60000
-}
-
-.btn-outline:hover {
-    background: #e60000;
-    color: #fff
-}
-
-.btn-sm {
-    padding: .35rem .7rem;
-    font-size: .9rem
-}
-
-.btn-block {
-    width: 100%
-}
-
-.panel {
-    background: #fff;
-    border-radius: 8px;
-    padding: .75rem;
-    box-shadow: 0 1px 3px #00000014;
-    border: 1px solid rgba(0,0,0,.06)
-}
-
-.badge {
-    display: inline-block;
-    padding: .2rem .5rem;
-    border-radius: 999px;
-    font-size: .8rem;
-    font-weight: 600
-}
-
-.badge-primary {
-    background: #e60000;
-    color: #fff
-}
-
-.badge-neutral {
-    background: #e9ecef;
-    color: #000
-}
-
-.badge-accent {
-    background: #f0b800;
-    color: #000
-}
-
-.alert {
-    padding: .75rem 1rem;
-    border-radius: 6px;
-    margin: .5rem 0;
-    border-left: 4px solid transparent
-}
-
-.alert-info {
-    background: #e7f3ff;
-    color: #084298;
-    border-left-color: #0d6efd
-}
-
-.alert-success {
-    background: #e6f4ea;
-    color: #0f5132;
-    border-left-color: #198754
-}
-
-.alert-warning {
-    background: #fff4e5;
-    color: #664d03;
-    border-left-color: #f6c343
-}
-
-.alert-danger {
-    background: #fdecea;
-    color: #842029;
-    border-left-color: #dc3545
-}
-
-.input,.select,.textarea,input[type=text],input[type=number],input[type=email],input[type=password],select,textarea {
-    width: 100%;
-    padding: .5rem .6rem;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
-    background: #fff;
-    color: #000;
-    box-shadow: inset 0 1px 2px #00000005
-}
-
-.input:focus,.select:focus,.textarea:focus,input[type=text]:focus,input[type=number]:focus,input[type=email]:focus,input[type=password]:focus,select:focus,textarea:focus {
-    outline: none;
-    border-color: #e60000;
-    box-shadow: 0 0 0 3px #e600001f
-}
-
-.helper-text {
-    color: #6c757d;
-    font-size: .85rem
-}
-
-.error-text {
-    color: #dc3545;
-    font-size: .85rem
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 6px;
-    overflow: hidden
-}
-
-.table thead th {
-    background: #f8f9fa;
-    font-weight: 600
-}
-
-.center {
-    display: grid;
-    place-items: center
-}
-
-.spacer {
-    height: 1rem
-}
-
-.divider {
-    border-top: 1px solid #e9ecef;
-    margin: .75rem 0
-}
-
-.muted {
-    color: #6c757d
-}
-
-*,*:before,*:after {
-    box-sizing: border-box
-}
-
-:root {
-    --hw-black: #231f20;
-    --hw-red: #c8102e;
-    --hw-gold: #f0b323;
-    --hw-gray-900: #1f2937;
-    --hw-gray-800: #374151;
-    --hw-gray-700: #4b5563;
-    --hw-gray-600: #6b7280;
-    --hw-gray-500: #9ca3af;
-    --hw-gray-400: #cbd5e1;
-    --hw-gray-300: #e5e7eb;
-    --hw-gray-200: #edf0f3;
-    --hw-gray-100: #f4f6f8;
-    --hw-surface: #ffffff;
-    --hw-font-sans: "Source Sans 3","Source Sans Pro","Source Sans", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;
-    --hw-font-weight-black: 900;
-    --hw-font-weight-bold: 700;
-    --hw-font-weight-semib: 600;
-    --hw-font-weight-reg: 400;
-    --hw-font-weight-light: 300;
-    --hw-radius: 8px;
-    --hw-radius-sm: 6px;
-    --hw-radius-xs: 4px;
-    --hw-border: #e5e7eb;
-    --hw-shadow: 0 1px 3px rgba(0,0,0,.08);
-    --hw-focus-ring: 0 0 0 3px rgba(200,16,46,.18)
-}
-
-.eyebrow {
-    font-size: .85rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    font-weight: var(--hw-font-weight-bold);
-    color: var(--hw-gray-700)
-}
-
-.red {
-    color: #bf2b34 !important;
-    text-transform: uppercase
-}
-
-.mono {
-    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
-    font-size: 12px
-}
-
-.tag {
-    display: inline-block;
-    padding: .2rem .55rem;
-    border-radius: 999px;
-    font-size: .8rem;
-    font-weight: 700
-}
-
-.tag-on {
-    background: #e6f4ea;
-    color: #0f5132
-}
-
-.tag-off {
-    background: #e9ecef;
-    color: #495057
-}
-
-.tag-run {
-    background: #e7f3ff;
-    color: #084298
-}
-
-.tag-err {
-    background: #fdecea;
-    color: #842029
-}
-
-.tag-idle {
-    background: #fff4e5;
-    color: #664d03
-}
-
-.app-shell {
-    min-height: calc(100vh - 1rem);
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: .75rem
 }
 
 .page {
-    padding-block: 1.25rem
-}
-
-.app-shell__title {
-    font-weight: 800;
-    font-size: 1rem
-}
-
-.page-title {
-    margin: 0;
-    text-align: left
+    padding-block: 26px 48px;
 }
 
 .content-grid {
     display: grid;
-    gap: .75rem
+    gap: 16px;
+}
+
+.h5,
+.page-title {
+    margin: 0;
+    color: var(--cb-text) !important;
+    font-size: clamp(1.45rem, 2vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -.04em;
+    line-height: 1.08;
+    text-transform: none !important;
+}
+
+.eyebrow {
+    color: var(--cb-muted) !important;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.red {
+    color: var(--cb-red) !important;
+}
+
+.muted {
+    color: var(--cb-muted) !important;
+}
+
+.mono {
+    color: var(--cb-text-soft);
+    font-family: var(--cb-font-mono);
+    font-size: 12px;
+    letter-spacing: -.01em;
+}
+
+.flex-grow {
+    min-width: 12px;
+}
+
+.divider,
+.q-separator {
+    background: var(--cb-border) !important;
+    border: 0 !important;
+    height: 1px !important;
+    margin: 14px 0 !important;
+}
+
+.q-drawer {
+    background: #0d0f0f !important;
+    border-right: 1px solid var(--cb-border) !important;
+    color: var(--cb-text) !important;
+}
+
+.q-header {
+    min-height: 56px;
+    background: rgba(13,15,15,.94) !important;
+    color: var(--cb-text) !important;
+    border-bottom: 1px solid var(--cb-border) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(10px);
+}
+
+.app-shell__title {
+    color: var(--cb-text);
+    font-size: .98rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
 }
 
 .nav-item {
+    display: flex !important;
+    align-items: center !important;
     min-height: 40px !important;
-    padding: 6px 10px !important;
-    border-radius: 6px;
-    color: #000
+    height: 40px !important;
+    margin: 0;
+    padding: 0 10px !important;
+    color: var(--cb-text-soft) !important;
+    border: 1px solid transparent;
+    border-radius: var(--cb-radius-sm);
+    transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+
+.nav-item .q-focus-helper {
+    display: none !important;
+}
+
+.nav-item .q-item__section {
+    min-height: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+.nav-item .q-item__section--avatar {
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 24px !important;
+    width: 24px !important;
+    margin-right: 8px !important;
+}
+
+.nav-item .q-item__section--main {
+    justify-content: center !important;
+}
+
+.nav-item .q-item__label,
+.nav-item .q-icon {
+    color: inherit !important;
+    line-height: 1 !important;
+}
+
+.nav-item .q-item__label {
+    display: flex !important;
+    align-items: center !important;
+    height: 16px !important;
+    font-size: .88rem !important;
+    transform: translateY(0) !important;
+}
+
+.nav-item .q-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-height: 18px !important;
+    font-size: 18px !important;
 }
 
 .nav-item.active,
 .nav-item:hover {
-    background: #f8f9fa
+    color: var(--cb-text) !important;
+    background: #171b1b !important;
+    border-color: var(--cb-border);
+}
+
+.nav-item.active {
+    box-shadow: inset 3px 0 0 var(--cb-red);
+}
+
+.panel,
+.q-card.panel {
+    width: 100%;
+    padding: 20px !important;
+    color: var(--cb-text) !important;
+    background: var(--cb-surface) !important;
+    border: 1px solid var(--cb-border) !important;
+    border-radius: var(--cb-radius) !important;
+    box-shadow: var(--cb-shadow-sm) !important;
+}
+
+.panel > .q-card__section {
+    padding: 0 !important;
 }
 
 .section-row {
-    padding: .35rem 0
+    min-height: 48px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(242,239,232,.08);
+}
+
+.section-row:last-child {
+    border-bottom: 0;
 }
 
 .readout,
 .nicegui-log {
-    background: #fafafa !important;
-    border: 1px solid #eceff1 !important;
-    border-radius: 4px !important;
-    color: #000 !important;
-    box-shadow: none !important
+    width: 100%;
+    color: var(--cb-text-soft) !important;
+    background: #0a0c0c !important;
+    border: 1px solid var(--cb-border) !important;
+    border-radius: var(--cb-radius-sm) !important;
+    box-shadow: inset 0 1px 0 rgba(242,239,232,.03) !important;
 }
 
 .readout {
     display: block;
-    min-height: 2.5rem;
-    padding: .45rem .55rem;
-    line-height: 1.45;
-    font-size: .9rem;
+    min-height: 58px;
+    max-height: 320px;
+    padding: 12px 13px;
+    overflow: auto;
     white-space: pre-wrap;
     word-break: break-word;
-    overflow: auto
 }
 
-.q-layout,
-.q-page-container,
-.q-page {
-    background: transparent !important
+.nicegui-log {
+    padding: 10px !important;
 }
 
-.q-drawer {
-    background: #fff !important;
-    border-right: 1px solid #e9ecef !important
+.btn,
+.widget-action-button,
+.q-btn.btn {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    padding: 0 14px !important;
+    color: white !important;
+    background: var(--cb-red-dark) !important;
+    border: 1px solid #c86f4a !important;
+    border-radius: var(--cb-radius-sm) !important;
+    box-shadow: none !important;
+    font-size: .82rem !important;
+    font-weight: 800 !important;
+    letter-spacing: .01em;
+    line-height: 1 !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color .12s ease, background .12s ease, color .12s ease;
 }
 
-.q-header {
-    background: #fff !important;
-    color: #000 !important;
-    border-bottom: 1px solid #e9ecef !important;
-    box-shadow: none !important
+.q-btn.btn .q-btn__content {
+    min-height: 0 !important;
+    line-height: 1 !important;
 }
 
-.q-card.panel {
-    box-shadow: 0 1px 3px #00000014 !important;
-    border-radius: 8px !important;
-    border: 1px solid rgba(0,0,0,.06) !important
+.q-btn.btn .q-icon {
+    font-size: 18px !important;
+    line-height: 1 !important;
+    margin-top: 0 !important;
+}
+
+.q-btn,
+.q-btn:before,
+.q-btn:after,
+.q-focus-helper,
+.q-ripple,
+.q-ripple__inner {
+    border-radius: 0 !important;
+}
+
+.btn:hover,
+.widget-action-button:hover,
+.q-btn.btn:hover {
+    background: var(--cb-red) !important;
+    filter: none;
+    transform: none;
+}
+
+.btn:disabled,
+.q-btn.disabled,
+.q-btn[disabled] {
+    opacity: .48 !important;
+    transform: none !important;
+    filter: none !important;
+    cursor: not-allowed !important;
+}
+
+.btn-sm {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+}
+
+.btn-neutral {
+    color: var(--cb-text) !important;
+    background: var(--cb-surface-3) !important;
+    border-color: var(--cb-border-strong) !important;
+    box-shadow: none !important;
+}
+
+.btn-outline {
+    color: var(--cb-red) !important;
+    background: transparent !important;
+    border-color: var(--cb-red) !important;
+    box-shadow: none !important;
+}
+
+.btn-danger {
+    color: #fff !important;
+    background: #7f2f2b !important;
+    border-color: var(--cb-danger) !important;
+    box-shadow: none !important;
+}
+
+.tag,
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .04em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.tag-on,
+.badge-success {
+    color: #d9ead4;
+    background: rgba(134,161,124,.13);
+    border-color: rgba(134,161,124,.42);
+}
+
+.tag-off,
+.badge-neutral {
+    color: var(--cb-muted);
+    background: rgba(129,144,167,.12);
+    border-color: rgba(129,144,167,.22);
+}
+
+.tag-run,
+.badge-primary {
+    color: #dbe6e8;
+    background: rgba(138,164,168,.14);
+    border-color: rgba(138,164,168,.42);
+}
+
+.tag-err,
+.badge-danger {
+    color: #f2d5d2;
+    background: rgba(184,92,82,.14);
+    border-color: rgba(184,92,82,.42);
+}
+
+.tag-idle,
+.badge-accent {
+    color: #eadcbf;
+    background: rgba(197,161,90,.13);
+    border-color: rgba(197,161,90,.4);
+}
+
+.q-field {
+    --field-radius: var(--cb-radius-sm);
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+.q-field--labeled {
+    padding-top: 16px !important;
+}
+
+.q-field,
+.q-select,
+.q-input {
+    color: var(--cb-text) !important;
+}
+
+.q-field__inner {
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+.q-field__bottom {
+    display: none !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+.q-field__control {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    color: var(--cb-text) !important;
+    background: #0a0c0c !important;
+    border-radius: var(--field-radius) !important;
+    padding: 0 10px !important;
+}
+
+.q-field--dense .q-field__control {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+}
+
+.q-field__control-container,
+.q-field__native,
+.q-field__input {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 !important;
+    line-height: 38px !important;
+}
+
+.q-field__append,
+.q-field__prepend,
+.q-field__marginal {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 !important;
+    line-height: 38px !important;
+}
+
+.q-field__append .q-icon,
+.q-field__prepend .q-icon,
+.q-field__marginal .q-icon {
+    font-size: 18px !important;
+    line-height: 1 !important;
+}
+
+.q-field--outlined .q-field__control:before {
+    border: 1px solid var(--cb-border-strong) !important;
+    border-radius: var(--field-radius) !important;
+}
+
+.q-field--outlined .q-field__control:after,
+.q-field--focused .q-field__control:before,
+.q-field--focused .q-field__control:after {
+    border: 1px solid var(--cb-red) !important;
+    border-radius: var(--field-radius) !important;
+    box-shadow: var(--cb-focus);
 }
 
 .q-field__native,
 .q-field__input,
+.q-field__prefix,
+.q-field__suffix,
 .q-field__marginal,
 .q-field__label {
-    color: #000 !important
+    color: var(--cb-text-soft) !important;
 }
 
-.pin-pul .q-field__label {
-    color: #2563eb !important;
-    font-weight: 700 !important
+.q-field__label {
+    top: -16px !important;
+    left: 0 !important;
+    height: 12px !important;
+    max-width: 100% !important;
+    overflow: hidden;
+    color: var(--cb-muted) !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: .08em !important;
+    line-height: 12px !important;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    transform: none !important;
+    transform-origin: left center !important;
 }
 
-.pin-dir .q-field__label {
-    color: #dc2626 !important;
-    font-weight: 700 !important
+.q-field--focused .q-field__label,
+.q-field--float .q-field__label {
+    color: var(--cb-red) !important;
+    font-weight: 800;
 }
 
-.pin-ena .q-field__label {
-    color: #16a34a !important;
-    font-weight: 700 !important
+.q-field--labeled .q-field__native,
+.q-field--labeled .q-field__input {
+    padding-top: 0 !important;
 }
 
-.q-field--outlined .q-field__control:before {
-    border: 1px solid #dee2e6 !important
+.q-field__native::placeholder,
+.q-field__input::placeholder {
+    color: rgba(184,196,216,.5) !important;
 }
 
-.q-field--focused .q-field__control:before,
-.q-field--focused .q-field__control:after {
-    border-color: #e60000 !important
+.q-menu,
+.q-dialog__inner > div,
+.q-card {
+    color: var(--cb-text) !important;
+    background: var(--cb-surface-2) !important;
+    border: 1px solid var(--cb-border) !important;
+    border-radius: var(--cb-radius) !important;
+    box-shadow: var(--cb-shadow) !important;
+}
+
+.q-list,
+.q-item {
+    color: var(--cb-text) !important;
+    background: transparent !important;
+}
+
+.q-item:hover {
+    background: rgba(242,239,232,.055) !important;
 }
 
 .q-toggle__inner,
-.q-checkbox__inner {
-    color: #e60000 !important
+.q-checkbox__inner,
+.q-radio__inner {
+    color: var(--cb-red) !important;
 }
 
-.btn-neutral {
-    background: #e9ecef !important;
-    color: #000 !important;
-    border-color: #dee2e6 !important
+.q-toggle__track {
+    opacity: 1 !important;
+    background: var(--cb-border-strong) !important;
 }
 
-.btn-neutral:hover {
-    background: #dde2e6 !important
+.q-toggle__inner--truthy .q-toggle__track {
+    background: rgba(200,111,74,.48) !important;
 }
 
-.btn-danger {
-    background: #842029 !important;
-    color: #fff !important
+.q-toggle__thumb,
+.q-toggle__track,
+.q-checkbox__bg,
+.q-radio__bg {
+    border-radius: 0 !important;
 }
 
-.btn-danger:hover {
-    background: #6d1b25 !important
+.q-btn-toggle,
+.q-btn-group {
+    background: #0a0c0c !important;
+    border: 1px solid var(--cb-border-strong) !important;
+    border-radius: var(--cb-radius-sm) !important;
+    overflow: hidden;
 }
 
-@media(max-width: 768px) {
-    body {
-        padding: .25rem
+.q-btn-toggle .q-btn {
+    color: var(--cb-text-soft) !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.q-btn-toggle .q-btn.bg-primary,
+.q-btn-toggle .q-btn[aria-pressed="true"] {
+    color: #fff !important;
+    background: var(--cb-red-dark) !important;
+}
+
+.q-notification {
+    color: var(--cb-text) !important;
+    background: var(--cb-surface-2) !important;
+    border: 1px solid var(--cb-border) !important;
+    border-radius: var(--cb-radius) !important;
+    box-shadow: var(--cb-shadow-sm) !important;
+}
+
+.pin-pul .q-field__label {
+    color: var(--cb-blue) !important;
+}
+
+.pin-dir .q-field__label {
+    color: var(--cb-danger) !important;
+}
+
+.pin-ena .q-field__label {
+    color: var(--cb-green) !important;
+}
+
+.style-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+
+.style-swatch {
+    min-height: 88px;
+    padding: 14px;
+    border: 1px solid var(--cb-border);
+    border-radius: var(--cb-radius-sm);
+    background: var(--cb-surface-2);
+}
+
+.style-token {
+    width: 100%;
+    height: 42px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--cb-radius-sm);
+}
+
+.alert {
+    padding: 12px 13px;
+    color: var(--cb-text-soft);
+    background: #0a0c0c;
+    border: 1px solid var(--cb-border);
+    border-left-width: 4px;
+    border-radius: var(--cb-radius-sm);
+}
+
+.alert-info {
+    border-left-color: var(--cb-blue);
+}
+
+.alert-success {
+    border-left-color: var(--cb-green);
+}
+
+.alert-warning {
+    border-left-color: var(--cb-gold);
+}
+
+.alert-danger {
+    border-left-color: var(--cb-danger);
+}
+
+.table {
+    width: 100%;
+    overflow: hidden;
+    color: var(--cb-text);
+    background: var(--cb-surface-2);
+    border: 1px solid var(--cb-border);
+    border-collapse: collapse;
+    border-radius: var(--cb-radius-sm);
+}
+
+.table th,
+.table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--cb-border);
+}
+
+.table th {
+    color: var(--cb-muted);
+    font-size: .75rem;
+    letter-spacing: .08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 18px;
     }
 
+    .q-drawer {
+        width: 230px !important;
+    }
+}
+
+@media (max-width: 640px) {
     .container {
-        padding: .5rem
+        padding: 14px;
+    }
+
+    .panel,
+    .q-card.panel {
+        padding: 16px !important;
+    }
+
+    .section-row {
+        align-items: flex-start !important;
     }
 }
 '''
@@ -518,7 +754,7 @@ def action_button(label, on_click=None, icon=None, variant='primary'):
     elif variant == 'danger':
         classes.append('btn-danger')
     classes.append('btn-sm')
-    return ui.button(label, on_click=on_click, icon=icon).props('unelevated no-caps').classes(' '.join(classes))
+    return ui.button(label, on_click=on_click, icon=icon).props('unelevated no-caps dense').classes(' '.join(classes))
 
 
 def ensure_coordinator():
@@ -718,13 +954,14 @@ def page_layout(active='dashboard'):
             ui.label('Navigation').classes('eyebrow red')
 
             items = [
-                ('Dashboard', 'grid_view', '/dashboard'),
-                ('Devices', 'usb', '/devices'),
-                ('Routines', 'playlist_play', '/routines'),
+                ('Dashboard', 'grid_view', '/dashboard', 'dashboard'),
+                ('Devices', 'usb', '/devices', 'devices'),
+                ('Routines', 'playlist_play', '/routines', 'routines'),
+                ('Style Guide', 'palette', '/styleguide', 'styleguide'),
             ]
-            for label, icon, url in items:
+            for label, icon, url, key in items:
                 with ui.item(on_click=lambda u=url: ui.navigate.to(u)).classes(
-                    'nav-item' + (' active' if active == label.lower() else '')
+                    'nav-item' + (' active' if active == key else '')
                 ):
                     with ui.item_section().props('avatar'):
                         ui.icon(icon, size='18px').classes('muted')
@@ -742,10 +979,189 @@ def page_layout(active='dashboard'):
                     ui.item_label(name.capitalize()).classes('text-sm')
 
     with ui.header().classes('items-center px-4 py-2'):
-        action_button('', on_click=drawer.toggle, icon='menu', variant='neutral').props('round')
+        action_button('', on_click=drawer.toggle, icon='menu', variant='neutral')
         ui.label('ChocolateBox Production').classes('app-shell__title ml-2')
 
     return ui.column().classes('container page content-grid')
+
+
+# ── Routines page ─────────────────────────────
+@ui.page('/routines')
+def routines_page():
+    ensure_routine_runner()
+    content = page_layout('routines')
+
+    with content:
+        with ui.column().classes('w-full gap-2'):
+            ui.label('Routines').classes('h5 page-title')
+            ui.label('Create, review, and run saved station routines.').classes('muted text-sm')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Runner').classes('eyebrow red')
+            runner_state = ui.label('').classes('readout mono')
+
+            def refresh_runner_state():
+                state = {
+                    'state': routine_runner.state if routine_runner else 'IDLE',
+                    'current_routine': routine_runner.current_routine if routine_runner else None,
+                    'current_step': routine_runner.current_step if routine_runner else None,
+                    'last_result': routine_runner.last_result if routine_runner else None,
+                }
+                runner_state.text = json.dumps(state, indent=2)
+
+            with ui.row().classes('items-center gap-2 flex-wrap'):
+                action_button('Refresh', on_click=refresh_runner_state, variant='neutral')
+                action_button('Stop Runner', on_click=lambda: (routine_runner.stop(), refresh_runner_state()), variant='danger')
+
+            ui.timer(1.0, refresh_runner_state)
+            refresh_runner_state()
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Saved Routines').classes('eyebrow red')
+            routines_box = ui.column().classes('w-full gap-2')
+
+            def render_routines():
+                routines_box.clear()
+                routines = get_routines()
+                with routines_box:
+                    if not routines:
+                        ui.label('No routines saved yet. Add one below.').classes('muted text-sm')
+                        return
+
+                    for routine in routines:
+                        ensure_routine_defaults(routine)
+                        steps = routine.get('steps', [])
+
+                        def mk_run(selected_routine):
+                            def run_selected():
+                                ok, message = routine_runner.run(selected_routine)
+                                ui.notify(message, type='positive' if ok else 'warning')
+                                refresh_runner_state()
+                            return run_selected
+
+                        def mk_delete(selected_routine):
+                            def delete_selected():
+                                get_routines().remove(selected_routine)
+                                persist_state()
+                                render_routines()
+                            return delete_selected
+
+                        with ui.row().classes('items-start gap-3 section-row w-full flex-wrap'):
+                            with ui.column().classes('gap-1'):
+                                ui.label(routine.get('name', 'Unnamed routine')).classes('text-sm font-medium')
+                                ui.label(f'{len(steps)} step(s) | repeat: {routine.get("repeat", False)}').classes('mono muted')
+                                for step in steps[:4]:
+                                    ui.label(step_summary(step)).classes('mono muted')
+                                if len(steps) > 4:
+                                    ui.label(f'+ {len(steps) - 4} more step(s)').classes('mono muted')
+                            ui.element('div').classes('flex-grow')
+                            action_button('Run', on_click=mk_run(routine), icon='play_arrow')
+                            action_button('Delete', on_click=mk_delete(routine), variant='danger')
+
+            render_routines()
+
+        with ui.card().classes('panel w-full'):
+            ui.label('New Routine').classes('eyebrow red')
+            with ui.row().classes('items-end gap-3 flex-wrap'):
+                routine_name = ui.input('Name', value='New Routine').props('outlined').classes('w-56')
+
+                def add_routine():
+                    name = (routine_name.value or '').strip()
+                    if not name:
+                        ui.notify('Name required', type='warning')
+                        return
+                    if get_routine(name):
+                        ui.notify('Routine name already exists', type='warning')
+                        return
+                    get_routines().append(make_new_routine(name))
+                    persist_state()
+                    routine_name.value = 'New Routine'
+                    render_routines()
+                    ui.notify(f'Added {name}', type='positive')
+
+                action_button('Add Routine', on_click=add_routine, icon='add')
+
+
+# ── Style guide ───────────────────────────────
+@ui.page('/styleguide')
+def styleguide_page():
+    content = page_layout('styleguide')
+
+    with content:
+        with ui.column().classes('w-full gap-2'):
+            ui.label('Style Guide').classes('h5 page-title')
+            ui.label('Dark production UI tokens and component examples.').classes('muted text-sm')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Color Tokens').classes('eyebrow red')
+            with ui.element('div').classes('style-grid'):
+                tokens = [
+                    ('Background', 'var(--cb-bg)', '--cb-bg'),
+                    ('Surface', 'var(--cb-surface)', '--cb-surface'),
+                    ('Raised', 'var(--cb-surface-2)', '--cb-surface-2'),
+                    ('Border', 'var(--cb-border)', '--cb-border'),
+                    ('Copper Action', 'var(--cb-red)', '--cb-red'),
+                    ('Sage Success', 'var(--cb-green)', '--cb-green'),
+                    ('Steel Info', 'var(--cb-blue)', '--cb-blue'),
+                    ('Muted Amber', 'var(--cb-gold)', '--cb-gold'),
+                ]
+                for name, color, token in tokens:
+                    with ui.element('div').classes('style-swatch'):
+                        ui.element('div').classes('style-token').style(f'background: {color}')
+                        ui.label(name).classes('text-sm font-medium')
+                        ui.label(token).classes('mono muted')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Controls').classes('eyebrow red')
+            with ui.row().classes('items-center gap-2 flex-wrap'):
+                action_button('Primary', icon='play_arrow')
+                action_button('Neutral', variant='neutral')
+                action_button('Outline', variant='outline')
+                action_button('Danger', variant='danger')
+                tag('online', 'on')
+                tag('idle', 'idle')
+                tag('running', 'run')
+                tag('error', 'err')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Form Fields').classes('eyebrow red')
+            with ui.row().classes('items-end gap-3 flex-wrap w-full'):
+                ui.input('Motor name', value='Motor 1').props('outlined').classes('w-40')
+                ui.number('PUL', value=9, min=0, max=19).props('outlined').classes('w-24 pin-pul')
+                ui.number('DIR', value=8, min=0, max=19).props('outlined').classes('w-24 pin-dir')
+                ui.number('ENA', value=7, min=0, max=19).props('outlined').classes('w-24 pin-ena')
+                ui.select(options={'forward': 'Forward', 'reverse': 'Reverse'}, value='forward').props('outlined').classes('w-40')
+                ui.toggle(['forward', 'reverse'], value='forward')
+                ui.switch('Auto')
+                ui.checkbox('Reversed')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Panels & Readouts').classes('eyebrow red')
+            with ui.element('div').classes('style-grid'):
+                with ui.column().classes('gap-2'):
+                    ui.label('Readout').classes('text-sm font-medium')
+                    ui.label('{"status":"ok","motors":1,"state":"IDLE"}').classes('readout mono')
+                with ui.column().classes('gap-2'):
+                    ui.label('Alerts').classes('text-sm font-medium')
+                    ui.html('<div class="alert alert-info">Info message with compact dark spacing.</div>')
+                    ui.html('<div class="alert alert-success">Success message for completed actions.</div>')
+                    ui.html('<div class="alert alert-warning">Warning message for recoverable issues.</div>')
+                    ui.html('<div class="alert alert-danger">Danger message for stop or error states.</div>')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Rows').classes('eyebrow red')
+            for name, state, pins in [
+                ('Dispenser', 'online', '9/8/7'),
+                ('Roller', 'idle', '12/11/10'),
+                ('Taper', 'offline', '6/5/4'),
+            ]:
+                with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
+                    ui.label(name).classes('text-sm font-medium w-24')
+                    tag(state, 'on' if state == 'online' else 'idle' if state == 'idle' else 'off')
+                    ui.label(pins).classes('mono muted')
+                    ui.element('div').classes('flex-grow')
+                    action_button('Details', variant='outline')
+                    action_button('Stop', variant='danger')
 
 
 # ── Devices page ─────────────────────────────
@@ -1196,7 +1612,7 @@ def station_detail_page(name: str):
                             ui.element('div').classes('flex-grow')
 
                             s_w = ui.number(value=1000, min=1, max=50000, step=100).props('outlined').classes('w-24').tooltip('Steps')
-                            sp_w = ui.number(value=500, min=50, max=5000, step=50).props('outlined').classes('w-20').tooltip('μs/step')
+                            sp_w = ui.number(value=62, min=1, max=5000, step=1).props('outlined').classes('w-20').tooltip('μs/step')
 
                             def mk_run(mn, sw, spw, fwd):
                                 def f():
@@ -1241,7 +1657,7 @@ def station_detail_page(name: str):
                     with ui.row().classes('items-end gap-2 flex-wrap'):
                         tester_motor = ui.select(options={}).props('outlined').classes('w-36')
                         tester_steps = ui.number('Steps', value=1000, min=1, max=50000, step=100).props('outlined').classes('w-28')
-                        tester_speed = ui.number('Speed μs', value=500, min=50, max=5000, step=50).props('outlined').classes('w-28')
+                        tester_speed = ui.number('Speed μs', value=62, min=1, max=5000, step=1).props('outlined').classes('w-28')
                         tester_direction = ui.toggle(['forward', 'reverse'], value='forward')
 
                         def run_test():

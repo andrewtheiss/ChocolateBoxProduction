@@ -6,6 +6,7 @@
 const char* FIRMWARE_NAME = "generic";
 const char* FIRMWARE_VERSION = "2.4.0";
 const char* FIRMWARE_BUILD = __DATE__ " " __TIME__;
+const int DEFAULT_SPEED_US = 62;
 
 struct Motor {
   char name[16];
@@ -25,7 +26,7 @@ Motor* activeMotors[MAX_MOTORS];
 int activeMotorCount = 0;
 int activeStepTarget = 0;
 int activeStepCount = 0;
-int activeSpeedUs = 500;
+int activeSpeedUs = DEFAULT_SPEED_US;
 unsigned long lastPulseMicros = 0;
 bool pulseHigh = false;
 bool asyncRunActive = false;
@@ -330,7 +331,7 @@ void loop() {
     if (anyMotorRunning()) { sendError("motor already running"); return; }
 
     int steps = doc["steps"] | 1000;
-    int speed_us = doc["speed_us"] | 500;
+    int speed_us = doc["speed_us"] | DEFAULT_SPEED_US;
     bool forward = doc["forward"] | true;
 
     Motor* selected[1] = {m};
@@ -403,7 +404,7 @@ void loop() {
     }
 
     int steps = doc["steps"] | 1000;
-    int speed_us = doc["speed_us"] | 500;
+    int speed_us = doc["speed_us"] | DEFAULT_SPEED_US;
 
     startAsyncRun(selected, forwards, selectedCount, steps, speed_us);
     sendOk("started");
@@ -452,7 +453,7 @@ void loop() {
       return;
     }
     int steps = doc["steps"] | 1000;
-    int speed_us = doc["speed_us"] | 500;
+    int speed_us = doc["speed_us"] | DEFAULT_SPEED_US;
     bool forward = doc["forward"] | true;
 
     Motor* selected[MAX_MOTORS];

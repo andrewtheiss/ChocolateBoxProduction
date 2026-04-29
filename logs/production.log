@@ -7359,3 +7359,503 @@ Traceback (most recent call last):
   File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
     raise RuntimeError('The parent slot of the element has been deleted.')
 RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:43:21,009 - INFO - Web UI → http://localhost:8080
+2026-04-27 22:43:21,362 - INFO - Pipeline: (none)
+2026-04-27 22:43:37,176 - WARNING - http://127.0.0.1:8080/routines not found
+2026-04-27 22:44:13,216 - INFO - Web UI → http://localhost:8080
+2026-04-27 22:44:13,388 - INFO - Pipeline: (none)
+2026-04-27 22:45:23,260 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:45:23,267 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:45:23,267 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:45:23,268 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:45:23,268 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:45:23,269 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:46:41,408 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-27 22:46:56,241 - INFO - Web UI → http://localhost:8080
+2026-04-27 22:46:56,536 - INFO - Pipeline: (none)
+2026-04-27 22:47:05,497 - INFO - Coordinator and workers reset to IDLE
+2026-04-27 22:47:16,515 - INFO - Pipeline: dispenser
+2026-04-27 22:48:06,665 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:48:06,671 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:48:06,671 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:48:06,672 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:48:06,672 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:48:06,673 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:48:47,743 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-27 22:49:26,773 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-27 22:49:27,638 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-27 22:50:58,019 - INFO - Web UI → http://localhost:8080
+2026-04-27 22:50:58,634 - INFO - Pipeline: (none)
+2026-04-27 22:50:59,021 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-27 22:52:08,065 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:52:08,071 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:52:08,072 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:52:08,072 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:52:08,072 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:52:08,073 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-27 22:57:59,076 - INFO - Pipeline: dispenser
+2026-04-27 22:57:59,222 - WARNING - Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web.py", line 13, in <module>
+    start_web_ui(stations_config, fsm_config)
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 1795, in start_web_ui
+    ui.run(title='ChocolateBox', port=8080, reload=False, favicon='🏭')
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/ui_run.py", line 303, in run
+    Server.instance.run()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/server.py", line 45, in run
+    super().run(sockets=sockets)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 111, in _invoke_callback
+    result = self.callback()
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 1352, in tick
+    log_disp.push(log_lines.pop(0))
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/log.py", line 32, in push
+    label = Label(text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/label.py", line 13, in __init__
+    super().__init__(tag='div', text=text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/mixins/text_element.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/outbox.py", line 68, in enqueue_update
+    self.client.check_existence()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/client.py", line 433, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/helpers.py", line 34, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-04-28 00:02:50,235 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 00:02:50,245 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 00:19:26,590 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 00:19:26,598 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 00:49:48,873 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 00:49:48,890 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 01:21:40,780 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 01:21:40,790 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 01:53:46,076 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 01:53:46,086 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 02:25:14,286 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 02:25:14,296 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 02:57:48,458 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 02:57:48,465 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 03:32:55,814 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 03:32:55,824 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 04:05:14,069 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 04:05:14,085 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 04:22:35,731 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 04:22:35,737 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 04:56:18,882 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 04:56:18,888 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 05:27:47,178 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 05:27:47,197 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 05:44:02,758 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 05:44:02,770 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 06:17:57,053 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 06:17:57,057 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 06:51:24,309 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 06:51:24,326 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 07:25:39,268 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 07:25:39,273 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 08:00:53,504 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 08:00:53,516 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 08:18:40,385 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 08:18:40,389 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 08:50:10,646 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 08:50:10,653 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 09:03:03,331 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 09:03:03,339 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 09:21:02,551 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 09:21:02,556 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 09:55:15,693 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 09:55:15,702 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 10:04:05,298 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 10:04:05,302 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 10:19:25,507 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 10:19:25,515 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 10:51:17,774 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 10:51:17,778 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 11:23:04,417 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 11:23:04,424 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 11:57:54,486 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 11:57:54,492 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 12:06:04,140 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 12:06:04,151 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 12:21:45,549 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 12:21:45,558 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 12:54:32,861 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 12:54:32,868 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 13:23:29,900 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 13:23:29,909 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 13:58:03,086 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 13:58:03,095 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 14:23:47,654 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 14:23:47,659 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 14:41:03,716 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 14:41:03,723 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:09:03,994 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:09:04,005 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:21:13,114 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:21:13,125 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:37:59,378 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:37:59,388 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:55:42,035 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 15:55:42,041 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 16:28:03,967 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 16:28:03,976 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:02:43,204 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:02:43,212 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:11:03,525 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:11:03,534 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:27:18,337 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:27:18,346 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:43:13,607 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:43:13,610 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:43:40,920 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:02,164 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:02,174 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:12,448 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:12,450 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:13,116 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:13,117 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:13,881 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:13,882 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:17,063 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:17,064 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:25,766 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:25,767 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:32,834 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:32,839 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:37,858 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:37,867 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:38,695 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:38,696 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:44,327 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:44,332 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:45,921 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:44:58,811 - INFO - Coordinator and workers reset to IDLE
+2026-04-28 17:45:01,064 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:02,177 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:02,187 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:05,595 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:05,604 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:08,764 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:08,765 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:14,615 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:16,064 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:17,465 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:24,777 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:45:26,174 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:45:32,512 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:34,645 - INFO - dispenser: processing...
+2026-04-28 17:45:34,646 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:34,646 - ERROR - dispenser: failed with 'no_response'
+2026-04-28 17:45:38,965 - INFO - Coordinator and workers reset to IDLE
+2026-04-28 17:45:40,956 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:40,985 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:45:47,517 - INFO - Pipeline: dispenser → roller
+2026-04-28 17:45:48,133 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:45:48,411 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:45:55,010 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:47:23,033 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:47:24,281 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-04-28 17:47:24,563 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:48:22,475 - INFO - Web UI → http://localhost:8080
+2026-04-28 17:48:22,924 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-04-28 17:48:23,050 - INFO - Pipeline: (none)
+2026-04-28 17:48:52,111 - INFO - Pipeline: taper
+2026-04-28 17:49:32,525 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:49:32,534 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:49:32,535 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:49:32,536 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.

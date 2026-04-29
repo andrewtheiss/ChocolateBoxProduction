@@ -7,7 +7,7 @@ from src.comms import get_status, run_motor, run_motor_group, stop_station
 
 def duration_to_steps(duration_ms, speed_us):
     if speed_us <= 0:
-        speed_us = 500
+        speed_us = 62
     steps = int((max(duration_ms, 1) * 1000) / (2 * speed_us))
     return max(1, steps)
 
@@ -110,7 +110,7 @@ class RoutineRunner:
         station = step.get('station')
         motor_name = step.get('motor')
         duration_ms = int(step.get('duration_ms', 0))
-        speed_us = int(step.get('speed_us', 500))
+        speed_us = int(step.get('speed_us', 62))
         forward = bool(step.get('forward', True))
 
         ser = self._serials_provider().get(station)
@@ -128,7 +128,7 @@ class RoutineRunner:
         station = step.get('station')
         motors = step.get('motors', [])
         duration_ms = int(step.get('duration_ms', 0))
-        speed_us = int(step.get('speed_us', 500))
+        speed_us = int(step.get('speed_us', 62))
 
         ser = self._serials_provider().get(station)
         if ser is None:
