@@ -28,9 +28,11 @@ class BaseStation:
 def load_stations(config, fsm_config):
     from .dispenser import Dispenser
     from .roller import Roller
-    from .taper import Taper
+    from .punch import Punch
+    from .crease import Crease
     return {
         'dispenser': Dispenser(config['dispenser'], fsm_config),
         'roller': Roller(config['roller'], fsm_config),
-        'taper': Taper(config['taper'], fsm_config),
+        'punch': Punch(config['punch'], fsm_config),
+        'crease': Crease(config['crease'], fsm_config),
     }

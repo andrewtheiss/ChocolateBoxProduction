@@ -2,22 +2,14 @@
   "last_active_routine": null,
   "routines": [],
   "stations": {
-    "dispenser": {
-      "firmware": "generic",
+    "crease": {
+      "firmware": null,
       "limits": [],
-      "motors": [
-        {
-          "dir_pin": 8,
-          "ena_pin": 7,
-          "name": "Motor 1",
-          "pul_pin": 9,
-          "reversed": false
-        }
-      ],
-      "port_hint": "/dev/cu.usbmodem113401",
+      "motors": [],
+      "port_hint": null,
       "triggers": []
     },
-    "roller": {
+    "dispenser": {
       "firmware": "generic",
       "limits": [],
       "motors": [
@@ -32,7 +24,22 @@
       "port_hint": "/dev/cu.usbmodem1113401",
       "triggers": []
     },
-    "taper": {
+    "punch": {
+      "firmware": "generic",
+      "limits": [],
+      "motors": [
+        {
+          "dir_pin": 8,
+          "ena_pin": 7,
+          "name": "Motor 1",
+          "pul_pin": 9,
+          "reversed": false
+        }
+      ],
+      "port_hint": "/dev/cu.usbmodem1113401",
+      "triggers": []
+    },
+    "roller": {
       "firmware": "generic",
       "limits": [],
       "motors": [

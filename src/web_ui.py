@@ -20,7 +20,7 @@ fsm_config: dict = {}
 persisted_state: dict = {}
 routine_runner: RoutineRunner = None
 log_lines: list = []
-STATION_ORDER = ['dispenser', 'roller', 'taper']
+STATION_ORDER = ['dispenser', 'roller', 'punch', 'crease']
 MOTOR_PIN_PRESETS = [
     {'name': 'Motor 1', 'pul': 9, 'dir': 8, 'ena': 7},
     {'name': 'Motor 2', 'pul': 12, 'dir': 11, 'ena': 10},
@@ -1153,7 +1153,8 @@ def styleguide_page():
             for name, state, pins in [
                 ('Dispenser', 'online', '9/8/7'),
                 ('Roller', 'idle', '12/11/10'),
-                ('Taper', 'offline', '6/5/4'),
+                ('Punch', 'offline', '6/5/4'),
+                ('Crease', 'offline', '9/8/7'),
             ]:
                 with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
                     ui.label(name).classes('text-sm font-medium w-24')

@@ -7859,3 +7859,148 @@ Traceback (most recent call last):
   File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
     raise RuntimeError('The parent slot of the element has been deleted.')
 RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:54:12,891 - INFO - Web UI → http://localhost:8080
+2026-04-28 17:54:13,280 - INFO - Pipeline: (none)
+2026-04-28 17:55:22,944 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:55:22,950 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:55:22,951 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:55:22,952 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:55:22,952 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:55:22,953 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 17:55:22,954 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-04-28 18:34:03,359 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-05-17 02:58:45,567 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-06 15:02:05,354 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-06 17:57:29,278 - INFO - Web UI → http://localhost:8080
+2026-06-06 17:57:29,733 - INFO - Pipeline: (none)
+2026-06-06 17:58:22,748 - INFO - Pipeline: dispenser

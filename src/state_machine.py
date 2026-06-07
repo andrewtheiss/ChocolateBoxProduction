@@ -62,7 +62,7 @@ class PipelineCoordinator:
         self.stations = stations
         self.state = 'IDLE'
 
-        all_order = ['dispenser', 'roller', 'taper']
+        all_order = ['dispenser', 'roller', 'punch', 'crease']
         self.station_order = [s for s in all_order if serials.get(s) is not None]
 
         # Build worker chain in reverse so each knows its next

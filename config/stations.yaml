@@ -9,9 +9,14 @@ roller:
   baud: 9600
   initial_state: IDLE
 
-taper:
+punch:
   port: /dev/ttyUSB2
   baud: 9600
   initial_state: IDLE
 
-# Add e.g., puncher: {port: /dev/ttyUSB3, ...}
+crease:
+  port: /dev/ttyUSB3
+  baud: 9600
+  initial_state: IDLE
+
+# Add e.g., folder: {port: /dev/ttyUSB4, ...}
