@@ -261,6 +261,10 @@ a {
     padding: 0 !important;
 }
 
+.step-disabled {
+    opacity: 0.55;
+}
+
 .section-row {
     min-height: 48px;
     padding: 12px 0;

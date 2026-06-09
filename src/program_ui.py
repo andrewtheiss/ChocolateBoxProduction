@@ -94,7 +94,8 @@ def _connection_block(program):
     manual tester works - the tester runs on whatever board is open, while the
     program targets a station by name that may be on a disconnected port.
     """
-    stations = {task.get('station') for (task, _) in _program_tasks(program) if task.get('station')}
+    stations = {task.get('station') for (task, step) in _program_tasks(program)
+                if task.get('station') and step.get('enabled', True)}
     missing = [s for s in sorted(stations) if web_ui.serials.get(s) is None]
     if missing:
         return ('Not connected: ' + ', '.join(missing) +
@@ -106,6 +107,16 @@ def _program_tasks(program):
     for step in program.get('steps', []):
         for task in step.get('tasks', []):
             yield task, step
+
+
+def _step_connection_block(step):
+    """Return a warning if a station this step drives isn't connected."""
+    stations = {t.get('station') for t in step.get('tasks', []) if t.get('station')}
+    missing = [s for s in sorted(stations) if web_ui.serials.get(s) is None]
+    if missing:
+        return ('Not connected: ' + ', '.join(missing) +
+                '. Connect these boards on the Devices page before testing this step.')
+    return None
 
 
 def _homing_block(program):
@@ -385,12 +396,33 @@ def program_editor_page(name: str):
 
 def _render_step_card(program, idx, step, rerender_steps, refresh_validation):
     steps = program['steps']
-    with ui.card().classes('panel w-full'):
+    step.setdefault('enabled', True)
+    with ui.card().classes('panel w-full' + ('' if step.get('enabled', True) else ' step-disabled')):
         with ui.row().classes('items-center gap-2 w-full flex-wrap'):
+            def on_enabled(e):
+                step['enabled'] = e.value
+                web_ui.persist_state()
+                rerender_steps()
+            ui.switch(value=step.get('enabled', True)) \
+                .on_value_change(on_enabled).tooltip('Enable/disable this step in the full run')
+
             ui.input('Step name').props('outlined dense').classes('w-48') \
                 .bind_value(step, 'name').on_value_change(lambda e: web_ui.persist_state())
             ui.label(step_summary(step, program)).classes('mono muted')
+            if not step.get('enabled', True):
+                ui.label('(disabled)').classes('mono muted')
             ui.element('div').classes('flex-grow')
+
+            def run_step_now():
+                block = _step_connection_block(step)
+                if block:
+                    ui.notify(block, type='warning')
+                    return
+                engine = web_ui.ensure_sequence_engine()
+                ok, message = engine.run_step(program, idx)
+                ui.notify(message, type='positive' if ok else 'warning')
+
+            web_ui.action_button('Run Step', on_click=run_step_now, icon='play_arrow', variant='outline')
 
             def move_up():
                 if idx > 0:

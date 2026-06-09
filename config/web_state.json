@@ -14,19 +14,20 @@
           "completion": {
             "conditions": [
               {
-                "ms": 8000,
+                "ms": 2000.0,
                 "type": "duration"
               }
             ],
             "mode": "any"
           },
-          "name": "MainPunchDown",
+          "enabled": true,
+          "name": "PunchDown",
           "on_complete": "stop_tasks",
           "tasks": [
             {
               "motors": [
                 {
-                  "forward": true,
+                  "forward": false,
                   "name": "Motor 1",
                   "speed_us": 200
                 }
@@ -40,21 +41,81 @@
           "completion": {
             "conditions": [
               {
-                "ms": 4000,
+                "ms": 1100.0,
                 "type": "duration"
               }
             ],
             "mode": "any"
           },
-          "name": "PunchUp",
+          "enabled": true,
+          "name": "Pinchers Pinch",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": true,
+                  "name": "Motor 2"
+                },
+                {
+                  "forward": true,
+                  "name": "Motor 3"
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "completion": {
+            "conditions": [
+              {
+                "ms": 1100.0,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "Pinchers Retract",
           "on_complete": "stop_tasks",
           "tasks": [
             {
               "motors": [
                 {
                   "forward": false,
-                  "name": "Motor 1",
-                  "speed_us": null
+                  "name": "Motor 2"
+                },
+                {
+                  "forward": false,
+                  "name": "Motor 3"
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "completion": {
+            "conditions": [
+              {
+                "ms": 2000.0,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "PunchUp",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": true,
+                  "name": "Motor 1"
                 }
               ],
               "speed_us": null,

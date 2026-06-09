@@ -249,6 +249,46 @@ class SequenceEngine:
             self._thread.start()
             return True, f"Started program {self.current_program}"
 
+    def run_step(self, program, step_index):
+        """Run a single step on its own (for testing), ignoring its enabled flag."""
+        with self._lock:
+            if self._thread is not None and self._thread.is_alive():
+                return False, 'A program is already running'
+
+            program = program_model.normalize_program(program)
+            steps = program.get('steps', [])
+            if step_index < 0 or step_index >= len(steps):
+                return False, 'Step not found'
+
+            self._stop_event.clear()
+            self.state = 'RUNNING'
+            self.current_program = f"{program.get('name', 'unnamed')} (step {step_index + 1})"
+            self.current_step = step_index
+            self.current_step_name = steps[step_index].get('name')
+            self.last_result = None
+            self._thread = threading.Thread(
+                target=self._run_single_step, args=(program, step_index), daemon=True)
+            self._thread.start()
+            return True, f"Running step {step_index + 1}: {steps[step_index].get('name', '?')}"
+
+    def _run_single_step(self, program, step_index):
+        try:
+            step = program.get('steps', [])[step_index]
+            self._log(f'Test step {step_index + 1}: {step.get("name", "?")}')
+            outcome = self._execute_step(step, program)
+            self.last_result = outcome
+            self.state = ('IDLE' if outcome.get('status') == 'done'
+                          else 'STOPPED' if outcome.get('status') == 'stopped' else 'ERROR')
+        except Exception as exc:
+            logging.exception('Sequence engine step error')
+            self.last_result = {'status': 'error', 'error': str(exc)}
+            self.state = 'ERROR'
+        finally:
+            if self.state == 'STOPPING':
+                self.state = 'STOPPED'
+            self.current_step = None
+            self.current_step_name = None
+
     def stop(self):
         self._stop_event.set()
         for ser in self._serials_provider().values():
@@ -291,6 +331,9 @@ class SequenceEngine:
         for idx, step in enumerate(steps):
             if self._stop_event.is_set():
                 return {'status': 'stopped', 'step': idx}
+            if not step.get('enabled', True):
+                self._log(f'Step {idx + 1}: {step.get("name", "?")} (disabled, skipped)')
+                continue
             self.current_step = idx
             self.current_step_name = step.get('name')
             self._log(f'Step {idx + 1}: {step.get("name", "?")}')
