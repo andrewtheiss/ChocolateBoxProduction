@@ -8004,3 +8004,359 @@ RuntimeError: The parent slot of the element has been deleted.
 2026-06-06 17:57:29,278 - INFO - Web UI → http://localhost:8080
 2026-06-06 17:57:29,733 - INFO - Pipeline: (none)
 2026-06-06 17:58:22,748 - INFO - Pipeline: dispenser
+2026-06-06 19:34:10,048 - WARNING - Comms error: Expecting value: line 1 column 10 (char 9)
+2026-06-06 19:34:10,198 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:34:13,092 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:34:13,238 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:34:30,494 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:34:30,641 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:34:39,452 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:34:41,596 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:34:43,927 - WARNING - Comms error: Expecting ':' delimiter: line 1 column 6 (char 5)
+2026-06-06 19:34:46,076 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:34:51,834 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:34:51,983 - WARNING - Comms error: Extra data: line 1 column 7 (char 6)
+2026-06-06 19:34:59,140 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:35:01,288 - WARNING - Comms error: Extra data: line 1 column 3 (char 2)
+2026-06-06 19:35:03,421 - WARNING - Comms error: Expecting ':' delimiter: line 1 column 10 (char 9)
+2026-06-06 19:35:05,568 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:35:07,798 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:35:09,920 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:35:23,842 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:35:25,989 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:35:28,189 - WARNING - Comms error: Extra data: line 1 column 3 (char 2)
+2026-06-06 19:35:30,328 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:35:47,911 - WARNING - Comms error: Expecting ':' delimiter: line 1 column 6 (char 5)
+2026-06-06 19:35:48,057 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:36:01,440 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:36:03,585 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:36:05,834 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:36:07,984 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:36:50,238 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:36:50,384 - WARNING - Comms error: Extra data: line 1 column 5 (char 4)
+2026-06-06 19:36:53,734 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:36:55,884 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:37:06,586 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:37:08,733 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:37:17,208 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:37:19,359 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:37:21,653 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:37:23,791 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:39:09,101 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:39:09,248 - WARNING - Comms error: Extra data: line 1 column 5 (char 4)
+2026-06-06 19:39:18,933 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:39:21,083 - WARNING - Comms error: Extra data: line 1 column 8 (char 7)
+2026-06-06 19:40:25,998 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:40:26,146 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:42:47,786 - WARNING - Comms error: Extra data: line 1 column 7 (char 6)
+2026-06-06 19:42:49,929 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:42:50,137 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:42:50,281 - WARNING - Comms error: Expecting ':' delimiter: line 1 column 4 (char 3)
+2026-06-06 19:42:55,449 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:42:57,592 - WARNING - Comms error: Extra data: line 1 column 8 (char 7)
+2026-06-06 19:43:03,233 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:43:03,377 - WARNING - Comms error: Extra data: line 1 column 4 (char 3)
+2026-06-06 19:43:19,716 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:43:21,865 - WARNING - Comms error: Extra data: line 1 column 7 (char 6)
+2026-06-06 19:44:49,220 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:44:51,369 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:44:57,835 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:44:57,981 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:45:34,799 - WARNING - Comms error: Extra data: line 1 column 7 (char 6)
+2026-06-06 19:45:36,951 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:45:42,703 - WARNING - Comms error: Extra data: line 1 column 5 (char 4)
+2026-06-06 19:45:44,852 - WARNING - Comms error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2026-06-06 19:45:47,085 - WARNING - Comms error: Extra data: line 1 column 4 (char 3)
+2026-06-06 19:45:49,230 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 19:49:54,909 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-06 20:35:55,067 - INFO - Web UI → http://localhost:8080
+2026-06-06 20:36:08,593 - INFO - Web UI → http://localhost:8080
+2026-06-06 20:36:15,247 - WARNING - http://localhost:8080/settings not found
+2026-06-06 20:36:17,378 - WARNING - Comms error: Expecting ':' delimiter: line 1 column 6 (char 5)
+2026-06-06 20:36:17,510 - WARNING - Comms error: Extra data: line 1 column 12 (char 11)
+2026-06-06 20:36:17,521 - WARNING - http://localhost:8080/program/Demo not found
+2026-06-06 20:37:17,537 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-06 20:37:17,542 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-06 21:05:20,073 - WARNING - Comms error: Expecting ',' delimiter: line 1 column 31 (char 30)
+2026-06-06 21:05:22,216 - WARNING - Comms error: Expecting value: line 1 column 1 (char 0)
+2026-06-06 21:05:27,188 - INFO - Web UI → http://localhost:8080
+2026-06-06 21:05:27,645 - INFO - Pipeline: (none)
+2026-06-07 01:00:53,759 - WARNING - binding propagation for 10 active links took 0.018 s
+2026-06-07 01:02:39,002 - WARNING - binding propagation for 10 active links took 0.018 s
+2026-06-07 01:45:10,497 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-07 07:43:14,960 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-07 18:24:45,735 - INFO - Web UI → http://localhost:8080
+2026-06-07 18:24:46,219 - INFO - Pipeline: (none)
+2026-06-07 20:58:03,746 - INFO - Web UI → http://localhost:8080
+2026-06-07 20:58:04,074 - INFO - Pipeline: (none)
+2026-06-07 20:58:21,026 - INFO - Pipeline: dispenser
+2026-06-07 20:58:37,641 - INFO - Pipeline: (none)
+2026-06-07 20:59:06,055 - INFO - Pipeline: dispenser
+2026-06-07 21:34:34,901 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 21:34:34,910 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 21:34:36,281 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 21:34:38,642 - INFO - Pipeline: (none)
+2026-06-07 21:34:52,820 - INFO - Pipeline: punch
+2026-06-07 21:35:47,829 - INFO - Pipeline: (none)
+2026-06-07 21:36:16,248 - INFO - Pipeline: punch
+2026-06-07 22:08:11,742 - INFO - Web UI → http://localhost:8080
+2026-06-07 22:08:12,261 - INFO - Pipeline: (none)
+2026-06-07 22:08:29,669 - INFO - Pipeline: punch
+2026-06-07 22:08:41,535 - INFO - Pipeline: (none)
+2026-06-07 22:09:12,404 - INFO - Pipeline: punch
+2026-06-07 22:24:35,067 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:24:35,078 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:24:35,094 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:39:49,409 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:39:49,416 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:39:49,426 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:44:05,507 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:44:05,519 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:44:05,544 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:44:45,567 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:44:45,580 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:44:45,603 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:46:09,458 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:46:09,470 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:46:09,492 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:47:08,316 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:47:08,330 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 22:47:08,352 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:03:23,730 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:03:23,741 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:03:23,766 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:19:13,553 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:19:13,567 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:19:13,584 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:23:08,493 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:23:08,519 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:23:08,543 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:41:02,601 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-07 23:41:03,877 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:41:03,888 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-07 23:41:03,912 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 00:14:43,097 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 00:14:43,107 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 00:14:43,214 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 00:41:33,077 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 00:41:33,095 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 00:41:33,116 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 01:13:39,200 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 01:13:39,204 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 01:13:39,215 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 01:43:26,408 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 01:43:26,430 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 01:43:26,454 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 02:14:13,582 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 02:14:13,588 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 02:14:13,609 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 02:46:34,460 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 02:46:34,465 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 02:46:34,476 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 03:20:55,576 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 03:20:55,580 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 03:20:55,591 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 03:54:00,744 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 03:54:00,752 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 03:54:00,779 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 04:28:38,961 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 04:28:38,974 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 04:28:38,999 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 05:00:26,091 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 05:00:26,100 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 05:00:26,112 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 05:34:36,372 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 05:34:36,377 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 05:34:36,389 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:01:01,474 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:01:01,485 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:01:01,506 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:18:59,983 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:18:59,987 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:19:00,001 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:53:14,331 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:53:14,339 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 06:53:14,354 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 07:10:59,919 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 07:10:59,924 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 07:10:59,939 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 07:41:47,206 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 07:41:47,213 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 07:41:47,230 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:02:01,355 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:02:01,365 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:02:01,395 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:17:09,219 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:17:09,233 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:17:09,256 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:50:34,495 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:50:34,507 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 08:50:34,529 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 09:18:20,943 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 09:18:20,954 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 09:18:20,975 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 09:48:28,962 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 09:48:28,969 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 09:48:28,984 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:33,333 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:33,337 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:35,700 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:38,614 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:38,626 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:38,648 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:40,297 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:40,297 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:43,752 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:43,753 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:45,607 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:45,612 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:16:47,586 - INFO - Pipeline: punch
+2026-06-08 10:16:47,592 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:15,771 - INFO - Pipeline: punch
+2026-06-08 10:18:17,086 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:18,899 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:18,909 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:18,920 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:20,196 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:20,196 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:21,119 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:21,119 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:28,018 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:28,018 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:35,453 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:35,455 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:43,648 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:43,650 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:45,149 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:45,150 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:53,751 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:53,752 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:59,883 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:18:59,883 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-08 10:19:03,818 - INFO - Pipeline: (none)
+2026-06-08 10:19:07,628 - INFO - Pipeline: (none)
+2026-06-08 10:19:41,277 - INFO - Pipeline: punch
+2026-06-08 10:28:15,210 - INFO - Web UI → http://localhost:8080
+2026-06-08 10:28:15,708 - INFO - Pipeline: (none)
+2026-06-08 10:28:23,131 - INFO - Pipeline: punch
+2026-06-08 10:28:23,280 - WARNING - Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web.py", line 13, in <module>
+    start_web_ui(stations_config, fsm_config)
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 2065, in start_web_ui
+    ui.run(title='ChocolateBox', port=8080, reload=False, favicon='🏭')
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/ui_run.py", line 303, in run
+    Server.instance.run()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/server.py", line 45, in run
+    super().run(sockets=sockets)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 111, in _invoke_callback
+    result = self.callback()
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 1386, in tick
+    log_disp.push(log_lines.pop(0))
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/log.py", line 32, in push
+    label = Label(text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/label.py", line 13, in __init__
+    super().__init__(tag='div', text=text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/mixins/text_element.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/outbox.py", line 68, in enqueue_update
+    self.client.check_existence()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/client.py", line 433, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/helpers.py", line 34, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-06-08 17:02:08,683 - INFO - Pipeline: punch
+2026-06-08 19:18:38,870 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-06-08 19:19:54,129 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-06-08 19:20:03,359 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-06-08 19:20:06,591 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-06-08 19:20:09,597 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-06-08 19:20:13,897 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
