@@ -301,17 +301,24 @@ class SequenceEngine:
         return {'status': 'done'}
 
     def _grouped_tasks(self, step, program):
-        """Merge a step's tasks into one motor group per station."""
+        """Merge a step's tasks into one motor group per station.
+
+        Each motor carries its own resolved speed (motor override -> task ->
+        global) so the firmware can drive them at independent us/step rates.
+        """
         groups = {}
         for task in step.get('tasks', []):
             station = task.get('station')
             motors = task.get('motors', [])
             if not station or not motors:
                 continue
-            speed = program_model.task_speed(task, program)
-            group = groups.setdefault(station, {'motors': [], 'speed': speed})
+            group = groups.setdefault(station, {'motors': []})
             for ref in motors:
-                group['motors'].append({'name': ref['name'], 'forward': bool(ref.get('forward', True))})
+                group['motors'].append({
+                    'name': ref['name'],
+                    'forward': bool(ref.get('forward', True)),
+                    'speed_us': program_model.motor_speed(ref, task, program),
+                })
         return groups
 
     def _execute_step(self, step, program):
@@ -341,15 +348,32 @@ class SequenceEngine:
 
         duration_ms = self._duration_condition_ms(conditions)
 
-        # Start each station's motor group.
+        # Start each station's motor group. Each motor is sized to the step's
+        # duration at its own speed, so motors at different rates all run for
+        # the same wall-clock time.
         for station, group in groups.items():
             ser = serials.get(station)
             if ser is None:
                 return {'status': 'error', 'error': f'Station {station} not connected'}
-            steps_target = (duration_to_steps(duration_ms, group['speed'])
-                            if duration_ms is not None else CONTINUOUS_STEPS)
-            response = run_motor_group(ser, motors=group['motors'],
-                                       steps=steps_target, speed_us=group['speed'])
+            motors_payload = []
+            for m in group['motors']:
+                speed = m['speed_us']
+                steps_target = (duration_to_steps(duration_ms, speed)
+                                if duration_ms is not None else CONTINUOUS_STEPS)
+                motors_payload.append({
+                    'name': m['name'],
+                    'forward': m['forward'],
+                    'speed_us': speed,
+                    'steps': steps_target,
+                })
+            # Group-level steps/speed sized to the duration so firmware that
+            # doesn't read per-motor fields still runs for the full time. Use
+            # the slowest motor's speed so the group lasts at least as long.
+            group_speed = min(m['speed_us'] for m in group['motors'])
+            group_steps = (duration_to_steps(duration_ms, group_speed)
+                           if duration_ms is not None else CONTINUOUS_STEPS)
+            response = run_motor_group(ser, motors=motors_payload,
+                                       steps=group_steps, speed_us=group_speed)
             if not response or response.get('status') not in {'started', 'done'}:
                 self._stop_stations(involved)
                 return {'status': 'error', 'error': f'Group start failed on {station}', 'response': response}

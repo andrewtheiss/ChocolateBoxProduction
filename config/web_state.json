@@ -5,8 +5,8 @@
   "last_active_routine": null,
   "routines": [
     {
-      "global_speed_us": 200.0,
-      "name": "Test",
+      "global_speed_us": 200,
+      "name": "PunchMain",
       "repeat": false,
       "require_homing": false,
       "steps": [
@@ -14,26 +14,24 @@
           "completion": {
             "conditions": [
               {
-                "ms": 4000.0,
+                "ms": 8000,
                 "type": "duration"
-              },
-              {
-                "type": "motors_idle"
               }
             ],
-            "mode": "all"
+            "mode": "any"
           },
           "name": "MainPunchDown",
-          "on_complete": "continue",
+          "on_complete": "stop_tasks",
           "tasks": [
             {
               "motors": [
                 {
-                  "forward": false,
-                  "name": "Motor 1"
+                  "forward": true,
+                  "name": "Motor 1",
+                  "speed_us": 200
                 }
               ],
-              "speed_us": null,
+              "speed_us": 1000,
               "station": "punch"
             }
           ]
@@ -42,11 +40,8 @@
           "completion": {
             "conditions": [
               {
-                "ms": 4000.0,
+                "ms": 4000,
                 "type": "duration"
-              },
-              {
-                "type": "motors_idle"
               }
             ],
             "mode": "any"
@@ -58,7 +53,8 @@
               "motors": [
                 {
                   "forward": false,
-                  "name": "Motor 1"
+                  "name": "Motor 1",
+                  "speed_us": null
                 }
               ],
               "speed_us": null,

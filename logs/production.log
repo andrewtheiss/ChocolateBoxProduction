@@ -8360,3 +8360,121 @@ Stack (most recent call last):
 2026-06-08 19:20:06,591 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
 2026-06-08 19:20:09,597 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
 2026-06-08 19:20:13,897 - WARNING - http://127.0.0.1:8080/.well-known/appspecific/com.chrome.devtools.json not found
+2026-06-08 19:45:26,270 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-08 20:47:55,462 - INFO - Web UI → http://localhost:8080
+2026-06-08 20:47:55,968 - INFO - Pipeline: (none)
+2026-06-08 20:48:04,124 - INFO - Pipeline: punch
+2026-06-08 20:48:10,870 - INFO - Pipeline: (none)
+2026-06-08 20:49:53,851 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:53,854 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:53,855 - INFO - Pipeline: punch
+2026-06-08 20:49:53,904 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:53,914 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:53,929 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:53,947 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:53,963 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:54,015 - WARNING - Comms error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2026-06-08 20:49:55,869 - INFO - Web UI → http://localhost:8080
+2026-06-08 20:49:56,108 - INFO - Pipeline: (none)
+2026-06-08 20:50:07,839 - INFO - Pipeline: punch
+2026-06-08 20:56:06,647 - WARNING - binding propagation for 11 active links took 0.010 s
+2026-06-09 01:47:41,729 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-09 02:30:35,684 - INFO - Web UI → http://localhost:8080
+2026-06-09 02:30:36,226 - INFO - Pipeline: (none)
+2026-06-09 02:30:43,581 - INFO - Pipeline: punch
+2026-06-09 02:30:43,724 - WARNING - Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web.py", line 13, in <module>
+    start_web_ui(stations_config, fsm_config)
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 2065, in start_web_ui
+    ui.run(title='ChocolateBox', port=8080, reload=False, favicon='🏭')
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/ui_run.py", line 303, in run
+    Server.instance.run()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/server.py", line 45, in run
+    super().run(sockets=sockets)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 111, in _invoke_callback
+    result = self.callback()
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 1386, in tick
+    log_disp.push(log_lines.pop(0))
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/log.py", line 32, in push
+    label = Label(text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/label.py", line 13, in __init__
+    super().__init__(tag='div', text=text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/mixins/text_element.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/outbox.py", line 68, in enqueue_update
+    self.client.check_existence()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/client.py", line 433, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/helpers.py", line 34, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-06-09 02:31:06,065 - INFO - Pipeline: (none)
+2026-06-09 02:31:41,070 - INFO - Pipeline: punch
+2026-06-09 02:32:51,379 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-09 02:33:01,379 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-09 02:33:29,226 - INFO - Pipeline: punch
+2026-06-09 02:34:06,961 - INFO - Web UI → http://localhost:8080
+2026-06-09 02:34:07,263 - INFO - Pipeline: (none)
+2026-06-09 02:34:19,451 - INFO - Pipeline: punch

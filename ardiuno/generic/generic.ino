@@ -21,7 +21,7 @@
 #define EEPROM_CFG_VERSION 1
 
 const char* FIRMWARE_NAME = "generic";
-const char* FIRMWARE_VERSION = "2.7.0";
+const char* FIRMWARE_VERSION = "2.8.1";
 const char* FIRMWARE_BUILD = __DATE__ " " __TIME__;
 const int DEFAULT_SPEED_US = 62;
 #define MAX_LIMITS 6
@@ -43,14 +43,17 @@ Motor motors[MAX_MOTORS];
 int motorCount = 0;
 volatile bool globalStop = false;
 String stationId = "generic";
+// Each active motor keeps its own speed, step target, and pulse state so a
+// single run can drive motors at independent us/step rates simultaneously.
 Motor* activeMotors[MAX_MOTORS];
-bool activeForward[MAX_MOTORS];   // logical direction per active motor (for position)
+bool activeForward[MAX_MOTORS];     // logical direction per active motor (for position)
+long activeStepTarget[MAX_MOTORS];  // steps to run for this motor
+long activeStepCount[MAX_MOTORS];   // steps completed
+int activeSpeedUs[MAX_MOTORS];      // us per half-pulse for this motor
+unsigned long activeLastPulse[MAX_MOTORS];
+bool activePulseHigh[MAX_MOTORS];
+bool activeDone[MAX_MOTORS];
 int activeMotorCount = 0;
-int activeStepTarget = 0;
-int activeStepCount = 0;
-int activeSpeedUs = DEFAULT_SPEED_US;
-unsigned long lastPulseMicros = 0;
-bool pulseHigh = false;
 bool asyncRunActive = false;
 
 // ── Limit switch registry ───────────────────
@@ -144,33 +147,47 @@ void stopMotorOutputState(Motor* m) {
 
 void clearAsyncRun() {
   for (int i = 0; i < activeMotorCount; i++) {
-    stopMotorOutputState(activeMotors[i]);
+    if (activeMotors[i]) stopMotorOutputState(activeMotors[i]);
     activeMotors[i] = nullptr;
   }
   activeMotorCount = 0;
-  activeStepTarget = 0;
-  activeStepCount = 0;
-  pulseHigh = false;
   asyncRunActive = false;
   globalStop = false;
 }
 
-void startAsyncRun(Motor* selected[], bool forwards[], int selectedCount, int steps, int speed_us) {
+void startAsyncRun(Motor* selected[], bool forwards[], int speeds[],
+                   long targets[], int selectedCount) {
   activeMotorCount = selectedCount;
-  activeStepTarget = steps;
-  activeStepCount = 0;
-  activeSpeedUs = speed_us;
-  pulseHigh = false;
   globalStop = false;
+  unsigned long now = micros();
 
   for (int i = 0; i < selectedCount; i++) {
     activeMotors[i] = selected[i];
     activeForward[i] = forwards[i];
-    setMotorOutputState(activeMotors[i], forwards[i]);
+    activeSpeedUs[i] = speeds[i] > 0 ? speeds[i] : DEFAULT_SPEED_US;
+    activeStepTarget[i] = targets[i];
+    activeStepCount[i] = 0;
+    activePulseHigh[i] = false;
+    activeLastPulse[i] = now;
+    activeDone[i] = (targets[i] <= 0);
+    if (!activeDone[i]) {
+      setMotorOutputState(activeMotors[i], forwards[i]);
+    }
   }
 
-  lastPulseMicros = micros();
   asyncRunActive = true;
+}
+
+// Convenience for uniform-speed runs (all motors share speed + step count).
+void startAsyncRunUniform(Motor* selected[], bool forwards[], int selectedCount,
+                          long steps, int speed_us) {
+  int speeds[MAX_MOTORS];
+  long targets[MAX_MOTORS];
+  for (int i = 0; i < selectedCount; i++) {
+    speeds[i] = speed_us;
+    targets[i] = steps;
+  }
+  startAsyncRun(selected, forwards, speeds, targets, selectedCount);
 }
 
 void serviceAsyncRun() {
@@ -182,25 +199,30 @@ void serviceAsyncRun() {
   }
 
   unsigned long now = micros();
-  if ((unsigned long)(now - lastPulseMicros) < (unsigned long)activeSpeedUs) {
-    return;
-  }
-  lastPulseMicros = now;
+  bool anyActive = false;
 
-  pulseHigh = !pulseHigh;
   for (int i = 0; i < activeMotorCount; i++) {
-    digitalWrite(activeMotors[i]->pulPin, pulseHigh ? HIGH : LOW);
+    if (activeDone[i]) continue;
+    if ((unsigned long)(now - activeLastPulse[i]) < (unsigned long)activeSpeedUs[i]) {
+      anyActive = true;
+      continue;
+    }
+    activeLastPulse[i] = now;
+    activePulseHigh[i] = !activePulseHigh[i];
+    digitalWrite(activeMotors[i]->pulPin, activePulseHigh[i] ? HIGH : LOW);
+
+    if (!activePulseHigh[i]) {
+      activeStepCount[i]++;
+      activeMotors[i]->position += activeForward[i] ? 1 : -1;
+      if (activeStepCount[i] >= activeStepTarget[i]) {
+        activeDone[i] = true;
+        stopMotorOutputState(activeMotors[i]);
+      }
+    }
+    if (!activeDone[i]) anyActive = true;
   }
 
-  if (!pulseHigh) {
-    activeStepCount++;
-    for (int i = 0; i < activeMotorCount; i++) {
-      activeMotors[i]->position += activeForward[i] ? 1 : -1;
-    }
-    if (activeStepCount >= activeStepTarget) {
-      clearAsyncRun();
-    }
-  }
+  if (!anyActive) clearAsyncRun();
 }
 
 void runSingleMotor(Motor* m, int steps, int speed_us, bool forward) {
@@ -685,13 +707,13 @@ void loop() {
     if (!m) { sendError("motor not found"); return; }
     if (anyMotorRunning()) { sendError("motor already running"); return; }
 
-    int steps = doc["steps"] | 1000;
+    long steps = doc["steps"] | 1000L;
     int speed_us = doc["speed_us"] | DEFAULT_SPEED_US;
     bool forward = doc["forward"] | true;
 
     Motor* selected[1] = {m};
     bool forwards[1] = {forward};
-    startAsyncRun(selected, forwards, 1, steps, speed_us);
+    startAsyncRunUniform(selected, forwards, 1, steps, speed_us);
     sendOk("started");
 
   // ── run_group ──
@@ -703,10 +725,20 @@ void loop() {
       return;
     }
 
+    long groupSteps = doc["steps"] | 1000L;
+    int groupSpeed = doc["speed_us"] | DEFAULT_SPEED_US;
+
     Motor* selected[MAX_MOTORS];
     bool forwards[MAX_MOTORS];
+    int speeds[MAX_MOTORS];
+    long targets[MAX_MOTORS];
     int selectedCount = 0;
     bool forward = doc["forward"] | true;
+
+    if (anyMotorRunning()) {
+      sendError("motor already running");
+      return;
+    }
 
     if (!motorsSpec.isNull() && motorsSpec.size() > 0) {
       for (JsonVariant value : motorsSpec) {
@@ -723,13 +755,12 @@ void loop() {
           sendError("motor not found");
           return;
         }
-        if (anyMotorRunning()) {
-          sendError("motor already running");
-          return;
-        }
 
         selected[selectedCount] = m;
         forwards[selectedCount] = motorForward;
+        // Per-motor overrides fall back to the group values.
+        speeds[selectedCount] = motorSpec["speed_us"] | groupSpeed;
+        targets[selectedCount] = motorSpec["steps"] | groupSteps;
         selectedCount++;
         if (selectedCount >= MAX_MOTORS) break;
       }
@@ -746,22 +777,17 @@ void loop() {
           sendError("motor not found");
           return;
         }
-        if (anyMotorRunning()) {
-          sendError("motor already running");
-          return;
-        }
 
         selected[selectedCount] = m;
         forwards[selectedCount] = forward;
+        speeds[selectedCount] = groupSpeed;
+        targets[selectedCount] = groupSteps;
         selectedCount++;
         if (selectedCount >= MAX_MOTORS) break;
       }
     }
 
-    int steps = doc["steps"] | 1000;
-    int speed_us = doc["speed_us"] | DEFAULT_SPEED_US;
-
-    startAsyncRun(selected, forwards, selectedCount, steps, speed_us);
+    startAsyncRun(selected, forwards, speeds, targets, selectedCount);
     sendOk("started");
 
   // ── stop_motor ──

@@ -95,6 +95,8 @@ def normalize_motor_ref(raw):
     return {
         'name': _as_str(raw.get('name')),
         'forward': _as_bool(raw.get('forward'), True),
+        # None inherits the task speed (which inherits the program global).
+        'speed_us': _as_speed(raw.get('speed_us')),
     }
 
 
@@ -304,6 +306,17 @@ def task_speed(task, program):
     if speed is None:
         return max(1, _as_int(program.get('global_speed_us'), DEFAULT_GLOBAL_SPEED_US))
     return max(1, _as_int(speed, DEFAULT_SPEED_US))
+
+
+def motor_speed(motor_ref, task, program):
+    """Resolve a single motor's effective speed.
+
+    Precedence: motor override -> task override -> program global.
+    """
+    speed = motor_ref.get('speed_us') if isinstance(motor_ref, dict) else None
+    if speed is not None:
+        return max(1, _as_int(speed, DEFAULT_SPEED_US))
+    return task_speed(task, program)
 
 
 # ── Station hardware config ──────────────────

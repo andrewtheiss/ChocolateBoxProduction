@@ -87,6 +87,27 @@ def _program_motor_refs(program):
     return refs
 
 
+def _connection_block(program):
+    """Return a warning if any station the program drives isn't connected.
+
+    This is the usual reason a program 'won't move' a motor even though the
+    manual tester works - the tester runs on whatever board is open, while the
+    program targets a station by name that may be on a disconnected port.
+    """
+    stations = {task.get('station') for (task, _) in _program_tasks(program) if task.get('station')}
+    missing = [s for s in sorted(stations) if web_ui.serials.get(s) is None]
+    if missing:
+        return ('Not connected: ' + ', '.join(missing) +
+                '. Connect these boards on the Devices page before running.')
+    return None
+
+
+def _program_tasks(program):
+    for step in program.get('steps', []):
+        for task in step.get('tasks', []):
+            yield task, step
+
+
 def _homing_block(program):
     """Return a warning string if the program requires homing and isn't homed."""
     if not program.get('require_homing'):
@@ -150,7 +171,7 @@ def programs_page():
 
                         def mk_run(target):
                             def do():
-                                block = _homing_block(target)
+                                block = _connection_block(target) or _homing_block(target)
                                 if block:
                                     ui.notify(block, type='warning')
                                     return
@@ -308,7 +329,7 @@ def program_editor_page(name: str):
 
             with ui.row().classes('items-center gap-2 flex-wrap'):
                 def run_now():
-                    block = _homing_block(program)
+                    block = _connection_block(program) or _homing_block(program)
                     if block:
                         ui.notify(block, type='warning')
                         return
@@ -320,6 +341,21 @@ def program_editor_page(name: str):
                 web_ui.action_button('Stop', on_click=lambda: web_ui.ensure_sequence_engine().stop(), variant='danger')
                 web_ui.action_button('Validate', on_click=refresh_validation, variant='neutral')
             refresh_validation()
+
+            run_status = ui.label('').classes('mono muted text-xs')
+
+            def refresh_run_status():
+                eng = web_ui.ensure_sequence_engine()
+                parts = [f'runner: {eng.state}']
+                if eng.current_step_name:
+                    parts.append(f'step: {eng.current_step_name}')
+                last = eng.last_result
+                if isinstance(last, dict) and last.get('status') not in (None, 'done'):
+                    detail = last.get('error') or last.get('status')
+                    parts.append(f'last: {detail}')
+                run_status.text = '  |  '.join(parts)
+            ui.timer(1.0, refresh_run_status)
+            refresh_run_status()
 
         # ── Steps ──
         with ui.card().classes('panel w-full'):
@@ -406,6 +442,10 @@ def _render_step_card(program, idx, step, rerender_steps, refresh_validation):
             ui.label('Completion').classes('eyebrow red')
             ui.toggle({'any': 'Any (whichever first)', 'all': 'All'}, value=completion.get('mode', 'any')) \
                 .bind_value(completion, 'mode').on_value_change(lambda e: web_ui.persist_state())
+        ui.label('How long this step runs = when its conditions are met. '
+                 'Add a Duration (ms) to run for a fixed time; use Limit switch / Encoder / '
+                 'Motors idle to end on an event. "Any" ends at the first met condition, '
+                 '"All" waits for every one.').classes('muted text-xs')
 
         conds_box = ui.column().classes('w-full gap-2')
 
@@ -478,7 +518,7 @@ def _render_task_row(program, step, task, ti, rerender_tasks):
             ui.label('No motors configured on this station yet (add them on the station page).').classes('muted text-xs')
         else:
             widgets = []
-            with ui.row().classes('items-center gap-4 flex-wrap'):
+            with ui.column().classes('w-full gap-1'):
                 for mn in names:
                     with ui.row().classes('items-center gap-2'):
                         cb = ui.checkbox(mn, value=mn in selected)
@@ -486,19 +526,30 @@ def _render_task_row(program, step, task, ti, rerender_tasks):
                             {'fwd': 'Fwd', 'rev': 'Rev'},
                             value='fwd' if selected.get(mn, {}).get('forward', True) else 'rev',
                         )
-                        widgets.append((mn, cb, direction))
+                        spd = ui.number(
+                            'us/step', value=selected.get(mn, {}).get('speed_us'),
+                            min=1, max=5000, step=1,
+                        ).props('outlined dense placeholder="task"').classes('w-28') \
+                            .tooltip('Per-motor speed. Blank = use the task/global speed.')
+                        widgets.append((mn, cb, direction, spd))
+            ui.label('Leave a motor\'s us/step blank to inherit the task speed. '
+                     'Set it to run that motor at its own rate.').classes('muted text-xs')
 
             def rebuild_motors(_=None):
                 motors = []
-                for mn, cb, direction in widgets:
+                for mn, cb, direction, spd in widgets:
                     if cb.value:
-                        motors.append({'name': mn, 'forward': direction.value == 'fwd'})
+                        ref = {'name': mn, 'forward': direction.value == 'fwd'}
+                        if spd.value:
+                            ref['speed_us'] = int(spd.value)
+                        motors.append(ref)
                 task['motors'] = motors
                 web_ui.persist_state()
 
-            for _, cb, direction in widgets:
+            for _, cb, direction, spd in widgets:
                 cb.on_value_change(rebuild_motors)
                 direction.on_value_change(rebuild_motors)
+                spd.on_value_change(rebuild_motors)
 
 
 def _render_condition_row(completion, cond, ci, rerender_conditions):
