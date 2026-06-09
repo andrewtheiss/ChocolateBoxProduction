@@ -6,11 +6,16 @@ from src.comms import (
     start_station, stop_station, send_command,
     add_motor, remove_motor, list_motors, run_motor, run_motor_group,
     stop_motor, verify_pin, set_station_id,
+    add_limit, remove_limit, list_limits, clear_limit,
+    add_encoder, remove_encoder, list_encoders,
+    save_config, clear_config,
 )
 from src.firmware import available_firmware_options, flash_firmware
-from src.routine_engine import RoutineRunner
+from src.routine_engine import SequenceEngine
+from src.homing import HomingController
 from src.state_machine import PipelineCoordinator
 from src.web_state import clone_station_motors, load_web_state, save_web_state
+from src import program_model
 
 # ── State ────────────────────────────────────
 serials: dict = {}
@@ -18,7 +23,8 @@ coordinator: PipelineCoordinator = None
 station_configs: dict = {}
 fsm_config: dict = {}
 persisted_state: dict = {}
-routine_runner: RoutineRunner = None
+sequence_engine: SequenceEngine = None
+homing_controller: HomingController = None
 log_lines: list = []
 STATION_ORDER = ['dispenser', 'roller', 'punch', 'crease']
 MOTOR_PIN_PRESETS = [
@@ -253,6 +259,10 @@ a {
 
 .panel > .q-card__section {
     padding: 0 !important;
+}
+
+.step-disabled {
+    opacity: 0.55;
 }
 
 .section-row {
@@ -774,10 +784,50 @@ def rebuild_coordinator():
     ensure_coordinator()
 
 
-def ensure_routine_runner():
-    global routine_runner
-    if routine_runner is None:
-        routine_runner = RoutineRunner(lambda: serials, add_log)
+def station_hw_provider():
+    """Provide each station's limit-switch / encoder config to the engine."""
+    result = {}
+    for name in STATION_ORDER:
+        station = get_saved_station(name)
+        result[name] = {
+            'limit_switches': station.get('limit_switches', []),
+            'encoders': station.get('encoders', []),
+        }
+    return result
+
+
+def ensure_sequence_engine():
+    global sequence_engine
+    if sequence_engine is None:
+        sequence_engine = SequenceEngine(lambda: serials, station_hw_provider, add_log)
+    return sequence_engine
+
+
+def homing_config_provider():
+    """Snapshot of homing-relevant config for the HomingController."""
+    return {
+        'global_speed_us': get_global_settings().get('global_speed_us', program_model.DEFAULT_GLOBAL_SPEED_US),
+        'stations': {
+            name: {
+                'motors': [m['name'] for m in get_saved_station(name).get('motors', [])],
+                'home_config': get_saved_station(name).get('home_config', {}),
+            }
+            for name in STATION_ORDER
+        },
+    }
+
+
+def ensure_homing_controller():
+    global homing_controller
+    if homing_controller is None:
+        homing_controller = HomingController(lambda: serials, homing_config_provider, add_log)
+    return homing_controller
+
+
+def get_global_settings():
+    settings = persisted_state.setdefault('global_settings', {})
+    settings.setdefault('global_speed_us', program_model.DEFAULT_GLOBAL_SPEED_US)
+    return settings
 
 
 def get_saved_station(name):
@@ -788,13 +838,85 @@ def get_saved_station(name):
         'motors': [],
         'limits': [],
         'triggers': [],
+        'limit_switches': [],
+        'encoders': [],
+        'home_config': {},
+        'verification': {'motors': {}, 'limit_switches': {}, 'encoders': {}},
     })
     station.setdefault('port_hint', None)
     station.setdefault('firmware', None)
     station.setdefault('motors', [])
     station.setdefault('limits', [])
     station.setdefault('triggers', [])
+    station.setdefault('limit_switches', [])
+    station.setdefault('encoders', [])
+    station.setdefault('home_config', {})
+    station.setdefault('verification', {'motors': {}, 'limit_switches': {}, 'encoders': {}})
     return station
+
+
+def get_station_verification(name):
+    verification = get_saved_station(name).setdefault(
+        'verification', {'motors': {}, 'limit_switches': {}, 'encoders': {}})
+    verification.setdefault('motors', {})
+    verification.setdefault('limit_switches', {})
+    verification.setdefault('encoders', {})
+    return verification
+
+
+def set_device_verified(name, kind, device, value):
+    """kind in {'motors','limit_switches','encoders'}."""
+    verification = get_station_verification(name)
+    verification.setdefault(kind, {})[device] = bool(value)
+    persist_state()
+
+
+def is_motor_verified(name, motor):
+    return bool(get_station_verification(name)['motors'].get(motor))
+
+
+def motor_config_report(name):
+    """Compare the board's live motor wiring to the saved config.
+
+    Returns {'connected': bool, 'motors': [{name, saved, live, status}]} where
+    status is 'match' | 'mismatch' | 'missing_on_board' | 'extra_on_board' | 'offline'.
+    """
+    saved_motors = get_saved_station(name).get('motors', [])
+    saved_by_name = {m['name']: m for m in saved_motors}
+    ser = serials.get(name)
+
+    if ser is None:
+        return {
+            'connected': False,
+            'motors': [{'name': m['name'], 'saved': m, 'live': None, 'status': 'offline'} for m in saved_motors],
+        }
+
+    live = list_motors(ser)
+    live_motors = live.get('motors', []) if (live and live.get('status') == 'ok') else []
+    live_by_name = {m['name']: m for m in live_motors}
+
+    def pins_match(a, b):
+        return (int(a['pul_pin']) == int(b['pul_pin'])
+                and int(a['dir_pin']) == int(b['dir_pin'])
+                and int(a['ena_pin']) == int(b['ena_pin'])
+                and bool(a.get('reversed', False)) == bool(b.get('reversed', False)))
+
+    rows = []
+    for m in saved_motors:
+        live_m = live_by_name.get(m['name'])
+        if live_m is None:
+            status = 'missing_on_board'
+        elif pins_match(m, live_m):
+            status = 'match'
+        else:
+            status = 'mismatch'
+        rows.append({'name': m['name'], 'saved': m, 'live': live_m, 'status': status})
+
+    for m in live_motors:
+        if m['name'] not in saved_by_name:
+            rows.append({'name': m['name'], 'saved': None, 'live': m, 'status': 'extra_on_board'})
+
+    return {'connected': True, 'motors': rows}
 
 
 def get_routines():
@@ -806,23 +928,6 @@ def get_routine(name):
         if routine.get('name') == name:
             return routine
     return None
-
-
-def ensure_routine_defaults(routine):
-    routine.setdefault('name', 'New Routine')
-    routine.setdefault('steps', [])
-    routine.setdefault('trigger', {'type': 'manual'})
-    routine.setdefault('repeat', False)
-    return routine
-
-
-def make_new_routine(name):
-    return ensure_routine_defaults({
-        'name': name,
-        'steps': [],
-        'trigger': {'type': 'manual'},
-        'repeat': False,
-    })
 
 
 def persist_state():
@@ -924,27 +1029,6 @@ def apply_saved_station_state(name, ser):
     return {'status': 'restored', 'count': len(saved_motors)}
 
 
-def step_summary(step):
-    step_type = step.get('type')
-    if step_type == 'run_motor_for':
-        direction = 'forward' if step.get('forward', True) else 'reverse'
-        return (
-            f'{step.get("station")} → motor {step.get("motor")} {direction} '
-            f'for {step.get("duration_ms")}ms @ {step.get("speed_us")}us'
-        )
-    if step_type == 'run_group_for':
-        motor_parts = []
-        for motor in step.get('motors', []):
-            motor_parts.append(f'{motor.get("name")}({"fwd" if motor.get("forward", True) else "rev"})')
-        return (
-            f'{step.get("station")} → group [{", ".join(motor_parts)}] '
-            f'for {step.get("duration_ms")}ms @ {step.get("speed_us")}us'
-        )
-    if step_type == 'delay':
-        return f'delay for {step.get("duration_ms")}ms'
-    return json.dumps(step)
-
-
 # ── Layout with sidebar ─────────────────────
 def page_layout(active='dashboard'):
     theme()
@@ -956,7 +1040,10 @@ def page_layout(active='dashboard'):
             items = [
                 ('Dashboard', 'grid_view', '/dashboard', 'dashboard'),
                 ('Devices', 'usb', '/devices', 'devices'),
-                ('Routines', 'playlist_play', '/routines', 'routines'),
+                ('Verify Setup', 'fact_check', '/verify', 'verify'),
+                ('Startup / Homing', 'home', '/homing', 'homing'),
+                ('Programs', 'playlist_play', '/routines', 'routines'),
+                ('Settings', 'tune', '/settings', 'settings'),
                 ('Style Guide', 'palette', '/styleguide', 'styleguide'),
             ]
             for label, icon, url, key in items:
@@ -983,103 +1070,6 @@ def page_layout(active='dashboard'):
         ui.label('ChocolateBox Production').classes('app-shell__title ml-2')
 
     return ui.column().classes('container page content-grid')
-
-
-# ── Routines page ─────────────────────────────
-@ui.page('/routines')
-def routines_page():
-    ensure_routine_runner()
-    content = page_layout('routines')
-
-    with content:
-        with ui.column().classes('w-full gap-2'):
-            ui.label('Routines').classes('h5 page-title')
-            ui.label('Create, review, and run saved station routines.').classes('muted text-sm')
-
-        with ui.card().classes('panel w-full'):
-            ui.label('Runner').classes('eyebrow red')
-            runner_state = ui.label('').classes('readout mono')
-
-            def refresh_runner_state():
-                state = {
-                    'state': routine_runner.state if routine_runner else 'IDLE',
-                    'current_routine': routine_runner.current_routine if routine_runner else None,
-                    'current_step': routine_runner.current_step if routine_runner else None,
-                    'last_result': routine_runner.last_result if routine_runner else None,
-                }
-                runner_state.text = json.dumps(state, indent=2)
-
-            with ui.row().classes('items-center gap-2 flex-wrap'):
-                action_button('Refresh', on_click=refresh_runner_state, variant='neutral')
-                action_button('Stop Runner', on_click=lambda: (routine_runner.stop(), refresh_runner_state()), variant='danger')
-
-            ui.timer(1.0, refresh_runner_state)
-            refresh_runner_state()
-
-        with ui.card().classes('panel w-full'):
-            ui.label('Saved Routines').classes('eyebrow red')
-            routines_box = ui.column().classes('w-full gap-2')
-
-            def render_routines():
-                routines_box.clear()
-                routines = get_routines()
-                with routines_box:
-                    if not routines:
-                        ui.label('No routines saved yet. Add one below.').classes('muted text-sm')
-                        return
-
-                    for routine in routines:
-                        ensure_routine_defaults(routine)
-                        steps = routine.get('steps', [])
-
-                        def mk_run(selected_routine):
-                            def run_selected():
-                                ok, message = routine_runner.run(selected_routine)
-                                ui.notify(message, type='positive' if ok else 'warning')
-                                refresh_runner_state()
-                            return run_selected
-
-                        def mk_delete(selected_routine):
-                            def delete_selected():
-                                get_routines().remove(selected_routine)
-                                persist_state()
-                                render_routines()
-                            return delete_selected
-
-                        with ui.row().classes('items-start gap-3 section-row w-full flex-wrap'):
-                            with ui.column().classes('gap-1'):
-                                ui.label(routine.get('name', 'Unnamed routine')).classes('text-sm font-medium')
-                                ui.label(f'{len(steps)} step(s) | repeat: {routine.get("repeat", False)}').classes('mono muted')
-                                for step in steps[:4]:
-                                    ui.label(step_summary(step)).classes('mono muted')
-                                if len(steps) > 4:
-                                    ui.label(f'+ {len(steps) - 4} more step(s)').classes('mono muted')
-                            ui.element('div').classes('flex-grow')
-                            action_button('Run', on_click=mk_run(routine), icon='play_arrow')
-                            action_button('Delete', on_click=mk_delete(routine), variant='danger')
-
-            render_routines()
-
-        with ui.card().classes('panel w-full'):
-            ui.label('New Routine').classes('eyebrow red')
-            with ui.row().classes('items-end gap-3 flex-wrap'):
-                routine_name = ui.input('Name', value='New Routine').props('outlined').classes('w-56')
-
-                def add_routine():
-                    name = (routine_name.value or '').strip()
-                    if not name:
-                        ui.notify('Name required', type='warning')
-                        return
-                    if get_routine(name):
-                        ui.notify('Routine name already exists', type='warning')
-                        return
-                    get_routines().append(make_new_routine(name))
-                    persist_state()
-                    routine_name.value = 'New Routine'
-                    render_routines()
-                    ui.notify(f'Added {name}', type='positive')
-
-                action_button('Add Routine', on_click=add_routine, icon='add')
 
 
 # ── Style guide ───────────────────────────────
@@ -1250,7 +1240,54 @@ def devices_page():
 
                                         action_button('Connect', on_click=mk_connect(p, sel))
 
-                action_button('Rescan', on_click=refresh, icon='refresh', variant='neutral')
+                def auto_detect():
+                    ports = scan_ports()
+                    assigned_ports = {s.port for s in serials.values() if s}
+                    matched = 0
+                    skipped = []
+                    for p in ports:
+                        if p.device in assigned_ports:
+                            continue
+                        ser = None
+                        try:
+                            ser = connect_serial(p.device, 9600)
+                            info = identify(ser)
+                            board_id = info.get('id') if info else None
+                            if board_id in STATION_ORDER and not serials.get(board_id):
+                                if station_configs.get(board_id, {}).get('baud', 9600) != 9600:
+                                    ser.close()
+                                    ser = connect_serial(p.device, station_configs[board_id]['baud'])
+                                    info = identify(ser)
+                                serials[board_id] = ser
+                                remember_port_hint(board_id, p.device)
+                                remember_station_firmware(board_id, info)
+                                restore = apply_saved_station_state(board_id, ser)
+                                matched += 1
+                                add_log(f'Auto-detect: {p.device} → {board_id} '
+                                        f'({restore.get("count", 0)} motor(s) restored)')
+                            else:
+                                ser.close()
+                                label = board_id or 'unknown'
+                                skipped.append(f'{p.device} (id="{label}")')
+                        except Exception as e:
+                            if ser:
+                                try:
+                                    ser.close()
+                                except Exception:
+                                    pass
+                            skipped.append(f'{p.device}: {e}')
+                    rebuild_coordinator()
+                    refresh()
+                    if matched:
+                        ui.notify(f'Auto-assigned {matched} board(s) by name', type='positive')
+                    if skipped:
+                        ui.notify('No match: ' + '; '.join(skipped), type='warning')
+                    if not matched and not skipped:
+                        ui.notify('No unassigned boards found', type='info')
+
+                with ui.row().classes('gap-2'):
+                    action_button('Auto-Detect & Assign', on_click=auto_detect, icon='auto_fix_high')
+                    action_button('Rescan', on_click=refresh, icon='refresh', variant='neutral')
 
         with ui.card().classes('panel w-full'):
             with ui.column().classes('w-full gap-2'):
@@ -1479,6 +1516,80 @@ def station_detail_page(name: str):
                 ui.label('Connect first.').classes('muted text-sm')
 
         with ui.card().classes('panel w-full'):
+            ui.label('Board Identity').classes('eyebrow red')
+            ui.label('Write a name into the board (saved in its EEPROM). Auto-Detect on the '
+                     'Devices page uses this name to load the right config automatically.').classes('muted text-xs')
+            if ser:
+                current_id = '—'
+                info0 = identify(ser)
+                if info0:
+                    current_id = info0.get('id', '—')
+                ui.label(f'Current board name: {current_id}').classes('mono muted text-xs')
+                with ui.row().classes('items-end gap-2 flex-wrap'):
+                    id_in = ui.input('Board name', value=name).props('outlined').classes('w-48')
+
+                    def write_id():
+                        new_id = (id_in.value or '').strip()
+                        if not new_id:
+                            ui.notify('Name required', type='warning')
+                            return
+                        resp = set_station_id(ser, new_id)
+                        if resp and resp.get('status') == 'id_set':
+                            add_log(f'{name}: board name set to "{new_id}"')
+                            ui.notify(f'Board name written: {new_id}', type='positive')
+                            refresh_identity()
+                        else:
+                            ui.notify(f'Failed: {resp.get("error") if resp else "no response"}', type='negative')
+
+                    action_button('Write Name', on_click=write_id, icon='badge')
+                    action_button('Use Station Name', on_click=lambda: id_in.set_value(name), variant='neutral')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
+
+        with ui.card().classes('panel w-full'):
+            ui.label('Board Config (EEPROM)').classes('eyebrow red')
+            ui.label('Burn the current motors, limit switches and encoders into the board so it '
+                     'rebuilds them itself on every boot - no host needed to repopulate.').classes('muted text-xs')
+            if ser:
+                cfg_status = ui.label('').classes('mono muted text-xs')
+
+                def save_to_board():
+                    station = get_saved_station(name)
+                    # Make sure every saved limit/encoder is live on the board first
+                    for sw in station.get('limit_switches', []):
+                        remove_limit(ser, sw['name'])
+                        add_limit(ser, sw['name'], sw['pin'], sw.get('normally_open', True), sw.get('stops', []))
+                    for enc in station.get('encoders', []):
+                        remove_encoder(ser, enc['name'])
+                        add_encoder(ser, enc['name'], enc['pin_a'], enc['pin_b'], enc.get('counts_per_rev', 0))
+                    resp = save_config(ser)
+                    if resp and resp.get('status') == 'config_saved':
+                        cfg_status.text = (f"Saved to EEPROM: {resp.get('motors')} motor(s), "
+                                           f"{resp.get('limits')} limit(s), {resp.get('encoders')} encoder(s) "
+                                           f"({resp.get('bytes')} bytes)")
+                        add_log(f'{name}: config saved to EEPROM ({resp.get("bytes")} bytes)')
+                        ui.notify('Config written to board EEPROM', type='positive')
+                    else:
+                        err = resp.get('error') if resp else 'no response'
+                        cfg_status.text = f'Save failed: {err}'
+                        ui.notify(f'Save failed: {err}', type='negative')
+
+                def clear_board_config():
+                    resp = clear_config(ser)
+                    if resp and resp.get('status') == 'config_cleared':
+                        cfg_status.text = 'EEPROM config cleared (board will boot empty next time)'
+                        add_log(f'{name}: EEPROM config cleared')
+                        ui.notify('Board config cleared', type='warning')
+                    else:
+                        ui.notify('Clear failed', type='negative')
+
+                with ui.row().classes('gap-2'):
+                    action_button('Save to Board', on_click=save_to_board, icon='save')
+                    action_button('Clear Board Config', on_click=clear_board_config, variant='danger')
+            else:
+                ui.label('Connect first.').classes('muted text-sm')
+
+        with ui.card().classes('panel w-full'):
             ui.label('Saved State').classes('eyebrow red')
             saved_state_meta = ui.label('').classes('mono muted text-xs')
 
@@ -1527,6 +1638,11 @@ def station_detail_page(name: str):
             ui.label('Motors').classes('eyebrow red')
             motor_status = ui.label('').classes('mono muted text-xs')
             motors_box = ui.column().classes('w-full gap-2')
+            # Last-used test values, kept across refreshes so they don't reset.
+            test_defaults = {
+                'steps': 1000,
+                'speed': int(get_global_settings().get('global_speed_us', 62)),
+            }
             tester_options = {}
             tester_motor = None
             tester_result = None
@@ -1612,8 +1728,10 @@ def station_detail_page(name: str):
                             ui.label(f'{m["pul_pin"]}/{m["dir_pin"]}/{m["ena_pin"]}').classes('mono muted text-xs')
                             ui.element('div').classes('flex-grow')
 
-                            s_w = ui.number(value=1000, min=1, max=50000, step=100).props('outlined').classes('w-24').tooltip('Steps')
-                            sp_w = ui.number(value=62, min=1, max=5000, step=1).props('outlined').classes('w-20').tooltip('μs/step')
+                            s_w = ui.number(value=test_defaults['steps'], min=1, max=50000, step=100).props('outlined').classes('w-24').tooltip('Steps')
+                            sp_w = ui.number(value=test_defaults['speed'], min=1, max=5000, step=1).props('outlined').classes('w-20').tooltip('μs/step')
+                            s_w.on_value_change(lambda e: test_defaults.update(steps=int(e.value)) if e.value else None)
+                            sp_w.on_value_change(lambda e: test_defaults.update(speed=int(e.value)) if e.value else None)
 
                             def mk_run(mn, sw, spw, fwd):
                                 def f():
@@ -1657,8 +1775,10 @@ def station_detail_page(name: str):
                 with ui.column().classes('w-full gap-3'):
                     with ui.row().classes('items-end gap-2 flex-wrap'):
                         tester_motor = ui.select(options={}).props('outlined').classes('w-36')
-                        tester_steps = ui.number('Steps', value=1000, min=1, max=50000, step=100).props('outlined').classes('w-28')
-                        tester_speed = ui.number('Speed μs', value=62, min=1, max=5000, step=1).props('outlined').classes('w-28')
+                        tester_steps = ui.number('Steps', value=test_defaults['steps'], min=1, max=50000, step=100).props('outlined').classes('w-28')
+                        tester_speed = ui.number('Speed μs', value=test_defaults['speed'], min=1, max=5000, step=1).props('outlined').classes('w-28')
+                        tester_steps.on_value_change(lambda e: test_defaults.update(steps=int(e.value)) if e.value else None)
+                        tester_speed.on_value_change(lambda e: test_defaults.update(speed=int(e.value)) if e.value else None)
                         tester_direction = ui.toggle(['forward', 'reverse'], value='forward')
 
                         def run_test():
@@ -1744,6 +1864,157 @@ def station_detail_page(name: str):
                 ui.label('Connect first.').classes('muted text-sm')
 
         apply_default_motor_preset()
+
+        def station_motor_names():
+            names = [m['name'] for m in station_motor_cache.get(name, [])]
+            if not names:
+                names = [m['name'] for m in get_saved_station(name).get('motors', [])]
+            return names
+
+        # ── Limit Switches ──
+        with ui.card().classes('panel w-full'):
+            ui.label('Limit Switches').classes('eyebrow red')
+            ui.label('Firmware stops the listed motors instantly when a switch trips.').classes('muted text-xs')
+            limits_box = ui.column().classes('w-full gap-2')
+
+            def render_limits():
+                limits_box.clear()
+                station = get_saved_station(name)
+                switches = station.get('limit_switches', [])
+                with limits_box:
+                    if not switches:
+                        ui.label('No limit switches configured.').classes('muted text-sm')
+                    for sw in switches:
+                        def mk_remove_limit(target):
+                            def do():
+                                station['limit_switches'] = [s for s in station['limit_switches'] if s is not target]
+                                persist_state()
+                                if ser:
+                                    remove_limit(ser, target.get('name'))
+                                render_limits()
+                            return do
+
+                        with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
+                            ui.label(sw.get('name')).classes('text-sm font-medium w-28')
+                            tag('NO' if sw.get('normally_open', True) else 'NC', 'idle')
+                            ui.label(f'pin {sw.get("pin")}').classes('mono muted text-xs')
+                            stops = sw.get('stops', [])
+                            ui.label('stops: ' + (', '.join(stops) if stops else 'ALL')).classes('mono muted text-xs')
+                            ui.element('div').classes('flex-grow')
+                            action_button('Remove', on_click=mk_remove_limit(sw), variant='danger')
+
+            render_limits()
+
+            with ui.row().classes('items-end gap-2 flex-wrap'):
+                ls_name = ui.input('Name').props('outlined').classes('w-28')
+                ls_pin = ui.number('Pin', value=2, min=0, max=21).props('outlined').classes('w-20')
+                ls_no = ui.toggle({'no': 'Normally Open', 'nc': 'Normally Closed'}, value='no')
+                ls_stops = ui.select(options=station_motor_names(), multiple=True, label='Stops (blank = all)') \
+                    .props('outlined').classes('w-48')
+
+                def add_limit_switch():
+                    nm = (ls_name.value or '').strip()
+                    if not nm:
+                        ui.notify('Name required', type='warning')
+                        return
+                    station = get_saved_station(name)
+                    if any(s.get('name') == nm for s in station['limit_switches']):
+                        ui.notify('Limit switch name already exists', type='warning')
+                        return
+                    sw = program_model.normalize_limit_switch({
+                        'name': nm,
+                        'pin': int(ls_pin.value),
+                        'normally_open': ls_no.value == 'no',
+                        'stops': list(ls_stops.value or []),
+                    })
+                    station['limit_switches'].append(sw)
+                    persist_state()
+                    if ser:
+                        resp = add_limit(ser, sw['name'], sw['pin'], sw['normally_open'], sw['stops'])
+                        if not resp or resp.get('status') != 'limit_added':
+                            ui.notify(f'Saved, but board rejected: {resp.get("error") if resp else "no response"}', type='warning')
+                    ls_name.value = ''
+                    render_limits()
+                    ui.notify(f'Added limit switch {nm}', type='positive')
+
+                action_button('Add Switch', on_click=add_limit_switch, icon='add')
+
+                def sync_limits_to_board():
+                    if not ser:
+                        ui.notify('Connect first', type='warning')
+                        return
+                    for sw in get_saved_station(name).get('limit_switches', []):
+                        remove_limit(ser, sw['name'])
+                        add_limit(ser, sw['name'], sw['pin'], sw.get('normally_open', True), sw.get('stops', []))
+                    ui.notify('Synced limit switches to board', type='positive')
+
+                action_button('Sync To Board', on_click=sync_limits_to_board, variant='neutral')
+
+        # ── Encoders ──
+        with ui.card().classes('panel w-full'):
+            ui.label('Encoders').classes('eyebrow red')
+            ui.label('Optional rotary feedback for encoder-count step conditions.').classes('muted text-xs')
+            encoders_box = ui.column().classes('w-full gap-2')
+
+            def render_encoders():
+                encoders_box.clear()
+                station = get_saved_station(name)
+                encs = station.get('encoders', [])
+                with encoders_box:
+                    if not encs:
+                        ui.label('No encoders configured.').classes('muted text-sm')
+                    for enc in encs:
+                        def mk_remove_encoder(target):
+                            def do():
+                                station['encoders'] = [e for e in station['encoders'] if e is not target]
+                                persist_state()
+                                if ser:
+                                    remove_encoder(ser, target.get('name'))
+                                render_encoders()
+                            return do
+
+                        with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
+                            ui.label(enc.get('name')).classes('text-sm font-medium w-28')
+                            ui.label(f'motor: {enc.get("motor") or "—"}').classes('mono muted text-xs')
+                            ui.label(f'A{enc.get("pin_a")}/B{enc.get("pin_b")} cpr {enc.get("counts_per_rev")}').classes('mono muted text-xs')
+                            ui.element('div').classes('flex-grow')
+                            action_button('Remove', on_click=mk_remove_encoder(enc), variant='danger')
+
+            render_encoders()
+
+            with ui.row().classes('items-end gap-2 flex-wrap'):
+                enc_name = ui.input('Name').props('outlined').classes('w-28')
+                enc_motor = ui.select(options=station_motor_names(), label='Motor').props('outlined').classes('w-32')
+                enc_a = ui.number('Pin A', value=2, min=0, max=21).props('outlined').classes('w-20')
+                enc_b = ui.number('Pin B', value=3, min=-1, max=21).props('outlined').classes('w-20')
+                enc_cpr = ui.number('Counts/rev', value=0, min=0, max=100000).props('outlined').classes('w-28')
+
+                def add_encoder_cfg():
+                    nm = (enc_name.value or '').strip()
+                    if not nm:
+                        ui.notify('Name required', type='warning')
+                        return
+                    station = get_saved_station(name)
+                    if any(e.get('name') == nm for e in station['encoders']):
+                        ui.notify('Encoder name already exists', type='warning')
+                        return
+                    enc = program_model.normalize_encoder({
+                        'name': nm,
+                        'motor': enc_motor.value or '',
+                        'pin_a': int(enc_a.value),
+                        'pin_b': int(enc_b.value),
+                        'counts_per_rev': int(enc_cpr.value),
+                    })
+                    station['encoders'].append(enc)
+                    persist_state()
+                    if ser:
+                        add_encoder(ser, enc['name'], enc['pin_a'], enc['pin_b'], enc['counts_per_rev'])
+                    enc_name.value = ''
+                    render_encoders()
+                    ui.notify(f'Added encoder {nm}', type='positive')
+
+                action_button('Add Encoder', on_click=add_encoder_cfg, icon='add')
+
         with ui.card().classes('panel w-full'):
             ui.label('Pin Test').classes('eyebrow red')
             if ser:
@@ -1792,5 +2063,14 @@ def start_web_ui(stations_cfg, fsm_cfg):
         station_motor_cache[station_name] = clone_station_motors(
             get_saved_station(station_name).get('motors', [])
         )
+    ensure_sequence_engine()
+    ensure_homing_controller()
     logging.info("Web UI → http://localhost:8080")
     ui.run(title='ChocolateBox', port=8080, reload=False, favicon='🏭')
+
+
+# Registers the additional pages (Programs editor, Settings, Startup/Homing).
+# Imported last so web_ui is fully defined when these modules import it.
+from src import program_ui  # noqa: E402,F401
+from src import homing_ui  # noqa: E402,F401
+from src import verify_ui  # noqa: E402,F401

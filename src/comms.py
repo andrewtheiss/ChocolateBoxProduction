@@ -9,6 +9,36 @@ IGNORED_PORT_KEYWORDS = ['bluetooth', 'wlan', 'debug']
 _SERIAL_LOCKS = {}
 _SERIAL_LOCKS_GUARD = threading.Lock()
 
+# ── Async event dispatch ─────────────────────
+# Firmware may emit unsolicited lines like {"event":"limit","name":...}.
+# Handlers registered here are called as handler(ser, event_dict) whenever
+# such a line is seen, either while waiting for a command response or when
+# pump_events() is called during an idle poll.
+_EVENT_HANDLERS = []
+_EVENT_HANDLERS_GUARD = threading.Lock()
+
+
+def register_event_handler(handler):
+    with _EVENT_HANDLERS_GUARD:
+        if handler not in _EVENT_HANDLERS:
+            _EVENT_HANDLERS.append(handler)
+
+
+def unregister_event_handler(handler):
+    with _EVENT_HANDLERS_GUARD:
+        if handler in _EVENT_HANDLERS:
+            _EVENT_HANDLERS.remove(handler)
+
+
+def _dispatch_event(ser, event):
+    with _EVENT_HANDLERS_GUARD:
+        handlers = list(_EVENT_HANDLERS)
+    for handler in handlers:
+        try:
+            handler(ser, event)
+        except Exception:
+            logging.exception("Event handler error")
+
 
 def _get_serial_lock(ser):
     key = getattr(ser, 'port', None) or id(ser)
@@ -40,20 +70,59 @@ def connect_serial(port, baud=9600):
 
 
 def send_json(ser, payload):
-    """Send a JSON command and return the parsed JSON response dict, or None."""
+    """Send a JSON command and return the parsed JSON response dict, or None.
+
+    Any async event lines ({"event": ...}) seen while waiting for the response
+    are dispatched to registered handlers and skipped, so events never corrupt
+    the request/response flow.
+    """
     if ser is None:
         return None
     try:
         with _get_serial_lock(ser):
             ser.write(dumps(payload).encode() + b'\n')
             ser.flush()
-            line = ser.readline().decode().strip()
-        if not line:
-            return None
-        return loads(line)
+            for _ in range(24):  # bounded so a noisy event stream can't hang us
+                line = ser.readline().decode(errors='ignore').strip()
+                if not line:
+                    return None
+                try:
+                    msg = loads(line)
+                except Exception:
+                    continue
+                if isinstance(msg, dict) and 'event' in msg:
+                    _dispatch_event(ser, msg)
+                    continue
+                return msg
+        return None
     except Exception as e:
         logging.warning(f"Comms error: {e}")
         return None
+
+
+def pump_events(ser):
+    """Drain any pending unsolicited event lines without sending a command.
+
+    Call this from idle poll loops so firmware-emitted events (e.g. a limit
+    switch trip that happens between commands) get dispatched promptly.
+    """
+    if ser is None:
+        return
+    try:
+        with _get_serial_lock(ser):
+            while getattr(ser, 'in_waiting', 0):
+                line = ser.readline().decode(errors='ignore').strip()
+                if not line:
+                    break
+                try:
+                    msg = loads(line)
+                except Exception:
+                    continue
+                if isinstance(msg, dict) and 'event' in msg:
+                    _dispatch_event(ser, msg)
+                # Stray (non-event) lines while idle are dropped.
+    except Exception as e:
+        logging.debug(f"pump_events error: {e}")
 
 
 def send_command(ser, cmd, **params):
@@ -126,5 +195,75 @@ def verify_pin(ser, pin, mode="output"):
     return send_command(ser, "verify_pin", pin=pin, mode=mode)
 
 
+def set_zero(ser, name=None):
+    """Mark a motor's current position as 0 (or all motors if name is None)."""
+    if name:
+        return send_command(ser, "set_zero", name=name)
+    return send_command(ser, "set_zero")
+
+
+def get_position(ser, name):
+    """Return {'status':'ok','name':..., 'position': int, 'running': bool}."""
+    return send_command(ser, "get_position", name=name)
+
+
 def set_station_id(ser, station_id):
     return send_command(ser, "set_id", id=station_id)
+
+
+def save_config(ser):
+    """Persist the board's current motors/limits/encoders to its EEPROM so they
+    are reconstructed automatically on the next boot/reconnect."""
+    return send_command(ser, "save_config")
+
+
+def clear_config(ser):
+    """Erase the board's persisted EEPROM config."""
+    return send_command(ser, "clear_config")
+
+
+# ── Limit switches ──────────────────────────
+
+def add_limit(ser, name, pin, normally_open=True, stops=None):
+    """Register a limit switch on the board. When tripped, the firmware stops
+    the associated motors immediately and emits an async limit event."""
+    return send_command(ser, "add_limit", name=name, pin=pin,
+                        normally_open=bool(normally_open), stops=stops or [])
+
+
+def remove_limit(ser, name):
+    return send_command(ser, "remove_limit", name=name)
+
+
+def list_limits(ser):
+    return send_command(ser, "list_limits")
+
+
+def clear_limit(ser, name=None):
+    """Clear a latched limit-trip flag so the switch can fire again."""
+    if name:
+        return send_command(ser, "clear_limit", name=name)
+    return send_command(ser, "clear_limit")
+
+
+# ── Encoders (firmware support reserved; see generic.ino) ──
+
+def add_encoder(ser, name, pin_a, pin_b=-1, counts_per_rev=0):
+    return send_command(ser, "add_encoder", name=name, pin_a=pin_a,
+                        pin_b=pin_b, counts_per_rev=counts_per_rev)
+
+
+def remove_encoder(ser, name):
+    return send_command(ser, "remove_encoder", name=name)
+
+
+def list_encoders(ser):
+    return send_command(ser, "list_encoders")
+
+
+def get_encoder(ser, name):
+    return send_command(ser, "get_encoder", name=name)
+
+
+def reset_encoder(ser, name):
+    return send_command(ser, "reset_encoder", name=name)

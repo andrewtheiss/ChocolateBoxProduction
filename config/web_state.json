@@ -1,16 +1,156 @@
 {
+  "global_settings": {
+    "global_speed_us": 62
+  },
   "last_active_routine": null,
-  "routines": [],
+  "routines": [
+    {
+      "global_speed_us": 200,
+      "name": "PunchMain",
+      "repeat": false,
+      "require_homing": false,
+      "steps": [
+        {
+          "completion": {
+            "conditions": [
+              {
+                "ms": 2000.0,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "PunchDown",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": false,
+                  "name": "Motor 1",
+                  "speed_us": 200
+                }
+              ],
+              "speed_us": 1000,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "completion": {
+            "conditions": [
+              {
+                "ms": 1100.0,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "Pinchers Pinch",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": true,
+                  "name": "Motor 2"
+                },
+                {
+                  "forward": true,
+                  "name": "Motor 3"
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "completion": {
+            "conditions": [
+              {
+                "ms": 1100.0,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "Pinchers Retract",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": false,
+                  "name": "Motor 2"
+                },
+                {
+                  "forward": false,
+                  "name": "Motor 3"
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "completion": {
+            "conditions": [
+              {
+                "ms": 2000.0,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "PunchUp",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": true,
+                  "name": "Motor 1"
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        }
+      ],
+      "trigger": {
+        "type": "manual"
+      },
+      "version": 2
+    }
+  ],
   "stations": {
     "crease": {
+      "encoders": [],
       "firmware": null,
+      "home_config": {},
+      "limit_switches": [],
       "limits": [],
       "motors": [],
       "port_hint": null,
-      "triggers": []
+      "triggers": [],
+      "verification": {
+        "encoders": {},
+        "limit_switches": {},
+        "motors": {}
+      }
     },
     "dispenser": {
+      "encoders": [],
       "firmware": "generic",
+      "home_config": {},
+      "limit_switches": [],
       "limits": [],
       "motors": [
         {
@@ -21,11 +161,19 @@
           "reversed": false
         }
       ],
-      "port_hint": "/dev/cu.usbmodem1113401",
-      "triggers": []
+      "port_hint": "/dev/cu.usbmodem113101",
+      "triggers": [],
+      "verification": {
+        "encoders": {},
+        "limit_switches": {},
+        "motors": {}
+      }
     },
     "punch": {
+      "encoders": [],
       "firmware": "generic",
+      "home_config": {},
+      "limit_switches": [],
       "limits": [],
       "motors": [
         {
@@ -34,13 +182,35 @@
           "name": "Motor 1",
           "pul_pin": 9,
           "reversed": false
+        },
+        {
+          "dir_pin": 11,
+          "ena_pin": 10,
+          "name": "Motor 2",
+          "pul_pin": 12,
+          "reversed": true
+        },
+        {
+          "dir_pin": 5,
+          "ena_pin": 4,
+          "name": "Motor 3",
+          "pul_pin": 6,
+          "reversed": false
         }
       ],
-      "port_hint": "/dev/cu.usbmodem1113401",
-      "triggers": []
+      "port_hint": "/dev/cu.usbmodem11401",
+      "triggers": [],
+      "verification": {
+        "encoders": {},
+        "limit_switches": {},
+        "motors": {}
+      }
     },
     "roller": {
+      "encoders": [],
       "firmware": "generic",
+      "home_config": {},
+      "limit_switches": [],
       "limits": [],
       "motors": [
         {
@@ -52,8 +222,13 @@
         }
       ],
       "port_hint": "/dev/cu.usbmodem1113401",
-      "triggers": []
+      "triggers": [],
+      "verification": {
+        "encoders": {},
+        "limit_switches": {},
+        "motors": {}
+      }
     }
   },
-  "version": 1
+  "version": 2
 }
