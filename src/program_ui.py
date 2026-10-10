@@ -303,7 +303,7 @@ def program_editor_page(name: str):
 
                 web_ui.action_button('Rename', on_click=do_rename, variant='neutral')
 
-                ui.number('Global speed (us/step)', min=1, max=5000, step=1) \
+                ui.number('Global speed (us/step)', min=1, max=20000, step=1) \
                     .props('outlined').classes('w-44') \
                     .bind_value(program, 'global_speed_us').on_value_change(lambda e: _persist())
 
@@ -397,8 +397,42 @@ def program_editor_page(name: str):
 def _render_step_card(program, idx, step, rerender_steps, refresh_validation):
     steps = program['steps']
     step.setdefault('enabled', True)
+    step.setdefault('collapsed', False)
     with ui.card().classes('panel w-full' + ('' if step.get('enabled', True) else ' step-disabled')):
+
+        def move_up():
+            if idx > 0:
+                steps[idx - 1], steps[idx] = steps[idx], steps[idx - 1]
+                web_ui.persist_state()
+                rerender_steps()
+
+        def move_down():
+            if idx < len(steps) - 1:
+                steps[idx + 1], steps[idx] = steps[idx], steps[idx + 1]
+                web_ui.persist_state()
+                rerender_steps()
+
+        def delete_step():
+            steps.pop(idx)
+            web_ui.persist_state()
+            rerender_steps()
+            refresh_validation()
+
+        def run_step_now():
+            block = _step_connection_block(step)
+            if block:
+                ui.notify(block, type='warning')
+                return
+            engine = web_ui.ensure_sequence_engine()
+            ok, message = engine.run_step(program, idx)
+            ui.notify(message, type='positive' if ok else 'warning')
+
+        # ── Header (always visible: caret, toggle, name, summary, run) ──
         with ui.row().classes('items-center gap-2 w-full flex-wrap'):
+            caret = ui.button(
+                icon='chevron_right' if step.get('collapsed') else 'expand_more'
+            ).props('flat round dense').tooltip('Expand / collapse step')
+
             def on_enabled(e):
                 step['enabled'] = e.value
                 web_ui.persist_state()
@@ -408,100 +442,87 @@ def _render_step_card(program, idx, step, rerender_steps, refresh_validation):
 
             ui.input('Step name').props('outlined dense').classes('w-48') \
                 .bind_value(step, 'name').on_value_change(lambda e: web_ui.persist_state())
-            ui.label(step_summary(step, program)).classes('mono muted')
+            summary_label = ui.label(step_summary(step, program)).classes('mono muted')
             if not step.get('enabled', True):
                 ui.label('(disabled)').classes('mono muted')
             ui.element('div').classes('flex-grow')
 
-            def run_step_now():
-                block = _step_connection_block(step)
-                if block:
-                    ui.notify(block, type='warning')
-                    return
-                engine = web_ui.ensure_sequence_engine()
-                ok, message = engine.run_step(program, idx)
-                ui.notify(message, type='positive' if ok else 'warning')
-
             web_ui.action_button('Run Step', on_click=run_step_now, icon='play_arrow', variant='outline')
 
-            def move_up():
-                if idx > 0:
-                    steps[idx - 1], steps[idx] = steps[idx], steps[idx - 1]
-                    web_ui.persist_state()
-                    rerender_steps()
+        # ── Details (collapsible) ──
+        details = ui.column().classes('w-full gap-2')
+        with details:
+            with ui.row().classes('items-center gap-2 flex-wrap'):
+                web_ui.action_button('Up', on_click=move_up, variant='neutral', icon='arrow_upward')
+                web_ui.action_button('Down', on_click=move_down, variant='neutral', icon='arrow_downward')
+                web_ui.action_button('Delete', on_click=delete_step, variant='danger', icon='delete')
 
-            def move_down():
-                if idx < len(steps) - 1:
-                    steps[idx + 1], steps[idx] = steps[idx], steps[idx + 1]
-                    web_ui.persist_state()
-                    rerender_steps()
+            # Tasks
+            ui.label('Tasks (start together)').classes('eyebrow red')
+            tasks_box = ui.column().classes('w-full gap-2')
 
-            def delete_step():
-                steps.pop(idx)
-                web_ui.persist_state()
-                rerender_steps()
-                refresh_validation()
+            def render_tasks():
+                tasks_box.clear()
+                with tasks_box:
+                    if not step['tasks']:
+                        ui.label('No tasks - this is a timer/condition-only step.').classes('muted text-sm')
+                    for ti, task in enumerate(step['tasks']):
+                        _render_task_row(program, step, task, ti, render_tasks)
 
-            web_ui.action_button('Up', on_click=move_up, variant='neutral', icon='arrow_upward')
-            web_ui.action_button('Down', on_click=move_down, variant='neutral', icon='arrow_downward')
-            web_ui.action_button('Delete', on_click=delete_step, variant='danger', icon='delete')
-
-        # Tasks
-        ui.label('Tasks (start together)').classes('eyebrow red')
-        tasks_box = ui.column().classes('w-full gap-2')
-
-        def render_tasks():
-            tasks_box.clear()
-            with tasks_box:
-                if not step['tasks']:
-                    ui.label('No tasks - this is a timer/condition-only step.').classes('muted text-sm')
-                for ti, task in enumerate(step['tasks']):
-                    _render_task_row(program, step, task, ti, render_tasks)
-
-        render_tasks()
-
-        def add_task():
-            step['tasks'].append(program_model.new_task())
-            web_ui.persist_state()
             render_tasks()
 
-        web_ui.action_button('Add Task', on_click=add_task, variant='neutral', icon='add')
+            def add_task():
+                step['tasks'].append(program_model.new_task())
+                web_ui.persist_state()
+                render_tasks()
 
-        # Completion
-        ui.separator().classes('divider')
-        completion = step.setdefault('completion', program_model.new_completion())
-        with ui.row().classes('items-center gap-3 flex-wrap'):
-            ui.label('Completion').classes('eyebrow red')
-            ui.toggle({'any': 'Any (whichever first)', 'all': 'All'}, value=completion.get('mode', 'any')) \
-                .bind_value(completion, 'mode').on_value_change(lambda e: web_ui.persist_state())
-        ui.label('How long this step runs = when its conditions are met. '
-                 'Add a Duration (ms) to run for a fixed time; use Limit switch / Encoder / '
-                 'Motors idle to end on an event. "Any" ends at the first met condition, '
-                 '"All" waits for every one.').classes('muted text-xs')
+            web_ui.action_button('Add Task', on_click=add_task, variant='neutral', icon='add')
 
-        conds_box = ui.column().classes('w-full gap-2')
+            # Completion
+            ui.separator().classes('divider')
+            completion = step.setdefault('completion', program_model.new_completion())
+            with ui.row().classes('items-center gap-3 flex-wrap'):
+                ui.label('Completion').classes('eyebrow red')
+                ui.toggle({'any': 'Any (whichever first)', 'all': 'All'}, value=completion.get('mode', 'any')) \
+                    .bind_value(completion, 'mode').on_value_change(lambda e: web_ui.persist_state())
+            ui.label('How long this step runs = when its conditions are met. '
+                     'Add a Duration (ms) to run for a fixed time; use Limit switch / Encoder / '
+                     'Motors idle to end on an event. "Any" ends at the first met condition, '
+                     '"All" waits for every one.').classes('muted text-xs')
 
-        def render_conditions():
-            conds_box.clear()
-            with conds_box:
-                if not completion['conditions']:
-                    ui.label('No conditions - step would never end. Add one.').classes('muted text-sm')
-                for ci, cond in enumerate(completion['conditions']):
-                    _render_condition_row(completion, cond, ci, render_conditions)
+            conds_box = ui.column().classes('w-full gap-2')
 
-        render_conditions()
+            def render_conditions():
+                conds_box.clear()
+                with conds_box:
+                    if not completion['conditions']:
+                        ui.label('No conditions - step would never end. Add one.').classes('muted text-sm')
+                    for ci, cond in enumerate(completion['conditions']):
+                        _render_condition_row(completion, cond, ci, render_conditions)
 
-        def add_condition():
-            completion['conditions'].append(program_model.new_condition(program_model.COND_DURATION))
-            web_ui.persist_state()
             render_conditions()
 
-        with ui.row().classes('items-center gap-2 flex-wrap'):
-            web_ui.action_button('Add Condition', on_click=add_condition, variant='neutral', icon='add')
-            ui.toggle(
-                {program_model.ON_COMPLETE_STOP: 'Stop motors', program_model.ON_COMPLETE_CONTINUE: 'Leave running'},
-                value=step.get('on_complete', program_model.ON_COMPLETE_STOP),
-            ).bind_value(step, 'on_complete').on_value_change(lambda e: web_ui.persist_state())
+            def add_condition():
+                completion['conditions'].append(program_model.new_condition(program_model.COND_DURATION))
+                web_ui.persist_state()
+                render_conditions()
+
+            with ui.row().classes('items-center gap-2 flex-wrap'):
+                web_ui.action_button('Add Condition', on_click=add_condition, variant='neutral', icon='add')
+                ui.toggle(
+                    {program_model.ON_COMPLETE_STOP: 'Stop motors', program_model.ON_COMPLETE_CONTINUE: 'Leave running'},
+                    value=step.get('on_complete', program_model.ON_COMPLETE_STOP),
+                ).bind_value(step, 'on_complete').on_value_change(lambda e: web_ui.persist_state())
+
+        details.set_visibility(not step.get('collapsed'))
+
+        def toggle_collapse():
+            step['collapsed'] = not step.get('collapsed', False)
+            web_ui.persist_state()
+            details.set_visibility(not step['collapsed'])
+            caret.props(f'icon={"chevron_right" if step["collapsed"] else "expand_more"}')
+            summary_label.text = step_summary(step, program)
+        caret.on('click', toggle_collapse)
 
 
 def _render_task_row(program, step, task, ti, rerender_tasks):
@@ -519,7 +540,7 @@ def _render_task_row(program, step, task, ti, rerender_tasks):
             station_sel.on_value_change(on_station)
 
             use_global = ui.checkbox('Global speed', value=task.get('speed_us') is None)
-            speed_num = ui.number('us/step', min=1, max=5000, step=1,
+            speed_num = ui.number('us/step', min=1, max=20000, step=1,
                                   value=task.get('speed_us') or program.get('global_speed_us')) \
                 .props('outlined').classes('w-28')
 
@@ -560,7 +581,7 @@ def _render_task_row(program, step, task, ti, rerender_tasks):
                         )
                         spd = ui.number(
                             'us/step', value=selected.get(mn, {}).get('speed_us'),
-                            min=1, max=5000, step=1,
+                            min=1, max=20000, step=1,
                         ).props('outlined dense placeholder="task"').classes('w-28') \
                             .tooltip('Per-motor speed. Blank = use the task/global speed.')
                         widgets.append((mn, cb, direction, spd))
@@ -677,7 +698,7 @@ def settings_page():
         with ui.card().classes('panel w-full'):
             ui.label('Global Speed').classes('eyebrow red')
             settings = web_ui.get_global_settings()
-            ui.number('Default speed (us/step)', min=1, max=5000, step=1) \
+            ui.number('Default speed (us/step)', min=1, max=20000, step=1) \
                 .props('outlined').classes('w-56') \
                 .bind_value(settings, 'global_speed_us').on_value_change(lambda e: web_ui.persist_state())
             ui.label('New programs start at this speed; each task can override it or inherit "Global speed".') \

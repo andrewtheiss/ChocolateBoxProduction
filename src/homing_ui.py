@@ -193,7 +193,7 @@ def _render_motor(controller, station, motor, status_labels):
 
                     with ui.row().classes('items-end gap-2 flex-wrap'):
                         use_global = ui.checkbox('Global home speed', value=current.get('home_speed_us') is None)
-                        speed_num = ui.number('Home speed us', min=1, max=5000, step=1,
+                        speed_num = ui.number('Home speed us', min=1, max=20000, step=1,
                                               value=current.get('home_speed_us') or web_ui.get_global_settings().get('global_speed_us')) \
                             .props('outlined').classes('w-32')
 

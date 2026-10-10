@@ -178,6 +178,7 @@ def new_step(name='New Step'):
     return {
         'name': name,
         'enabled': True,
+        'collapsed': False,
         'tasks': [],
         'completion': new_completion(),
         'on_complete': ON_COMPLETE_STOP,
@@ -250,6 +251,7 @@ def normalize_step(raw):
     return {
         'name': _as_str(raw.get('name'), 'Step') or 'Step',
         'enabled': _as_bool(raw.get('enabled'), True),
+        'collapsed': _as_bool(raw.get('collapsed'), False),
         'tasks': [normalize_task(t) for t in tasks],
         'completion': normalize_completion(raw.get('completion')),
         'on_complete': on_complete,

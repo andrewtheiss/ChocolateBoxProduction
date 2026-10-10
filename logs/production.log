@@ -8482,3 +8482,1599 @@ RuntimeError: The parent slot of the element has been deleted.
 2026-06-09 03:56:49,556 - INFO - Pipeline: (none)
 2026-06-09 03:57:02,508 - INFO - Pipeline: (none)
 2026-06-09 03:57:12,236 - INFO - Pipeline: punch
+2026-06-09 10:35:35,693 - INFO - Web UI → http://localhost:8080
+2026-06-09 10:35:36,282 - INFO - Pipeline: (none)
+2026-06-09 10:35:48,503 - INFO - Pipeline: (none)
+2026-06-09 10:35:59,089 - INFO - Pipeline: punch
+2026-06-09 10:41:20,275 - WARNING - binding propagation for 19 active links took 0.011 s
+2026-06-09 11:43:06,815 - WARNING - binding propagation for 19 active links took 0.012 s
+2026-06-09 13:46:41,505 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-09 19:44:15,988 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-10 01:45:30,422 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-10 05:16:36,708 - WARNING - binding propagation for 19 active links took 0.010 s
+2026-06-10 05:33:35,481 - WARNING - binding propagation for 19 active links took 0.015 s
+2026-06-10 07:36:54,743 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-10 10:45:07,145 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-10 13:18:15,431 - WARNING - binding propagation for 19 active links took 0.010 s
+2026-06-10 16:59:01,777 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-10 18:17:40,430 - WARNING - binding propagation for 19 active links took 0.018 s
+2026-06-10 19:13:04,406 - INFO - Pipeline: punch
+2026-06-10 19:36:53,574 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-10 23:30:06,787 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-11 00:14:29,732 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-11 03:54:07,250 - WARNING - binding propagation for 46 active links took 0.013 s
+2026-06-11 08:48:56,780 - WARNING - binding propagation for 46 active links took 0.011 s
+2026-06-11 08:50:06,508 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-11 11:32:38,705 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-11 13:30:15,522 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:15,524 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:23,895 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:23,896 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:26,147 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:26,156 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:26,180 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:28,274 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:28,274 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:29,671 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:29,681 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:30,761 - INFO - Pipeline: punch
+2026-06-11 13:30:30,764 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:32,109 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:37,328 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:47,859 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:52,762 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:52,766 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:30:59,861 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:02,229 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:05,112 - INFO - Pipeline: punch
+2026-06-11 13:31:05,114 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:10,154 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:10,167 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:10,191 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:11,456 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:11,457 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:13,852 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:13,865 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:13,893 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:16,026 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:16,027 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-11 13:31:23,151 - INFO - Web UI → http://localhost:8080
+2026-06-11 13:31:23,314 - INFO - Pipeline: (none)
+2026-06-11 13:31:48,976 - INFO - Pipeline: punch
+2026-06-11 16:35:45,482 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-11 20:40:58,562 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-12 01:26:52,096 - WARNING - binding propagation for 46 active links took 0.025 s
+2026-06-12 04:24:10,801 - WARNING - binding propagation for 46 active links took 0.049 s
+2026-06-12 05:20:23,946 - WARNING - binding propagation for 46 active links took 0.014 s
+2026-06-12 09:55:49,956 - WARNING - binding propagation for 23 active links took 931.833 s
+2026-06-12 09:55:54,188 - WARNING - binding propagation for 46 active links took 0.018 s
+2026-06-12 11:01:21,379 - WARNING - binding propagation for 23 active links took 0.015 s
+2026-06-12 12:20:31,721 - WARNING - binding propagation for 46 active links took 0.014 s
+2026-06-12 12:20:34,725 - WARNING - binding propagation for 23 active links took 0.025 s
+2026-06-12 12:20:37,561 - WARNING - binding propagation for 23 active links took 0.023 s
+2026-06-12 12:20:39,537 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-12 12:20:40,001 - WARNING - binding propagation for 23 active links took 0.023 s
+2026-06-12 12:52:58,895 - WARNING - binding propagation for 23 active links took 0.035 s
+2026-06-12 12:53:00,337 - WARNING - binding propagation for 23 active links took 0.041 s
+2026-06-12 13:42:21,683 - WARNING - binding propagation for 23 active links took 0.026 s
+2026-06-12 14:16:08,617 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-12 17:13:37,689 - WARNING - binding propagation for 23 active links took 0.025 s
+2026-06-12 17:13:38,038 - WARNING - binding propagation for 23 active links took 0.018 s
+2026-06-12 20:00:51,525 - WARNING - binding propagation for 23 active links took 1063.899 s
+2026-06-12 20:27:34,628 - WARNING - binding propagation for 23 active links took 0.017 s
+2026-06-12 20:27:34,758 - WARNING - binding propagation for 23 active links took 0.022 s
+2026-06-12 21:01:19,438 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-12 21:28:34,608 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-12 22:03:28,434 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-13 01:20:07,440 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-13 01:20:10,327 - WARNING - binding propagation for 46 active links took 0.015 s
+2026-06-13 01:49:48,346 - WARNING - binding propagation for 46 active links took 0.026 s
+2026-06-13 03:09:49,164 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-13 03:45:27,860 - WARNING - binding propagation for 23 active links took 0.026 s
+2026-06-13 05:48:42,985 - WARNING - binding propagation for 46 active links took 0.016 s
+2026-06-13 07:05:13,869 - WARNING - binding propagation for 46 active links took 0.011 s
+2026-06-13 07:39:30,225 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-13 07:39:30,345 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-13 09:19:11,144 - WARNING - binding propagation for 23 active links took 0.023 s
+2026-06-13 09:36:34,855 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-13 10:04:01,522 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-13 10:20:45,275 - WARNING - binding propagation for 23 active links took 0.099 s
+2026-06-13 10:37:25,418 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-13 10:52:53,277 - WARNING - binding propagation for 23 active links took 0.015 s
+2026-06-13 13:02:06,968 - WARNING - binding propagation for 46 active links took 0.024 s
+2026-06-13 19:11:26,048 - WARNING - binding propagation for 23 active links took 0.067 s
+2026-06-13 20:12:20,831 - WARNING - binding propagation for 23 active links took 0.039 s
+2026-06-13 20:48:06,259 - WARNING - binding propagation for 23 active links took 0.043 s
+2026-06-13 21:03:48,794 - WARNING - binding propagation for 23 active links took 0.070 s
+2026-06-13 21:03:49,042 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-13 21:13:24,966 - WARNING - binding propagation for 23 active links took 0.032 s
+2026-06-13 21:28:31,658 - WARNING - binding propagation for 23 active links took 0.019 s
+2026-06-13 22:01:12,809 - WARNING - binding propagation for 46 active links took 0.040 s
+2026-06-13 22:48:09,652 - WARNING - binding propagation for 46 active links took 0.037 s
+2026-06-13 22:48:09,820 - WARNING - binding propagation for 23 active links took 0.053 s
+2026-06-13 23:05:42,656 - WARNING - binding propagation for 23 active links took 0.022 s
+2026-06-13 23:15:20,870 - WARNING - binding propagation for 23 active links took 0.015 s
+2026-06-13 23:15:25,153 - WARNING - binding propagation for 23 active links took 0.021 s
+2026-06-13 23:32:26,705 - WARNING - binding propagation for 23 active links took 0.031 s
+2026-06-13 23:49:37,454 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-13 23:49:38,589 - WARNING - binding propagation for 23 active links took 0.042 s
+2026-06-14 01:05:33,997 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-14 01:05:35,637 - WARNING - binding propagation for 46 active links took 0.037 s
+2026-06-14 01:33:05,110 - WARNING - binding propagation for 46 active links took 0.040 s
+2026-06-14 02:25:16,826 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-14 02:57:46,484 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-14 04:54:56,391 - WARNING - binding propagation for 23 active links took 0.112 s
+2026-06-14 04:54:57,531 - WARNING - binding propagation for 23 active links took 0.038 s
+2026-06-14 06:00:59,347 - WARNING - binding propagation for 23 active links took 0.017 s
+2026-06-14 06:01:08,087 - WARNING - binding propagation for 23 active links took 0.041 s
+2026-06-14 06:01:08,235 - WARNING - binding propagation for 23 active links took 0.043 s
+2026-06-14 06:18:28,317 - WARNING - binding propagation for 23 active links took 0.031 s
+2026-06-14 06:18:28,509 - WARNING - binding propagation for 23 active links took 0.041 s
+2026-06-14 06:18:31,731 - WARNING - binding propagation for 46 active links took 0.013 s
+2026-06-14 06:33:46,617 - WARNING - binding propagation for 23 active links took 0.015 s
+2026-06-14 07:37:12,971 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-14 09:18:56,654 - WARNING - binding propagation for 46 active links took 0.018 s
+2026-06-14 10:38:57,429 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-14 11:36:26,624 - WARNING - binding propagation for 23 active links took 0.025 s
+2026-06-14 12:40:07,013 - WARNING - binding propagation for 46 active links took 0.021 s
+2026-06-14 12:56:29,920 - WARNING - binding propagation for 46 active links took 0.021 s
+2026-06-14 13:07:05,357 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-14 13:24:34,578 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-14 13:24:37,207 - WARNING - binding propagation for 46 active links took 0.014 s
+2026-06-14 13:41:31,530 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-14 13:58:17,933 - WARNING - binding propagation for 46 active links took 0.015 s
+2026-06-14 15:09:01,981 - WARNING - binding propagation for 23 active links took 0.067 s
+2026-06-14 17:43:53,335 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-14 21:01:57,008 - WARNING - binding propagation for 46 active links took 0.012 s
+2026-06-14 21:31:16,782 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-14 23:17:07,172 - WARNING - binding propagation for 23 active links took 0.023 s
+2026-06-14 23:17:07,408 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-14 23:33:39,284 - WARNING - binding propagation for 46 active links took 0.018 s
+2026-06-15 02:41:04,917 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-15 03:45:14,415 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-15 04:00:18,808 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-15 04:00:20,371 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-15 04:34:37,472 - WARNING - binding propagation for 46 active links took 0.017 s
+2026-06-15 06:50:58,355 - WARNING - binding propagation for 46 active links took 0.049 s
+2026-06-15 07:06:28,339 - WARNING - binding propagation for 46 active links took 0.019 s
+2026-06-15 07:06:28,555 - WARNING - binding propagation for 23 active links took 0.010 s
+2026-06-15 08:01:59,405 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-15 08:02:05,602 - WARNING - binding propagation for 23 active links took 0.047 s
+2026-06-15 08:52:14,126 - WARNING - binding propagation for 23 active links took 0.041 s
+2026-06-15 09:03:00,987 - WARNING - binding propagation for 46 active links took 0.050 s
+2026-06-15 09:03:01,270 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-15 09:03:06,371 - WARNING - binding propagation for 23 active links took 0.023 s
+2026-06-15 09:39:59,919 - WARNING - binding propagation for 46 active links took 0.030 s
+2026-06-15 13:55:13,362 - WARNING - binding propagation for 23 active links took 0.032 s
+2026-06-15 14:08:04,553 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-15 14:08:05,948 - WARNING - binding propagation for 23 active links took 0.017 s
+2026-06-15 15:24:11,288 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-15 15:24:13,358 - WARNING - binding propagation for 46 active links took 0.149 s
+2026-06-15 21:04:06,830 - WARNING - binding propagation for 23 active links took 0.018 s
+2026-06-15 21:30:56,877 - WARNING - binding propagation for 23 active links took 0.010 s
+2026-06-15 21:30:58,681 - WARNING - binding propagation for 23 active links took 0.031 s
+2026-06-15 22:31:30,131 - WARNING - binding propagation for 23 active links took 0.036 s
+2026-06-15 22:48:40,591 - WARNING - binding propagation for 23 active links took 0.063 s
+2026-06-15 23:34:23,808 - WARNING - binding propagation for 23 active links took 0.015 s
+2026-06-15 23:34:24,081 - WARNING - binding propagation for 23 active links took 0.035 s
+2026-06-16 00:49:32,748 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-16 01:19:06,667 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 01:19:11,510 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-16 02:59:08,882 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-16 03:16:39,450 - WARNING - binding propagation for 46 active links took 0.019 s
+2026-06-16 04:36:45,731 - WARNING - binding propagation for 23 active links took 0.017 s
+2026-06-16 04:36:46,702 - WARNING - binding propagation for 23 active links took 0.018 s
+2026-06-16 04:36:47,267 - WARNING - binding propagation for 23 active links took 0.030 s
+2026-06-16 05:08:12,269 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-16 05:41:44,571 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 07:08:34,534 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 07:56:14,452 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 08:01:59,492 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 08:02:06,642 - WARNING - binding propagation for 23 active links took 0.090 s
+2026-06-16 08:18:41,603 - WARNING - binding propagation for 23 active links took 0.076 s
+2026-06-16 08:18:43,190 - WARNING - binding propagation for 23 active links took 0.019 s
+2026-06-16 09:52:26,426 - WARNING - binding propagation for 23 active links took 0.016 s
+2026-06-16 09:52:26,633 - WARNING - binding propagation for 23 active links took 0.067 s
+2026-06-16 10:03:59,455 - WARNING - binding propagation for 23 active links took 0.036 s
+2026-06-16 10:03:59,596 - WARNING - binding propagation for 23 active links took 0.029 s
+2026-06-16 10:54:06,633 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-16 11:04:59,503 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 12:05:59,416 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 12:39:59,519 - WARNING - binding propagation for 23 active links took 0.025 s
+2026-06-16 16:57:23,106 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-16 17:45:50,248 - WARNING - binding propagation for 23 active links took 0.025 s
+2026-06-16 18:03:49,118 - WARNING - binding propagation for 23 active links took 0.018 s
+2026-06-16 19:13:02,029 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-16 22:04:29,204 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-17 01:04:52,749 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-17 05:54:15,609 - WARNING - binding propagation for 23 active links took 908.253 s
+2026-06-17 13:22:30,257 - WARNING - binding propagation for 23 active links took 0.021 s
+2026-06-17 15:43:45,314 - WARNING - binding propagation for 46 active links took 0.010 s
+2026-06-17 16:09:59,175 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-17 16:25:55,359 - WARNING - binding propagation for 23 active links took 0.027 s
+2026-06-17 18:12:02,269 - WARNING - binding propagation for 23 active links took 0.019 s
+2026-06-17 19:12:19,249 - WARNING - binding propagation for 46 active links took 0.010 s
+2026-06-17 20:04:02,198 - WARNING - binding propagation for 23 active links took 0.021 s
+2026-06-17 20:30:05,986 - WARNING - binding propagation for 46 active links took 0.034 s
+2026-06-17 21:03:17,023 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-17 23:33:32,216 - WARNING - binding propagation for 46 active links took 0.019 s
+2026-06-18 03:02:10,999 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-18 05:45:18,234 - WARNING - binding propagation for 46 active links took 0.012 s
+2026-06-18 07:40:10,151 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-18 10:03:59,461 - WARNING - binding propagation for 46 active links took 0.011 s
+2026-06-18 16:10:00,225 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-18 22:03:43,086 - WARNING - binding propagation for 46 active links took 0.012 s
+2026-06-19 14:39:31,419 - WARNING - binding propagation for 46 active links took 935.233 s
+2026-06-19 15:41:29,401 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-19 21:05:45,348 - WARNING - binding propagation for 46 active links took 0.020 s
+2026-06-20 01:48:56,552 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-20 02:05:30,117 - WARNING - binding propagation for 23 active links took 0.034 s
+2026-06-20 07:05:17,817 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-20 11:52:19,961 - WARNING - binding propagation for 23 active links took 0.012 s
+2026-06-20 17:11:03,062 - WARNING - binding propagation for 23 active links took 0.021 s
+2026-06-20 17:26:21,279 - WARNING - binding propagation for 23 active links took 0.011 s
+2026-06-20 18:28:25,457 - WARNING - binding propagation for 23 active links took 0.014 s
+2026-06-20 19:12:29,850 - WARNING - binding propagation for 23 active links took 0.027 s
+2026-06-20 19:14:44,982 - WARNING - binding propagation for 46 active links took 0.023 s
+2026-06-20 19:14:45,938 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-20 19:32:16,322 - WARNING - binding propagation for 23 active links took 0.020 s
+2026-06-20 20:15:04,777 - WARNING - binding propagation for 23 active links took 0.053 s
+2026-06-20 20:15:09,167 - WARNING - binding propagation for 23 active links took 0.020 s
+2026-06-20 20:26:47,383 - WARNING - binding propagation for 23 active links took 0.013 s
+2026-06-21 02:32:17,922 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-21 08:31:52,416 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-21 14:30:26,859 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-21 20:21:41,170 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-22 02:29:05,880 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-22 08:24:50,251 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-22 14:21:54,646 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-22 15:20:18,984 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:39,654 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:39,665 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:39,688 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:41,975 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:41,975 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:44,024 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:44,024 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:45,373 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:45,373 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:47,149 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:52,696 - INFO - Pipeline: punch
+2026-06-22 15:20:52,724 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:20:56,545 - INFO - Pipeline: punch
+2026-06-22 15:20:56,579 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:02,696 - INFO - Pipeline: punch
+2026-06-22 15:21:03,880 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:03,890 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:03,910 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:03,930 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:06,176 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:10,076 - INFO - Pipeline: punch
+2026-06-22 15:21:18,198 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:18,209 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:18,229 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:20,205 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:20,205 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:21,092 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:21,092 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:22,893 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:54,473 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:54,475 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:21:56,090 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:01,538 - INFO - Pipeline: punch
+2026-06-22 15:22:04,941 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:06,568 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-22 15:22:13,063 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:16,306 - INFO - Pipeline: punch
+2026-06-22 15:22:36,503 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:36,514 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:36,534 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:38,087 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:22:38,088 - WARNING - Comms error: write failed: [Errno 6] Device not configured
+2026-06-22 15:27:48,243 - INFO - Web UI → http://localhost:8080
+2026-06-22 15:27:49,283 - INFO - Pipeline: (none)
+2026-06-22 15:27:57,913 - INFO - Pipeline: punch
+2026-06-22 15:27:58,052 - WARNING - Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web.py", line 13, in <module>
+    start_web_ui(stations_config, fsm_config)
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 2119, in start_web_ui
+    ui.run(title='ChocolateBox', port=8080, reload=False, favicon='🏭')
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/ui_run.py", line 303, in run
+    Server.instance.run()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/server.py", line 45, in run
+    super().run(sockets=sockets)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 111, in _invoke_callback
+    result = self.callback()
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 1440, in tick
+    log_disp.push(log_lines.pop(0))
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/log.py", line 32, in push
+    label = Label(text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/label.py", line 13, in __init__
+    super().__init__(tag='div', text=text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/mixins/text_element.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/outbox.py", line 68, in enqueue_update
+    self.client.check_existence()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/client.py", line 433, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/helpers.py", line 34, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-06-22 15:35:11,321 - INFO - Web UI → http://localhost:8080
+2026-06-22 15:35:11,663 - INFO - Pipeline: (none)
+2026-06-22 15:35:21,351 - INFO - Pipeline: punch
+2026-06-22 15:35:21,494 - WARNING - Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web.py", line 13, in <module>
+    start_web_ui(stations_config, fsm_config)
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 2145, in start_web_ui
+    ui.run(title='ChocolateBox', port=8080, reload=False, favicon='🏭')
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/ui_run.py", line 303, in run
+    Server.instance.run()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/server.py", line 45, in run
+    super().run(sockets=sockets)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 111, in _invoke_callback
+    result = self.callback()
+  File "/Users/theiss/Documents/ChocolateBoxProduction/src/web_ui.py", line 1441, in tick
+    log_disp.push(log_lines.pop(0))
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/log.py", line 32, in push
+    label = Label(text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/label.py", line 13, in __init__
+    super().__init__(tag='div', text=text)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/mixins/text_element.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/outbox.py", line 68, in enqueue_update
+    self.client.check_existence()
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/client.py", line 433, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/helpers.py", line 34, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-06-22 16:53:44,476 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-22 20:31:54,934 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-22 23:23:19,323 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-23 00:29:46,492 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-23 01:02:40,543 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-06-23 02:22:39,385 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-23 04:54:00,611 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-06-23 05:37:16,300 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-06-23 08:25:13,857 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-23 14:30:18,428 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-23 16:37:36,501 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-06-23 20:19:32,815 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-24 02:31:37,485 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-24 08:30:31,929 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-24 14:26:26,412 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-24 20:19:50,964 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-24 20:49:33,733 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-06-24 21:21:37,210 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-06-24 21:36:58,980 - WARNING - binding propagation for 27 active links took 0.031 s
+2026-06-24 21:36:59,358 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-06-24 21:37:01,029 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-24 21:54:20,933 - WARNING - binding propagation for 27 active links took 0.034 s
+2026-06-24 22:34:17,989 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-25 01:24:01,566 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-06-25 01:37:22,744 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-06-25 02:07:27,520 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-25 02:23:35,003 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-25 02:40:22,163 - WARNING - binding propagation for 54 active links took 0.019 s
+2026-06-25 02:56:27,575 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-25 03:31:24,401 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-25 04:20:14,486 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-06-25 04:36:04,587 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-06-25 05:10:46,665 - WARNING - binding propagation for 27 active links took 0.064 s
+2026-06-25 05:10:46,896 - WARNING - binding propagation for 27 active links took 0.056 s
+2026-06-25 05:10:50,791 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-06-25 05:44:50,627 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-25 05:44:50,760 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-06-25 05:44:51,391 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-25 05:44:53,914 - WARNING - binding propagation for 54 active links took 0.032 s
+2026-06-25 06:01:07,463 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-06-25 06:18:47,450 - WARNING - binding propagation for 27 active links took 0.036 s
+2026-06-25 07:11:10,686 - WARNING - binding propagation for 27 active links took 0.042 s
+2026-06-25 08:18:44,240 - WARNING - binding propagation for 27 active links took 0.322 s
+2026-06-25 08:21:21,316 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-25 08:21:24,667 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-06-25 08:21:26,630 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-06-25 08:21:27,056 - WARNING - binding propagation for 27 active links took 0.051 s
+2026-06-25 08:37:30,440 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-06-25 10:19:55,050 - WARNING - binding propagation for 27 active links took 1001.087 s
+2026-06-25 10:20:00,020 - WARNING - binding propagation for 54 active links took 0.017 s
+2026-06-25 11:04:08,376 - WARNING - binding propagation for 27 active links took 0.069 s
+2026-06-25 11:04:08,601 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-25 11:52:13,195 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-06-25 11:52:13,434 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-06-25 12:21:50,066 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-06-25 13:06:10,807 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-25 13:39:40,518 - WARNING - binding propagation for 27 active links took 0.072 s
+2026-06-25 14:07:16,780 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-06-25 14:24:53,671 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-25 15:24:18,976 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-06-25 15:39:23,761 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-25 16:09:11,148 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-06-25 16:09:14,168 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-06-25 17:23:19,415 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-25 17:40:15,234 - WARNING - binding propagation for 27 active links took 0.059 s
+2026-06-25 17:40:15,665 - WARNING - binding propagation for 27 active links took 0.045 s
+2026-06-25 18:11:15,127 - WARNING - binding propagation for 27 active links took 0.028 s
+2026-06-25 20:03:18,002 - WARNING - binding propagation for 27 active links took 0.036 s
+2026-06-25 20:03:18,871 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-06-25 20:03:21,767 - WARNING - binding propagation for 54 active links took 0.022 s
+2026-06-25 20:33:19,975 - WARNING - binding propagation for 27 active links took 0.057 s
+2026-06-25 20:33:20,411 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-25 22:03:46,773 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-25 22:03:46,920 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-06-25 22:15:15,947 - WARNING - binding propagation for 54 active links took 0.020 s
+2026-06-25 22:47:45,851 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-06-25 22:47:50,760 - WARNING - binding propagation for 27 active links took 0.058 s
+2026-06-26 00:17:10,820 - WARNING - binding propagation for 27 active links took 0.107 s
+2026-06-26 06:50:43,156 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-06-26 07:07:21,326 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-26 07:07:23,093 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-06-26 07:57:07,348 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-06-26 08:02:01,223 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-06-26 09:03:04,550 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-06-26 10:04:06,008 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-26 10:21:04,448 - WARNING - binding propagation for 27 active links took 0.121 s
+2026-06-26 11:05:02,432 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-26 11:36:30,731 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-06-26 11:52:13,897 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-06-26 12:38:39,500 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-06-26 13:06:59,034 - WARNING - binding propagation for 27 active links took 0.035 s
+2026-06-26 13:39:44,181 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-26 13:57:27,251 - WARNING - binding propagation for 27 active links took 0.040 s
+2026-06-26 15:57:40,936 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-26 16:10:04,239 - WARNING - binding propagation for 27 active links took 0.031 s
+2026-06-26 16:40:50,873 - WARNING - binding propagation for 54 active links took 0.026 s
+2026-06-26 16:40:51,038 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-06-26 18:43:24,145 - WARNING - binding propagation for 27 active links took 0.026 s
+2026-06-26 19:00:47,177 - WARNING - binding propagation for 54 active links took 0.021 s
+2026-06-26 19:47:34,820 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-26 20:29:48,781 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-06-26 20:45:25,215 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-26 22:03:46,595 - WARNING - binding propagation for 54 active links took 0.032 s
+2026-06-26 22:15:52,835 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-06-26 22:33:47,870 - WARNING - binding propagation for 27 active links took 0.057 s
+2026-06-26 22:51:38,595 - WARNING - binding propagation for 54 active links took 0.032 s
+2026-06-26 23:06:57,550 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-06-26 23:16:54,676 - WARNING - binding propagation for 27 active links took 0.055 s
+2026-06-27 00:04:31,664 - WARNING - binding propagation for 27 active links took 0.075 s
+2026-06-27 00:33:51,588 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-06-27 00:49:40,357 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-27 01:05:28,912 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-06-27 06:01:01,527 - WARNING - binding propagation for 54 active links took 0.021 s
+2026-06-27 10:53:17,121 - WARNING - binding propagation for 27 active links took 1061.889 s
+2026-06-27 11:21:19,114 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-27 11:37:41,431 - WARNING - binding propagation for 27 active links took 0.030 s
+2026-06-27 11:37:42,518 - WARNING - binding propagation for 27 active links took 0.040 s
+2026-06-27 11:37:43,966 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-06-27 11:52:51,084 - WARNING - binding propagation for 27 active links took 0.051 s
+2026-06-27 12:58:21,335 - WARNING - binding propagation for 27 active links took 0.043 s
+2026-06-27 12:58:22,079 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-27 13:06:51,936 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-06-27 13:06:52,170 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-06-27 15:25:03,210 - WARNING - binding propagation for 27 active links took 0.039 s
+2026-06-27 15:58:46,009 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-06-27 15:58:50,043 - WARNING - binding propagation for 54 active links took 0.023 s
+2026-06-27 16:09:48,168 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-06-27 16:09:49,766 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-06-27 16:09:49,982 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-27 18:11:20,796 - WARNING - binding propagation for 27 active links took 0.051 s
+2026-06-27 19:51:44,591 - WARNING - binding propagation for 54 active links took 0.017 s
+2026-06-28 01:52:10,485 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-06-28 02:57:11,409 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-06-28 04:20:21,761 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-06-28 04:20:23,262 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-06-28 06:00:57,282 - WARNING - binding propagation for 27 active links took 0.039 s
+2026-06-28 07:25:05,436 - WARNING - binding propagation for 27 active links took 0.068 s
+2026-06-28 15:41:55,085 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-06-28 17:02:37,172 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-06-28 17:02:37,518 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-06-28 17:02:37,649 - WARNING - binding propagation for 27 active links took 0.029 s
+2026-06-28 23:16:15,584 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-06-29 02:39:14,586 - WARNING - binding propagation for 27 active links took 0.036 s
+2026-06-29 02:56:53,435 - WARNING - binding propagation for 27 active links took 0.025 s
+2026-06-29 04:36:27,134 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-06-29 05:23:44,162 - WARNING - binding propagation for 27 active links took 0.096 s
+2026-06-29 06:00:56,640 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-29 06:51:59,227 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-06-29 06:52:01,130 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-06-29 07:25:02,273 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-29 07:41:18,196 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-29 07:58:09,516 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-29 08:35:08,270 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-06-29 23:01:11,982 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-06-30 03:52:19,841 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-30 04:39:17,502 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-06-30 04:39:17,657 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-06-30 06:00:57,857 - WARNING - binding propagation for 54 active links took 0.017 s
+2026-06-30 07:06:36,527 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-30 08:01:52,740 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-06-30 08:33:09,602 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-06-30 09:02:53,722 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-06-30 09:34:46,003 - WARNING - binding propagation for 54 active links took 980.160 s
+2026-06-30 09:51:03,835 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-06-30 11:55:26,222 - WARNING - binding propagation for 27 active links took 0.087 s
+2026-06-30 12:05:35,341 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-01 02:09:18,103 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-01 16:21:22,778 - WARNING - binding propagation for 27 active links took 0.061 s
+2026-07-01 16:38:49,880 - WARNING - binding propagation for 27 active links took 0.070 s
+2026-07-01 16:38:50,139 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-01 18:19:39,821 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-01 18:19:40,188 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-01 18:22:23,787 - WARNING - binding propagation for 27 active links took 0.047 s
+2026-07-01 19:11:23,669 - WARNING - binding propagation for 54 active links took 0.025 s
+2026-07-01 20:10:09,107 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-07-01 20:10:10,661 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-01 21:10:53,621 - WARNING - binding propagation for 27 active links took 0.029 s
+2026-07-01 21:25:03,392 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-01 23:13:53,441 - WARNING - binding propagation for 54 active links took 0.024 s
+2026-07-01 23:57:19,946 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-02 00:26:17,530 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-02 01:45:43,802 - WARNING - binding propagation for 54 active links took 0.041 s
+2026-07-02 02:01:27,614 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-07-02 02:01:27,736 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-02 02:17:58,633 - WARNING - binding propagation for 27 active links took 0.028 s
+2026-07-02 02:34:32,090 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-02 03:07:11,373 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-02 03:07:11,619 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-07-02 03:23:34,378 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-02 03:39:47,187 - WARNING - binding propagation for 27 active links took 0.032 s
+2026-07-02 04:13:09,087 - WARNING - binding propagation for 27 active links took 0.095 s
+2026-07-02 04:28:53,202 - WARNING - binding propagation for 27 active links took 939.701 s
+2026-07-02 05:17:09,893 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-02 05:32:46,119 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-07-02 07:57:04,306 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-02 08:01:47,145 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-02 09:02:45,142 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-07-02 09:54:54,201 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-02 10:03:39,215 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-07-02 10:21:11,088 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-02 10:36:13,397 - WARNING - binding propagation for 27 active links took 0.063 s
+2026-07-02 10:52:10,921 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-07-02 10:52:14,634 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-02 10:52:14,817 - WARNING - binding propagation for 27 active links took 0.029 s
+2026-07-02 11:52:41,165 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-07-02 12:05:28,503 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-02 13:06:21,322 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-07-02 13:40:17,253 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-02 14:24:40,949 - WARNING - binding propagation for 54 active links took 0.024 s
+2026-07-02 15:08:01,772 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-07-02 20:00:09,673 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-02 22:14:15,743 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-02 22:48:28,875 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-07-03 00:32:41,739 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-07-03 01:16:56,993 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-03 01:50:24,965 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-03 01:50:27,990 - WARNING - binding propagation for 27 active links took 0.031 s
+2026-07-03 02:07:38,396 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-03 02:07:42,213 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-03 02:59:42,013 - WARNING - binding propagation for 27 active links took 0.036 s
+2026-07-03 02:59:42,239 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-03 02:59:43,286 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-07-03 15:07:50,698 - WARNING - binding propagation for 27 active links took 565.886 s
+2026-07-04 01:48:43,452 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-04 21:02:02,655 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-04 21:30:32,629 - WARNING - binding propagation for 54 active links took 0.010 s
+2026-07-05 08:01:44,306 - WARNING - binding propagation for 54 active links took 0.029 s
+2026-07-05 08:22:21,933 - WARNING - binding propagation for 54 active links took 247.883 s
+2026-07-05 22:44:16,354 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-06 16:19:33,571 - WARNING - binding propagation for 27 active links took 675.037 s
+2026-07-07 17:55:34,802 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-10 02:29:42,267 - WARNING - binding propagation for 27 active links took 0.166 s
+2026-07-10 10:33:42,721 - WARNING - binding propagation for 54 active links took 941.191 s
+2026-07-11 00:29:46,315 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-11 11:56:09,717 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-11 21:11:00,259 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-12 01:02:43,310 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-12 18:25:40,672 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-13 04:32:53,228 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-13 04:59:12,619 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-13 16:55:39,488 - WARNING - binding propagation for 27 active links took 888.215 s
+2026-07-13 23:58:51,077 - WARNING - binding propagation for 27 active links took 995.226 s
+2026-07-14 09:56:13,041 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-14 10:41:44,337 - WARNING - binding propagation for 54 active links took 0.023 s
+2026-07-14 11:06:58,083 - WARNING - binding propagation for 54 active links took 0.010 s
+2026-07-14 11:38:00,308 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-14 11:54:46,486 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-14 12:07:34,826 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-14 12:07:37,322 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-07-14 12:42:04,668 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-14 14:09:02,653 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-14 16:26:26,003 - WARNING - binding propagation for 54 active links took 0.017 s
+2026-07-14 16:43:31,214 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-14 17:11:03,014 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-07-14 17:27:08,671 - WARNING - binding propagation for 27 active links took 0.100 s
+2026-07-14 18:54:43,349 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-14 21:13:36,817 - WARNING - binding propagation for 54 active links took 0.046 s
+2026-07-14 21:46:15,395 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-14 22:31:51,613 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-14 23:04:40,403 - WARNING - binding propagation for 27 active links took 0.098 s
+2026-07-14 23:14:54,409 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-15 00:06:14,297 - WARNING - binding propagation for 27 active links took 0.035 s
+2026-07-15 00:15:35,573 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-15 01:16:19,872 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-15 03:07:49,511 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-15 06:00:40,062 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-15 06:00:47,947 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-15 07:40:39,278 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-15 08:01:21,921 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-07-15 08:35:43,424 - WARNING - binding propagation for 27 active links took 0.037 s
+2026-07-15 09:01:59,956 - WARNING - binding propagation for 27 active links took 0.052 s
+2026-07-15 09:51:18,936 - WARNING - binding propagation for 27 active links took 0.099 s
+2026-07-15 10:02:43,946 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-15 10:02:44,081 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-07-15 11:37:33,699 - WARNING - binding propagation for 54 active links took 0.015 s
+2026-07-15 13:20:37,221 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-07-15 13:35:31,261 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-15 14:21:26,901 - WARNING - binding propagation for 27 active links took 0.214 s
+2026-07-15 14:37:24,887 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-15 14:53:42,551 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-15 15:06:04,303 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-15 15:39:11,499 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-07-15 15:56:31,362 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-15 16:06:40,924 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-15 16:55:08,664 - WARNING - binding propagation for 27 active links took 0.094 s
+2026-07-15 17:07:20,500 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-07-15 17:07:24,214 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-15 17:22:29,488 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-07-15 18:07:59,435 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-07-15 18:24:22,647 - WARNING - binding propagation for 54 active links took 0.031 s
+2026-07-15 19:08:43,299 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-15 19:33:45,717 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-07-15 21:59:23,187 - WARNING - binding propagation for 27 active links took 0.038 s
+2026-07-16 01:12:39,294 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-16 02:52:59,240 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-07-16 03:25:50,234 - WARNING - binding propagation for 27 active links took 0.041 s
+2026-07-16 04:36:44,061 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-16 07:38:28,194 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-07-16 08:49:19,862 - WARNING - binding propagation for 27 active links took 0.033 s
+2026-07-16 08:49:20,362 - WARNING - binding propagation for 27 active links took 0.039 s
+2026-07-16 08:49:20,487 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-16 09:31:56,302 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-16 09:49:08,385 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-07-16 10:02:33,013 - WARNING - binding propagation for 27 active links took 0.038 s
+2026-07-16 10:50:18,727 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-16 11:59:44,707 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-16 14:51:42,846 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-07-16 15:05:48,540 - WARNING - binding propagation for 27 active links took 0.028 s
+2026-07-16 15:53:03,390 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-07-16 16:06:26,594 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-07-16 16:06:33,856 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-16 17:39:41,335 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-16 17:56:46,849 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-16 18:24:03,615 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-16 18:24:07,825 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-07-16 19:23:48,222 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-07-16 20:12:41,463 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-07-16 20:12:47,768 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-16 23:27:55,539 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-16 23:27:55,719 - WARNING - binding propagation for 54 active links took 0.062 s
+2026-07-17 00:00:55,984 - WARNING - binding propagation for 54 active links took 0.012 s
+2026-07-17 00:11:38,582 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-17 00:11:38,718 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-07-17 02:49:51,083 - WARNING - binding propagation for 27 active links took 0.042 s
+2026-07-17 03:40:40,231 - WARNING - binding propagation for 27 active links took 0.092 s
+2026-07-17 04:59:18,009 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-17 06:47:30,210 - WARNING - binding propagation for 27 active links took 0.102 s
+2026-07-17 07:02:18,302 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-07-17 09:01:54,877 - WARNING - binding propagation for 27 active links took 0.045 s
+2026-07-17 09:01:57,087 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-17 09:01:57,267 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-17 09:16:42,830 - WARNING - binding propagation for 27 active links took 0.073 s
+2026-07-17 09:49:14,716 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-17 11:03:14,852 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-07-17 11:03:20,810 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-17 11:37:45,345 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-17 13:51:37,414 - WARNING - binding propagation for 27 active links took 993.862 s
+2026-07-17 16:55:17,195 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-07-17 17:54:02,971 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-07-17 20:06:22,308 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-07-17 21:43:43,436 - WARNING - binding propagation for 27 active links took 0.035 s
+2026-07-18 00:11:25,332 - WARNING - binding propagation for 27 active links took 0.060 s
+2026-07-18 01:41:59,296 - WARNING - binding propagation for 27 active links took 0.048 s
+2026-07-18 01:42:00,851 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-18 02:47:07,189 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-07-18 03:19:45,484 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-18 03:19:45,891 - WARNING - binding propagation for 27 active links took 0.157 s
+2026-07-18 03:19:46,932 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-18 03:37:25,175 - WARNING - binding propagation for 27 active links took 0.051 s
+2026-07-18 04:10:20,968 - WARNING - binding propagation for 27 active links took 0.032 s
+2026-07-18 04:10:23,770 - WARNING - binding propagation for 54 active links took 0.027 s
+2026-07-19 16:06:01,717 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-19 23:25:56,068 - WARNING - binding propagation for 27 active links took 937.474 s
+2026-07-20 00:49:45,613 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-20 05:59:38,682 - WARNING - binding propagation for 54 active links took 1027.237 s
+2026-07-20 18:04:22,147 - WARNING - binding propagation for 54 active links took 0.010 s
+2026-07-21 09:42:07,396 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-07-22 10:02:11,784 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-22 15:04:41,254 - WARNING - binding propagation for 54 active links took 642.211 s
+2026-07-23 08:00:48,900 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-07-23 08:16:27,043 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-07-23 09:01:19,849 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-07-23 10:01:52,272 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-23 10:34:52,707 - WARNING - binding propagation for 27 active links took 0.029 s
+2026-07-23 12:02:55,362 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-07-23 12:02:55,578 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-23 13:03:31,421 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-07-23 18:53:25,065 - WARNING - binding propagation for 27 active links took 872.219 s
+2026-07-23 23:08:48,943 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-24 00:09:19,250 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-07-24 00:09:22,132 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-07-24 03:25:46,280 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-24 05:52:00,587 - WARNING - binding propagation for 27 active links took 928.206 s
+2026-07-24 05:52:03,547 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-07-24 05:52:03,663 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-07-24 06:00:31,738 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-24 06:00:34,673 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-24 06:17:22,696 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-07-24 06:17:22,869 - WARNING - binding propagation for 27 active links took 0.069 s
+2026-07-24 06:17:23,448 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-24 06:49:21,750 - WARNING - binding propagation for 54 active links took 0.018 s
+2026-07-24 07:04:50,668 - WARNING - binding propagation for 54 active links took 0.033 s
+2026-07-24 07:38:06,589 - WARNING - binding propagation for 54 active links took 0.174 s
+2026-07-24 07:53:24,701 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-24 08:01:04,450 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-07-24 08:50:54,685 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-07-24 09:01:32,747 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-07-24 09:01:35,712 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-07-24 09:33:34,482 - WARNING - binding propagation for 27 active links took 0.025 s
+2026-07-24 09:50:20,433 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-07-24 09:50:20,588 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-24 10:02:03,843 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-07-24 10:50:29,600 - WARNING - binding propagation for 27 active links took 0.058 s
+2026-07-24 10:50:30,052 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-07-24 10:50:33,208 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-07-24 11:38:48,998 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-24 11:38:49,142 - WARNING - binding propagation for 27 active links took 0.037 s
+2026-07-24 14:37:20,218 - WARNING - binding propagation for 54 active links took 991.253 s
+2026-07-24 18:36:53,088 - WARNING - binding propagation for 54 active links took 0.023 s
+2026-07-24 18:36:53,516 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-07-24 18:36:56,833 - WARNING - binding propagation for 27 active links took 0.032 s
+2026-07-24 20:41:55,995 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-07-24 21:39:33,134 - ERROR - The parent slot of the element has been deleted.
+Traceback (most recent call last):
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/background_tasks.py", line 91, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/elements/timer.py", line 12, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/theiss/Environments/vyperenv/lib/python3.13/site-packages/nicegui/element.py", line 148, in parent_slot
+    raise RuntimeError('The parent slot of the element has been deleted.')
+RuntimeError: The parent slot of the element has been deleted.
+2026-07-24 21:39:35,917 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-07-24 22:55:16,163 - WARNING - binding propagation for 54 active links took 0.015 s
+2026-07-24 22:55:16,287 - WARNING - binding propagation for 54 active links took 0.010 s
+2026-07-24 23:08:50,743 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-07-25 00:41:57,534 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-07-25 00:58:34,067 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-08-08 17:19:15,578 - WARNING - binding propagation for 54 active links took 0.033 s
+2026-08-08 17:19:21,794 - WARNING - binding propagation for 27 active links took 0.064 s
+2026-08-08 17:19:22,684 - WARNING - binding propagation for 27 active links took 0.035 s
+2026-08-08 20:43:10,487 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-09 01:11:50,175 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-08-09 01:11:50,291 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-08-10 07:27:22,165 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-08-10 15:31:54,148 - WARNING - binding propagation for 27 active links took 0.037 s
+2026-08-10 15:32:07,708 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-08-10 15:32:17,550 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-08-10 15:32:18,745 - WARNING - binding propagation for 27 active links took 0.055 s
+2026-08-10 15:32:19,900 - WARNING - binding propagation for 27 active links took 0.023 s
+2026-08-10 21:52:08,445 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-11 08:13:07,979 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-08-13 16:25:22,238 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-16 20:24:04,725 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-08-18 11:22:00,719 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-08-18 13:03:00,592 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-08-19 02:32:00,065 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-08-19 09:35:36,786 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-08-20 10:47:58,679 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-08-20 11:50:58,663 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-21 06:33:00,351 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-21 15:01:59,458 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-08-22 02:41:57,000 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-08-23 09:25:55,718 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-23 21:31:55,161 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-08-24 07:36:20,485 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-08-24 07:37:00,044 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-08-24 09:51:54,612 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-08-24 19:20:54,203 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-08-24 19:41:54,162 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-08-25 21:02:53,092 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-08-27 18:46:20,372 - WARNING - binding propagation for 27 active links took 0.022 s
+2026-08-29 02:14:20,545 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-08-30 06:25:48,678 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-08-31 22:37:46,982 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-09-01 02:10:50,159 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-09-01 07:02:46,532 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-01 15:46:46,171 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-01 23:46:45,800 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-02 14:31:45,237 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-09-02 17:28:09,711 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-04 02:14:43,796 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-04 12:50:43,282 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-09-04 15:11:43,120 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-09-04 15:14:43,199 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-04 17:37:43,015 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-09-05 03:53:16,453 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-05 17:31:41,974 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-05 21:44:41,965 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-09-06 20:46:40,859 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-07 10:43:35,692 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-07 12:38:52,266 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-09-08 07:18:35,311 - WARNING - binding propagation for 27 active links took 0.019 s
+2026-09-08 09:14:39,329 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-09-09 11:08:38,224 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-09-09 17:31:37,895 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-09-12 07:37:35,307 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-09-12 17:32:24,080 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-14 03:11:33,412 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-09-14 06:19:33,314 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-15 11:20:20,468 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-09-16 10:58:05,222 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-09-16 22:13:28,349 - WARNING - binding propagation for 27 active links took 0.010 s
+2026-09-17 00:26:30,472 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-09-17 01:34:51,372 - WARNING - binding propagation for 54 active links took 0.016 s
+2026-09-17 01:51:26,187 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-09-17 01:51:27,421 - WARNING - binding propagation for 27 active links took 0.046 s
+2026-09-17 02:05:45,657 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-09-17 02:35:12,577 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-17 02:50:12,737 - WARNING - binding propagation for 27 active links took 0.027 s
+2026-09-17 02:50:16,267 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-09-17 03:38:05,664 - WARNING - binding propagation for 27 active links took 0.051 s
+2026-09-17 05:40:47,993 - WARNING - binding propagation for 54 active links took 0.015 s
+2026-09-17 05:40:48,255 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-09-17 05:40:49,510 - WARNING - binding propagation for 54 active links took 0.027 s
+2026-09-17 07:15:08,272 - WARNING - binding propagation for 27 active links took 0.036 s
+2026-09-17 07:15:11,506 - WARNING - binding propagation for 54 active links took 0.013 s
+2026-09-17 11:35:41,481 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-09-17 11:59:38,094 - WARNING - binding propagation for 54 active links took 0.015 s
+2026-09-17 13:44:38,274 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-09-17 14:58:43,014 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-09-18 02:30:18,558 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-09-18 03:28:48,471 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-09-18 03:28:48,650 - WARNING - binding propagation for 27 active links took 0.035 s
+2026-09-18 03:28:51,894 - WARNING - binding propagation for 54 active links took 0.011 s
+2026-09-18 07:30:38,657 - WARNING - binding propagation for 27 active links took 0.034 s
+2026-09-18 09:44:57,479 - WARNING - binding propagation for 54 active links took 0.037 s
+2026-09-18 11:41:22,886 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-09-18 11:41:26,049 - WARNING - binding propagation for 54 active links took 0.014 s
+2026-09-18 20:15:05,514 - WARNING - binding propagation for 54 active links took 0.010 s
+2026-09-18 21:14:37,063 - WARNING - binding propagation for 27 active links took 0.017 s
+2026-09-18 21:46:16,702 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-09-18 23:59:10,814 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-09-18 23:59:33,553 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-09-19 00:46:41,618 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-09-19 00:59:36,159 - WARNING - binding propagation for 54 active links took 0.010 s
+2026-09-19 13:43:16,439 - WARNING - binding propagation for 27 active links took 0.045 s
+2026-09-19 13:43:35,636 - WARNING - binding propagation for 27 active links took 0.036 s
+2026-09-19 15:43:02,091 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-09-19 17:14:26,356 - WARNING - binding propagation for 27 active links took 0.024 s
+2026-10-04 19:28:18,986 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-10-05 04:48:07,201 - WARNING - binding propagation for 27 active links took 0.038 s
+2026-10-05 13:25:46,013 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-10-06 00:26:45,481 - WARNING - binding propagation for 27 active links took 0.014 s
+2026-10-06 05:50:45,271 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-10-07 01:58:16,439 - WARNING - binding propagation for 27 active links took 0.016 s
+2026-10-07 09:15:44,136 - WARNING - binding propagation for 27 active links took 0.018 s
+2026-10-07 17:00:47,576 - WARNING - binding propagation for 27 active links took 0.012 s
+2026-10-07 18:50:43,697 - WARNING - binding propagation for 27 active links took 0.015 s
+2026-10-08 16:03:42,872 - WARNING - binding propagation for 27 active links took 0.026 s
+2026-10-08 20:45:42,588 - WARNING - binding propagation for 27 active links took 0.013 s
+2026-10-09 00:46:42,463 - WARNING - binding propagation for 27 active links took 0.033 s
+2026-10-09 11:38:05,231 - WARNING - binding propagation for 27 active links took 0.011 s
+2026-10-09 12:45:41,907 - WARNING - binding propagation for 27 active links took 0.020 s
+2026-10-09 17:15:41,772 - WARNING - binding propagation for 27 active links took 0.021 s
+2026-10-09 19:25:41,664 - WARNING - binding propagation for 27 active links took 0.011 s

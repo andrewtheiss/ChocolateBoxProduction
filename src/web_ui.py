@@ -16,6 +16,7 @@ from src.homing import HomingController
 from src.state_machine import PipelineCoordinator
 from src.web_state import clone_station_motors, load_web_state, save_web_state
 from src import program_model
+from src.pins import parse_pin, format_pin, PIN_OPTIONS
 
 # ── State ────────────────────────────────────
 serials: dict = {}
@@ -970,6 +971,34 @@ def sync_station_state_from_board(name, ser):
     return motors
 
 
+def prune_disconnected_serials(active_ping=True):
+    """Drop serials whose USB port has vanished or that no longer respond.
+
+    Returns the list of station names that were cleared. Used by the Devices
+    'Force Reload' so unplugged boards stop showing as connected.
+    """
+    available = {p.device for p in scan_ports()}
+    removed = []
+    for name, ser in list(serials.items()):
+        if ser is None:
+            continue
+        port = getattr(ser, 'port', None)
+        alive = port in available and getattr(ser, 'is_open', True)
+        if alive and active_ping:
+            # The port may still exist but the board could be hung/reset.
+            alive = identify(ser) is not None
+        if not alive:
+            try:
+                ser.close()
+            except Exception:
+                pass
+            serials[name] = None
+            removed.append(name)
+    if removed:
+        rebuild_coordinator()
+    return removed
+
+
 def apply_saved_station_state(name, ser):
     if ser is None:
         return {'status': 'not_connected'}
@@ -1285,29 +1314,51 @@ def devices_page():
                     if not matched and not skipped:
                         ui.notify('No unassigned boards found', type='info')
 
+                status_refreshers = {}
+
+                def force_reload():
+                    removed = prune_disconnected_serials()
+                    refresh()
+                    if 'status' in status_refreshers:
+                        status_refreshers['status']()
+                    if removed:
+                        add_log('Force reload cleared: ' + ', '.join(removed))
+                        ui.notify('Disconnected: ' + ', '.join(removed), type='warning')
+                    else:
+                        ui.notify('Devices refreshed', type='positive')
+
                 with ui.row().classes('gap-2'):
                     action_button('Auto-Detect & Assign', on_click=auto_detect, icon='auto_fix_high')
+                    action_button('Force Reload', on_click=force_reload, icon='sync', variant='neutral')
                     action_button('Rescan', on_click=refresh, icon='refresh', variant='neutral')
 
         with ui.card().classes('panel w-full'):
             with ui.column().classes('w-full gap-2'):
                 ui.label('Status').classes('eyebrow red')
-                for name in STATION_ORDER:
-                    s = serials.get(name)
-                    with ui.row().classes('items-center gap-3 section-row'):
-                        ui.label(name.capitalize()).classes('text-sm w-20')
-                        if s:
-                            info = identify(s)
-                            ui.label(s.port).classes('mono muted')
-                            tag('online', 'on')
-                            if info:
-                                fw = info.get('firmware', info.get('id', '?'))
-                                ver = info.get('version', '?')
-                                build = info.get('build', '?')
-                                ui.label(f'{fw} {ver}').classes('mono muted text-xs')
-                                ui.label(build).classes('mono muted text-xs')
-                        else:
-                            tag('offline', 'off')
+                status_box = ui.column().classes('w-full gap-2')
+
+                def render_status():
+                    status_box.clear()
+                    with status_box:
+                        for name in STATION_ORDER:
+                            s = serials.get(name)
+                            with ui.row().classes('items-center gap-3 section-row'):
+                                ui.label(name.capitalize()).classes('text-sm w-20')
+                                if s:
+                                    info = identify(s)
+                                    ui.label(s.port).classes('mono muted')
+                                    tag('online', 'on')
+                                    if info:
+                                        fw = info.get('firmware', info.get('id', '?'))
+                                        ver = info.get('version', '?')
+                                        build = info.get('build', '?')
+                                        ui.label(f'{fw} {ver}').classes('mono muted text-xs')
+                                        ui.label(build).classes('mono muted text-xs')
+                                else:
+                                    tag('offline', 'off')
+
+                status_refreshers['status'] = render_status
+                render_status()
 
         refresh()
 
@@ -1661,9 +1712,9 @@ def station_detail_page(name: str):
 
                 if not nn.value:
                     nn.value = preset['name']
-                np.value = preset['pul']
-                nd.value = preset['dir']
-                ne.value = preset['ena']
+                np.value = format_pin(preset['pul'])
+                nd.value = format_pin(preset['dir'])
+                ne.value = format_pin(preset['ena'])
                 nr.value = False
 
             def refresh_motors(force_result_text=None):
@@ -1725,11 +1776,11 @@ def station_detail_page(name: str):
                             tag('run' if m.get('running') else 'idle', 'run' if m.get('running') else 'idle')
                             if m.get('reversed'):
                                 tag('rev', 'err')
-                            ui.label(f'{m["pul_pin"]}/{m["dir_pin"]}/{m["ena_pin"]}').classes('mono muted text-xs')
+                            ui.label(f'{format_pin(m["pul_pin"])}/{format_pin(m["dir_pin"])}/{format_pin(m["ena_pin"])}').classes('mono muted text-xs')
                             ui.element('div').classes('flex-grow')
 
                             s_w = ui.number(value=test_defaults['steps'], min=1, max=50000, step=100).props('outlined').classes('w-24').tooltip('Steps')
-                            sp_w = ui.number(value=test_defaults['speed'], min=1, max=5000, step=1).props('outlined').classes('w-20').tooltip('μs/step')
+                            sp_w = ui.number(value=test_defaults['speed'], min=1, max=20000, step=1).props('outlined').classes('w-20').tooltip('μs/step')
                             s_w.on_value_change(lambda e: test_defaults.update(steps=int(e.value)) if e.value else None)
                             sp_w.on_value_change(lambda e: test_defaults.update(speed=int(e.value)) if e.value else None)
 
@@ -1776,7 +1827,7 @@ def station_detail_page(name: str):
                     with ui.row().classes('items-end gap-2 flex-wrap'):
                         tester_motor = ui.select(options={}).props('outlined').classes('w-36')
                         tester_steps = ui.number('Steps', value=test_defaults['steps'], min=1, max=50000, step=100).props('outlined').classes('w-28')
-                        tester_speed = ui.number('Speed μs', value=test_defaults['speed'], min=1, max=5000, step=1).props('outlined').classes('w-28')
+                        tester_speed = ui.number('Speed μs', value=test_defaults['speed'], min=1, max=20000, step=1).props('outlined').classes('w-28')
                         tester_steps.on_value_change(lambda e: test_defaults.update(steps=int(e.value)) if e.value else None)
                         tester_speed.on_value_change(lambda e: test_defaults.update(speed=int(e.value)) if e.value else None)
                         tester_direction = ui.toggle(['forward', 'reverse'], value='forward')
@@ -1837,17 +1888,24 @@ def station_detail_page(name: str):
             if ser:
                 with ui.row().classes('items-end gap-2 flex-wrap'):
                     nn = ui.input('Name').props('outlined').classes('w-28')
-                    np = ui.number('PUL', value=9, min=0, max=19).props('outlined').classes('w-20 pin-pul')
-                    nd = ui.number('DIR', value=8, min=0, max=19).props('outlined').classes('w-20 pin-dir')
-                    ne = ui.number('ENA', value=7, min=0, max=19).props('outlined').classes('w-20 pin-ena')
+                    np = ui.input('PUL', value='9').props('outlined').classes('w-20 pin-pul')
+                    nd = ui.input('DIR', value='8').props('outlined').classes('w-20 pin-dir')
+                    ne = ui.input('ENA', value='7').props('outlined').classes('w-20 pin-ena')
                     nr = ui.checkbox('Rev')
 
                     def do_add():
                         if not nn.value:
                             ui.notify('Name required', type='warning')
                             return
-                        r = add_motor(ser, name=nn.value, pul_pin=int(np.value),
-                                      dir_pin=int(nd.value), ena_pin=int(ne.value), reversed=nr.value)
+                        try:
+                            pul_pin = parse_pin(np.value)
+                            dir_pin = parse_pin(nd.value)
+                            ena_pin = parse_pin(ne.value)
+                        except ValueError as exc:
+                            ui.notify(str(exc), type='negative')
+                            return
+                        r = add_motor(ser, name=nn.value, pul_pin=pul_pin,
+                                      dir_pin=dir_pin, ena_pin=ena_pin, reversed=nr.value)
                         if r and r.get('status') == 'motor_added':
                             add_log(f'{name}: +{nn.value}')
                             nn.value = ''
@@ -1859,6 +1917,8 @@ def station_detail_page(name: str):
 
                     action_button('Add', on_click=do_add, icon='add')
                     action_button('Preset', on_click=apply_default_motor_preset, variant='neutral')
+                ui.label('Pins accept D-numbers (0-13) or analog A0-A5 (= D14-D19) for extra controllers.') \
+                    .classes('mono muted text-xs')
                 ui.label('Default motor presets: 9/8/7, 12/11/10, 6/5/4').classes('mono muted text-xs')
             else:
                 ui.label('Connect first.').classes('muted text-sm')
@@ -1897,7 +1957,7 @@ def station_detail_page(name: str):
                         with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
                             ui.label(sw.get('name')).classes('text-sm font-medium w-28')
                             tag('NO' if sw.get('normally_open', True) else 'NC', 'idle')
-                            ui.label(f'pin {sw.get("pin")}').classes('mono muted text-xs')
+                            ui.label(f'pin {format_pin(sw.get("pin"))}').classes('mono muted text-xs')
                             stops = sw.get('stops', [])
                             ui.label('stops: ' + (', '.join(stops) if stops else 'ALL')).classes('mono muted text-xs')
                             ui.element('div').classes('flex-grow')
@@ -1907,7 +1967,7 @@ def station_detail_page(name: str):
 
             with ui.row().classes('items-end gap-2 flex-wrap'):
                 ls_name = ui.input('Name').props('outlined').classes('w-28')
-                ls_pin = ui.number('Pin', value=2, min=0, max=21).props('outlined').classes('w-20')
+                ls_pin = ui.input('Pin', value='2').props('outlined').classes('w-20')
                 ls_no = ui.toggle({'no': 'Normally Open', 'nc': 'Normally Closed'}, value='no')
                 ls_stops = ui.select(options=station_motor_names(), multiple=True, label='Stops (blank = all)') \
                     .props('outlined').classes('w-48')
@@ -1921,9 +1981,14 @@ def station_detail_page(name: str):
                     if any(s.get('name') == nm for s in station['limit_switches']):
                         ui.notify('Limit switch name already exists', type='warning')
                         return
+                    try:
+                        pin_num = parse_pin(ls_pin.value)
+                    except ValueError as exc:
+                        ui.notify(str(exc), type='negative')
+                        return
                     sw = program_model.normalize_limit_switch({
                         'name': nm,
-                        'pin': int(ls_pin.value),
+                        'pin': pin_num,
                         'normally_open': ls_no.value == 'no',
                         'stops': list(ls_stops.value or []),
                     })
@@ -1976,7 +2041,7 @@ def station_detail_page(name: str):
                         with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
                             ui.label(enc.get('name')).classes('text-sm font-medium w-28')
                             ui.label(f'motor: {enc.get("motor") or "—"}').classes('mono muted text-xs')
-                            ui.label(f'A{enc.get("pin_a")}/B{enc.get("pin_b")} cpr {enc.get("counts_per_rev")}').classes('mono muted text-xs')
+                            ui.label(f'chA {format_pin(enc.get("pin_a"))} / chB {format_pin(enc.get("pin_b")) or "—"} cpr {enc.get("counts_per_rev")}').classes('mono muted text-xs')
                             ui.element('div').classes('flex-grow')
                             action_button('Remove', on_click=mk_remove_encoder(enc), variant='danger')
 
@@ -1985,8 +2050,8 @@ def station_detail_page(name: str):
             with ui.row().classes('items-end gap-2 flex-wrap'):
                 enc_name = ui.input('Name').props('outlined').classes('w-28')
                 enc_motor = ui.select(options=station_motor_names(), label='Motor').props('outlined').classes('w-32')
-                enc_a = ui.number('Pin A', value=2, min=0, max=21).props('outlined').classes('w-20')
-                enc_b = ui.number('Pin B', value=3, min=-1, max=21).props('outlined').classes('w-20')
+                enc_a = ui.input('Pin A', value='2').props('outlined').classes('w-20')
+                enc_b = ui.input('Pin B', value='3').props('outlined').classes('w-20')
                 enc_cpr = ui.number('Counts/rev', value=0, min=0, max=100000).props('outlined').classes('w-28')
 
                 def add_encoder_cfg():
@@ -1998,11 +2063,17 @@ def station_detail_page(name: str):
                     if any(e.get('name') == nm for e in station['encoders']):
                         ui.notify('Encoder name already exists', type='warning')
                         return
+                    try:
+                        pin_a_num = parse_pin(enc_a.value)
+                        pin_b_num = parse_pin(enc_b.value)
+                    except ValueError as exc:
+                        ui.notify(str(exc), type='negative')
+                        return
                     enc = program_model.normalize_encoder({
                         'name': nm,
                         'motor': enc_motor.value or '',
-                        'pin_a': int(enc_a.value),
-                        'pin_b': int(enc_b.value),
+                        'pin_a': pin_a_num,
+                        'pin_b': pin_b_num,
                         'counts_per_rev': int(enc_cpr.value),
                     })
                     station['encoders'].append(enc)
@@ -2019,13 +2090,18 @@ def station_detail_page(name: str):
             ui.label('Pin Test').classes('eyebrow red')
             if ser:
                 with ui.row().classes('items-end gap-2 flex-wrap'):
-                    tp = ui.number('Pin', value=9, min=0, max=19).props('outlined').classes('w-20')
+                    tp = ui.input('Pin', value='9').props('outlined').classes('w-20')
                     tm = ui.toggle(['out', 'in'], value='out')
                     pin_out = ui.label('').classes('mono muted text-xs')
 
                     def test():
                         mode = 'output' if tm.value == 'out' else 'input'
-                        r = verify_pin(ser, pin=int(tp.value), mode=mode)
+                        try:
+                            pin_num = parse_pin(tp.value)
+                        except ValueError as exc:
+                            ui.notify(str(exc), type='negative')
+                            return
+                        r = verify_pin(ser, pin=pin_num, mode=mode)
                         if r:
                             pin_out.text = json.dumps(r)
                         else:

@@ -5,6 +5,8 @@ import logging
 import time
 import threading
 
+from src.pins import parse_pin
+
 IGNORED_PORT_KEYWORDS = ['bluetooth', 'wlan', 'debug']
 _SERIAL_LOCKS = {}
 _SERIAL_LOCKS_GUARD = threading.Lock()
@@ -155,8 +157,9 @@ def stop_station(ser):
 # ── Motor management ────────────────────────
 
 def add_motor(ser, name, pul_pin, dir_pin, ena_pin, reversed=False):
-    return send_command(ser, "add_motor", name=name, pul_pin=pul_pin,
-                        dir_pin=dir_pin, ena_pin=ena_pin, reversed=reversed)
+    return send_command(ser, "add_motor", name=name, pul_pin=parse_pin(pul_pin),
+                        dir_pin=parse_pin(dir_pin), ena_pin=parse_pin(ena_pin),
+                        reversed=reversed)
 
 
 def remove_motor(ser, name):
@@ -192,7 +195,7 @@ def stop_motor(ser, name=None):
 
 
 def verify_pin(ser, pin, mode="output"):
-    return send_command(ser, "verify_pin", pin=pin, mode=mode)
+    return send_command(ser, "verify_pin", pin=parse_pin(pin), mode=mode)
 
 
 def set_zero(ser, name=None):
@@ -227,7 +230,7 @@ def clear_config(ser):
 def add_limit(ser, name, pin, normally_open=True, stops=None):
     """Register a limit switch on the board. When tripped, the firmware stops
     the associated motors immediately and emits an async limit event."""
-    return send_command(ser, "add_limit", name=name, pin=pin,
+    return send_command(ser, "add_limit", name=name, pin=parse_pin(pin),
                         normally_open=bool(normally_open), stops=stops or [])
 
 
@@ -249,8 +252,8 @@ def clear_limit(ser, name=None):
 # ── Encoders (firmware support reserved; see generic.ino) ──
 
 def add_encoder(ser, name, pin_a, pin_b=-1, counts_per_rev=0):
-    return send_command(ser, "add_encoder", name=name, pin_a=pin_a,
-                        pin_b=pin_b, counts_per_rev=counts_per_rev)
+    return send_command(ser, "add_encoder", name=name, pin_a=parse_pin(pin_a),
+                        pin_b=parse_pin(pin_b), counts_per_rev=counts_per_rev)
 
 
 def remove_encoder(ser, name):

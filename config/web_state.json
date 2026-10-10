@@ -11,10 +11,11 @@
       "require_homing": false,
       "steps": [
         {
+          "collapsed": true,
           "completion": {
             "conditions": [
               {
-                "ms": 2000.0,
+                "ms": 6000,
                 "type": "duration"
               }
             ],
@@ -38,10 +39,11 @@
           ]
         },
         {
+          "collapsed": true,
           "completion": {
             "conditions": [
               {
-                "ms": 1100.0,
+                "ms": 1400,
                 "type": "duration"
               }
             ],
@@ -54,12 +56,14 @@
             {
               "motors": [
                 {
-                  "forward": true,
-                  "name": "Motor 2"
+                  "forward": false,
+                  "name": "Motor 2",
+                  "speed_us": 3200
                 },
                 {
                   "forward": true,
-                  "name": "Motor 3"
+                  "name": "Motor 3",
+                  "speed_us": 3200
                 }
               ],
               "speed_us": null,
@@ -68,28 +72,31 @@
           ]
         },
         {
+          "collapsed": true,
           "completion": {
             "conditions": [
               {
-                "ms": 1100.0,
+                "ms": 1400,
                 "type": "duration"
               }
             ],
             "mode": "any"
           },
           "enabled": true,
-          "name": "Pinchers Retract",
+          "name": "Pinchers back",
           "on_complete": "stop_tasks",
           "tasks": [
             {
               "motors": [
                 {
-                  "forward": false,
-                  "name": "Motor 2"
+                  "forward": true,
+                  "name": "Motor 2",
+                  "speed_us": 3200
                 },
                 {
                   "forward": false,
-                  "name": "Motor 3"
+                  "name": "Motor 3",
+                  "speed_us": 3200
                 }
               ],
               "speed_us": null,
@@ -98,10 +105,67 @@
           ]
         },
         {
+          "collapsed": true,
           "completion": {
             "conditions": [
               {
-                "ms": 2000.0,
+                "ms": 15500,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "Secondary Down",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": false,
+                  "name": "Inner Punch",
+                  "speed_us": 1000
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "completion": {
+            "conditions": [
+              {
+                "ms": 15500,
+                "type": "duration"
+              }
+            ],
+            "mode": "any"
+          },
+          "enabled": true,
+          "name": "Secondary Up",
+          "on_complete": "stop_tasks",
+          "tasks": [
+            {
+              "motors": [
+                {
+                  "forward": true,
+                  "name": "Inner Punch",
+                  "speed_us": 1000
+                }
+              ],
+              "speed_us": null,
+              "station": "punch"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "completion": {
+            "conditions": [
+              {
+                "ms": 6000,
                 "type": "duration"
               }
             ],
@@ -115,7 +179,8 @@
               "motors": [
                 {
                   "forward": true,
-                  "name": "Motor 1"
+                  "name": "Motor 1",
+                  "speed_us": null
                 }
               ],
               "speed_us": null,
@@ -149,7 +214,17 @@
     "dispenser": {
       "encoders": [],
       "firmware": "generic",
-      "home_config": {},
+      "home_config": {
+        "Motor 1": {
+          "direction": "reverse",
+          "encoder": "",
+          "home_speed_us": null,
+          "jog_step": 200,
+          "method": "manual",
+          "switch": "",
+          "target_counts": 0
+        }
+      },
       "limit_switches": [],
       "limits": [],
       "motors": [
@@ -172,7 +247,35 @@
     "punch": {
       "encoders": [],
       "firmware": "generic",
-      "home_config": {},
+      "home_config": {
+        "Motor 1": {
+          "direction": "reverse",
+          "encoder": "",
+          "home_speed_us": null,
+          "jog_step": 200,
+          "method": "manual",
+          "switch": "",
+          "target_counts": 0
+        },
+        "Motor 2": {
+          "direction": "reverse",
+          "encoder": "",
+          "home_speed_us": null,
+          "jog_step": 200,
+          "method": "manual",
+          "switch": "",
+          "target_counts": 0
+        },
+        "Motor 3": {
+          "direction": "reverse",
+          "encoder": "",
+          "home_speed_us": null,
+          "jog_step": 200,
+          "method": "manual",
+          "switch": "",
+          "target_counts": 0
+        }
+      },
       "limit_switches": [],
       "limits": [],
       "motors": [
@@ -196,9 +299,16 @@
           "name": "Motor 3",
           "pul_pin": 6,
           "reversed": false
+        },
+        {
+          "dir_pin": 15,
+          "ena_pin": 14,
+          "name": "Inner Punch",
+          "pul_pin": 16,
+          "reversed": false
         }
       ],
-      "port_hint": "/dev/cu.usbmodem11401",
+      "port_hint": "/dev/cu.usbmodem111401",
       "triggers": [],
       "verification": {
         "encoders": {},
@@ -209,7 +319,17 @@
     "roller": {
       "encoders": [],
       "firmware": "generic",
-      "home_config": {},
+      "home_config": {
+        "Motor 1": {
+          "direction": "reverse",
+          "encoder": "",
+          "home_speed_us": null,
+          "jog_step": 200,
+          "method": "manual",
+          "switch": "",
+          "target_counts": 0
+        }
+      },
       "limit_switches": [],
       "limits": [],
       "motors": [

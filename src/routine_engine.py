@@ -429,6 +429,17 @@ class SequenceEngine:
         return wait_result
 
     def _wait_for_completion(self, step, program, conditions, mode, involved, duration_ms):
+        """Wait for the step's completion conditions.
+
+        Polling the firmware (get_status / get_encoder) briefly stalls its
+        stepping loop because the serial reply blocks the loop at 9600 baud,
+        which shortens motion. So we touch the serial as little as possible:
+          - duration is timed purely on the host clock (no serial),
+          - motors_idle is NOT polled while a duration is still counting (a
+            duration-sized run can't be idle before its time is up anyway),
+          - encoder/idle reads (when actually needed) are throttled, and
+          - limit events are drained cheaply (non-blocking) only when relevant.
+        """
         serials = self._serials_provider()
         start = time.time()
         base = (duration_ms or 0) / 1000.0
@@ -438,20 +449,71 @@ class SequenceEngine:
         if not conditions:
             return {'status': 'done', 'step': self.current_step}
 
+        has_limit = any(c.get('type') == program_model.COND_LIMIT_SWITCH for c in conditions)
+        has_idle = any(c.get('type') == program_model.COND_MOTORS_IDLE for c in conditions)
+        has_encoder = any(c.get('type') == program_model.COND_ENCODER for c in conditions)
+        has_duration = duration_ms is not None
+
+        status_idle = {}        # station -> bool (idle) once polled
+        encoder_counts = {}     # (station, motor) -> count once polled
+        last_poll = 0.0
+        STATUS_POLL_INTERVAL = 0.2
+
         while True:
             if self._stop_event.is_set():
                 self._stop_stations(involved)
                 return {'status': 'stopped', 'step': self.current_step}
 
-            for station in involved:
-                pump_events(serials.get(station))
+            now = time.time()
+            duration_met = has_duration and (now - start) * 1000.0 >= duration_ms
 
-            met = [self._condition_met(cond, start, involved, serials) for cond in conditions]
+            # Drain async limit-switch events without blocking motion.
+            if has_limit:
+                for station in involved:
+                    pump_events(serials.get(station))
+
+            # Only read motor status once a duration (if any) has elapsed; only
+            # read encoders when an encoder condition exists. Throttled either way.
+            need_idle_poll = has_idle and (not has_duration or duration_met)
+            if (need_idle_poll or has_encoder) and (now - last_poll) >= STATUS_POLL_INTERVAL:
+                last_poll = now
+                if need_idle_poll:
+                    for station in involved:
+                        ser = serials.get(station)
+                        if ser is not None:
+                            st = get_status(ser)
+                            status_idle[station] = not (st and st.get('state') == 'PROCESSING')
+                if has_encoder:
+                    for cond in conditions:
+                        if cond.get('type') == program_model.COND_ENCODER:
+                            ser = serials.get(cond.get('station'))
+                            if ser is not None:
+                                resp = get_encoder(ser, cond.get('motor'))
+                                if resp and resp.get('status') == 'ok':
+                                    encoder_counts[(cond.get('station'), cond.get('motor'))] = resp.get('count', 0)
+
+            met = []
+            for cond in conditions:
+                ctype = cond.get('type')
+                if ctype == program_model.COND_DURATION:
+                    met.append((now - start) * 1000.0 >= cond.get('ms', 0))
+                elif ctype == program_model.COND_LIMIT_SWITCH:
+                    with self._trips_lock:
+                        met.append((cond.get('station'), cond.get('switch')) in self._trips)
+                elif ctype == program_model.COND_MOTORS_IDLE:
+                    targets = [cond.get('station')] if cond.get('station') else list(involved)
+                    met.append(bool(status_idle) and all(status_idle.get(s, False) for s in targets))
+                elif ctype == program_model.COND_ENCODER:
+                    count = encoder_counts.get((cond.get('station'), cond.get('motor')))
+                    met.append(count is not None and count >= cond.get('counts', 0))
+                else:
+                    met.append(False)
+
             satisfied = all(met) if mode == program_model.COMPLETION_ALL else any(met)
             if satisfied:
                 return {'status': 'done', 'step': self.current_step}
 
-            if time.time() > cap:
+            if now > cap:
                 return {'status': 'error', 'error': f'Step {self.current_step} timed out', 'step': self.current_step}
 
             time.sleep(POLL_INTERVAL_S)

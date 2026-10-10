@@ -12,6 +12,7 @@ from nicegui import ui
 from src import web_ui
 
 from src.comms import run_motor, stop_motor, verify_pin, get_encoder
+from src.pins import format_pin
 
 NUDGE_STEPS = 200
 NUDGE_SPEED_US = 80
@@ -28,7 +29,7 @@ _STATUS_TAG = {
 def _pins_text(motor):
     if not motor:
         return '—'
-    return f'PUL {motor["pul_pin"]} / DIR {motor["dir_pin"]} / ENA {motor["ena_pin"]}' + \
+    return f'PUL {format_pin(motor["pul_pin"])} / DIR {format_pin(motor["dir_pin"])} / ENA {format_pin(motor["ena_pin"])}' + \
         (' (rev)' if motor.get('reversed') else '')
 
 
@@ -155,7 +156,7 @@ def _render_switch_row(station, sw, verification, rerender):
     with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
         ui.label(sw['name']).classes('text-sm font-medium w-28')
         web_ui.tag('NO' if sw.get('normally_open', True) else 'NC', 'idle')
-        ui.label(f'pin {sw.get("pin")}').classes('mono muted text-xs')
+        ui.label(f'pin {format_pin(sw.get("pin"))}').classes('mono muted text-xs')
         reading = ui.label('').classes('mono muted text-xs')
         ui.element('div').classes('flex-grow')
 
@@ -185,7 +186,7 @@ def _render_encoder_row(station, enc, verification, rerender):
     with ui.row().classes('items-center gap-3 section-row w-full flex-wrap'):
         ui.label(enc['name']).classes('text-sm font-medium w-28')
         ui.label(f'motor {enc.get("motor") or "—"}').classes('mono muted text-xs')
-        ui.label(f'A{enc.get("pin_a")}/B{enc.get("pin_b")}').classes('mono muted text-xs')
+        ui.label(f'chA {format_pin(enc.get("pin_a"))} / chB {format_pin(enc.get("pin_b")) or "—"}').classes('mono muted text-xs')
         count_lbl = ui.label('').classes('mono muted text-xs')
         ui.element('div').classes('flex-grow')
 
